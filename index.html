@@ -465,6 +465,33 @@ body.trailer-open{overflow:hidden}
 #ccCard .ccSteps:is(.ccStepOne,.ccStepTwo,.ccStepThree,.ccStepFour) b{color:#103e2f!important}
 #ccCard .ccSteps:is(.ccStepOne,.ccStepTwo,.ccStepThree,.ccStepFour) p{color:#19382e!important}
 #ccCard .ccSteps:is(.ccStepOne,.ccStepTwo,.ccStepThree,.ccStepFour) strong{color:#103e2f!important}
+
+/* v8.5: crisp, responsive rendering and pre-match mobile landscape recommendation */
+#stage, #stage canvas { -webkit-tap-highlight-color:transparent; }
+#stage canvas { image-rendering:auto; }
+#stage .cc-landscape-prompt{position:absolute;inset:0;z-index:30;display:grid;place-items:center;padding:clamp(12px,4vw,30px);background:rgba(3,17,27,.89);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);pointer-events:auto;color:#102a2c;text-align:center}
+#stage .cc-landscape-prompt[hidden]{display:none!important}
+#stage .cc-landscape-card{width:min(100%,390px);padding:clamp(18px,4vw,28px);border-radius:24px;background:linear-gradient(165deg,#fff 0%,#e9f9ff 65%,#def2ed 100%);border:2px solid #d8f5f7;box-shadow:0 20px 65px #00131cb3,0 0 0 5px #ffffff12}
+#stage .cc-rotate-symbol{display:flex;align-items:center;justify-content:center;gap:16px;font-size:46px;color:#087c9b;line-height:1.1;margin:4px 0 16px}
+#stage .cc-rotate-phone{width:39px;height:62px;border:4px solid currentColor;border-radius:9px;position:relative;transform:rotate(0deg);animation:ccRotatePhone 2.4s ease-in-out infinite}
+#stage .cc-rotate-phone:after{content:'';position:absolute;bottom:4px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:currentColor}
+#stage .cc-landscape-card h2{color:#093d50;font-size:clamp(21px,4vw,29px);margin:0 0 10px}
+#stage .cc-landscape-card p{color:#2d515b;font-size:15px;line-height:1.5;margin:0 0 18px}
+#stage .cc-landscape-card button{background:linear-gradient(180deg,#ffdc7d,#f5c75b);color:#253a35;border:0;font-weight:850;min-height:48px;padding:0 22px}
+#stage .cc-landscape-card small{display:block;color:#547480;font-size:12px;margin-top:12px}
+@keyframes ccRotatePhone{0%,15%,100%{transform:rotate(0)}42%,72%{transform:rotate(-90deg)}}
+@media(prefers-reduced-motion:reduce){#stage .cc-rotate-phone{animation:none;transform:rotate(-90deg)}}
+@media (pointer:coarse) and (orientation:landscape) and (max-height:600px){
+  .game{height:calc(100dvh - 30px);min-height:260px;border-radius:12px}
+  #stage .tl{top:7px;left:7px;padding:4px 9px;font-size:12px}
+  #stage .br{bottom:6px;right:6px}
+  #stage .touch-stick{bottom:8px}
+  #stage .pad{bottom:8px}
+  #stage .hand-toggle{bottom:14px}
+  .toast{top:35px}
+}
+@media (max-width:600px){ .game{border-radius:13px;box-shadow:0 14px 40px #0008} }
+
 </style>
 <style>
 #ccOverlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(3,9,20,.91);overflow-y:auto;padding:16px;color:#f6f8fa;font-family:system-ui,Arial,sans-serif}#ccOverlay.ccOpen{display:flex;align-items:flex-start;justify-content:center}
@@ -530,6 +557,7 @@ body.trailer-open{overflow:hidden}
 #ccCard button.ccGold{background:linear-gradient(125deg,#b92538,#cf3a4b)!important;color:#fff!important;border-color:#a52232!important;box-shadow:0 6px 15px #ac24332a!important}
 #ccCard button.ccGold:hover:not(:disabled){background:#a92336!important}
 #ccCard .ccInvite{background:linear-gradient(120deg,#f4faf6,#f6faff)!important;border:1px solid #cbded9!important;border-radius:16px!important;padding:18px!important}
+#ccCard .ccInviteHeadline{font-weight:850;font-size:19px;letter-spacing:-.02em;color:#163e30;margin:0 0 12px;line-height:1.35;overflow-wrap:anywhere}
 #ccCard .ccInvite label{margin-top:0!important}
 #ccCard .ccButtons{display:flex!important;flex-wrap:wrap!important;gap:6px!important}
 #ccCard .ccInvite #ccWa{background:#197d54!important;color:white!important;border-color:#197d54!important}
@@ -578,6 +606,15 @@ body.trailer-open{overflow:hidden}
     <button id="exitBtn" aria-label="Leave practice"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
   </div>
   <div class="glass recpill" id="recPill" hidden><i></i><span>REC</span><b id="recTime">0:00</b><button id="recStop" style="min-height:32px;padding:0 12px;font-size:13px">Stop</button></div>
+  <div class="cc-landscape-prompt" id="ccLandscapePrompt" role="dialog" aria-modal="true" aria-label="Turn your phone sideways for the best game view" hidden>
+    <div class="cc-landscape-card">
+      <div class="cc-rotate-symbol" aria-hidden="true"><span class="cc-rotate-phone"></span><span>↻</span></div>
+      <h2>Turn sideways for the best view</h2>
+      <p>For sharper gameplay and more room for the snowball controls, rotate your phone to <strong>landscape</strong> before the countdown.</p>
+      <button id="ccLandscapeContinue" type="button">I'm ready — let's play</button>
+      <small>Portrait works too. Rotation is recommended, not required.</small>
+    </div>
+  </div>
   <div class="c321" id="c321" aria-live="assertive"><div class="num" id="c321n"><svg class="hat" viewBox="0 0 120 100" aria-hidden="true"><path d="M14 78C20 40 52 8 98 22C86 30 80 44 92 58L100 72Z" fill="#d81f33"/><path d="M14 78C20 40 52 8 98 22C80 22 52 40 40 74Z" fill="rgba(0,0,0,.14)"/><rect x="4" y="66" width="104" height="24" rx="12" fill="#fff"/><circle cx="102" cy="24" r="13" fill="#fff"/></svg><span id="c321t">3</span></div></div>
   <div class="over lobby" id="lobby"><div class="card glass" style="position:static">
     <p>Your dashboard</p>
@@ -802,7 +839,7 @@ function genTerrain(){terr=new Uint8Array(N);TREES=[];HILLS=[];PROPS=[];TB=new M
     for(const [x,y] of [[cx-26,cy-12],[cx+30,cy+6],[cx-6,cy+21],[cx+10,cy-20]]){let ok=true;for(let yy=0;yy<2;yy++)for(let xx=0;xx<2;xx++)if(terr[(y+yy)*W+x+xx])ok=false;if(ok){for(let yy=0;yy<2;yy++)for(let xx=0;xx<2;xx++)terr[(y+yy)*W+x+xx]=2;const o={k:2,x,y};HILLS.push(o);tAdd(o)}}
     for(const [x,y] of [[cx-31,cy-18],[cx-32,cy-16],[cx-29,cy-19],[cx+33,cy+15],[cx+31,cy+17],[cx+3,cy-24],[cx+33,cy-20],[cx-20,cy+23],[cx-22,cy+22]])if(put(x,y,1)){const o={k:1,x,y,s:1+r()*.3};TREES.push(o);tAdd(o)}}}
 const initials=n=>n.split(/\s+/).filter(w=>!/^(co|ltd|inc|plc|llc|&|the)$/i.test(w)).map(w=>w[0]).join('').slice(0,2).toUpperCase()||'?';
-const dpr=()=>devicePixelRatio||1;
+const dpr=()=>Math.min(2.5,Math.max(1,window.devicePixelRatio||1));
 function hangLights(){const box=$('lights'),w=box.clientWidth,h=box.clientHeight;if(!w)return;const n=Math.max(12,Math.round(w/46)),step=w/n,sag=12;
   let d=`M0 4`;for(let k=0;k<n;k++){const x0=k*step,x1=(k+1)*step;d+=` Q${x0+step/2} ${4+sag*2} ${x1} 4`}
   $('wire').setAttribute('viewBox',`0 0 ${w} ${h}`);$('wire').innerHTML=`<path d="${d}" fill="none" stroke="#1d2b21" stroke-width="2.5"/>`;
@@ -1162,7 +1199,7 @@ function step(dt){
   if(MODE==='practice'&&t>=ROUND)endRound()}
 
 // camera
-function size(){const r=cv.getBoundingClientRect();cv.width=Math.max(1,r.width*dpr()|0);cv.height=Math.max(1,r.height*dpr()|0)}
+function size(){const r=cv.getBoundingClientRect(),scale=dpr();const w=Math.max(1,Math.round(r.width*scale)),h=Math.max(1,Math.round(r.height*scale));if(cv.width!==w)cv.width=w;if(cv.height!==h)cv.height=h}
 const ro=new ResizeObserver(size);ro.observe(cv);
 function view(){const z=cam.zc*dpr(),hw=cv.width/2/z,hh=cv.height/2/z;return{z,x0:cam.x-hw,x1:cam.x+hw,y0:cam.y-hh,y1:cam.y+hh}}
 const zoomBy=f=>{cam.zc=Math.max(ZMIN,Math.min(ZMAX,cam.zc*f))};
@@ -1496,12 +1533,27 @@ const practiceOpen=()=>Date.now()>=PRACTICE_FROM;
 const openPractice=()=>{if(!practiceOpen())return;if(!session){$('pModal').classList.add('on');$('pName').focus();return}$('lobby').classList.add('on');return;if(practiceLocked()){if(session){$('lobby').classList.add('on');return}$('lt').textContent='Practice is for entrants this week';$('loginModal').classList.add('on');return}$('pModal').classList.add('on');$('pName').focus()};
 function syncPracticeBtn(){const o=practiceOpen();$('practBtn').disabled=!o;$('practBtn').textContent=o?'Practise free':'Practice opening soon';$('practBtn').title=''}
 syncPracticeBtn();setInterval(syncPracticeBtn,30000);
-$('practBtn').onclick=openPractice;$('again').onclick=()=>{newRound();count321()};
+$('practBtn').onclick=openPractice;$('again').onclick=()=>{newRound();frozen=true;ccBeforeCountdown(()=>count321())};
 function backToExample(){if(rec)stopRec();MODE='attract';practBrand=null;newRound();try{theme.pause()}catch(_){}if(session){renderLobby();$('lobby').classList.add('on')}}
 $('exitBtn').onclick=backToExample;$('winBack').onclick=backToExample;
+// v8.5: optional mobile rotate recommendation shown before the 3-2-1 countdown.
+const ccLandscapeBox=$('ccLandscapePrompt');
+let ccLandscapeResolve=null;
+const ccIsPortraitPhone=()=>matchMedia('(orientation: portrait)').matches && (matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints>0) && Math.min(innerWidth,innerHeight)<900;
+function ccCloseLandscape(){ccLandscapeBox.hidden=true;if(ccLandscapeResolve){const done=ccLandscapeResolve;ccLandscapeResolve=null;done()}}
+$('ccLandscapeContinue').addEventListener('click',ccCloseLandscape);
+addEventListener('orientationchange',()=>{if(!ccIsPortraitPhone())ccCloseLandscape();size()});
+addEventListener('resize',()=>{if(!ccLandscapeBox.hidden&&!ccIsPortraitPhone())ccCloseLandscape()});
+function ccBeforeCountdown(done){
+ if(!ccIsPortraitPhone()){done();return}
+ ccLandscapeBox.hidden=false;
+ ccLandscapeResolve=()=>done();
+ $('ccLandscapeContinue').focus({preventScroll:true});
+}
 function count321(done){frozen=true;const box=$('c321'),n=$('c321n'),tx=$('c321t');box.classList.add('on');let k=3;
   const tick=()=>{if(k===0){box.classList.remove('on');frozen=false;done&&done();return}tx.textContent=k;n.classList.remove('go');void n.offsetWidth;n.classList.add('go');k--;setTimeout(tick,1000)};tick()}
-function startPractice(b){practBrand=b;MODE='practice';newRound();count321();startMusic();document.getElementById('stage').scrollIntoView({behavior:'smooth',block:'center'})}
+function startPractice(b,scheduled=false){practBrand=b;MODE='practice';newRound();frozen=true;startMusic();document.getElementById('stage').scrollIntoView({behavior:'smooth',block:'center'});
+ if(scheduled){ccCloseLandscape();count321()}else ccBeforeCountdown(()=>count321())}
 $('pForm').onsubmit=e=>{e.preventDefault();const name=$('pName').value.trim()||'You';readImg($('pLogo').files[0],im=>{$('pModal').classList.remove('on');startPractice({name,color:$('pCol').value,im})})};
 
 // paid entry
@@ -1893,6 +1945,8 @@ const ccText=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>'
 const ccBy=id=>document.getElementById(id);
 const ccStatus=m=>{ccBy('ccStatus').textContent=m};
 const ccInvite=()=>ccRoom?location.origin+location.pathname+'?room='+encodeURIComponent(ccRoom.invite):'';
+const ccInviteHeadline=()=>`Yo! Join the “${(ccRoom&&ccRoom.lobby_name||'My Snowball Squad').trim()}” lobby.`;
+const ccInviteMessage=()=>ccInviteHeadline()+'\n\n'+ccInvite();
 
 // Browser WebRTC voice prototype: Supabase Realtime broadcasts only SDP/ICE signals.
 // No recording or server-side audio upload. STUN-only may fail on restrictive networks.
@@ -2053,7 +2107,7 @@ function ccUI(){
  <label class="ccUpload">Your own logo (only for your own team)<input id="ccLogo" type="file" accept="image/png,image/jpeg,image/webp"></label>
  <button id="ccSave" type="button">Apply team selection</button><small id="ccBrandHelp">Ready-made companies set their logo and colour automatically.</small></div>
  <div class="ccSteps ccStepTwo"><b>02 / INVITE YOUR SQUAD</b><p>Send this private link now. Friends appear below when they join. Nothing starts until the host decides.</p></div>
- <div class="ccInvite"><label>Invite-only link · share before you start<input id="ccLink" readonly></label><div class="ccButtons"><button id="ccCopy" type="button">Copy invitation</button><button id="ccWa" type="button">WhatsApp</button><button id="ccTg" type="button">Telegram</button><button id="ccShare" type="button">Share</button></div><div class="ccButtons"><button id="ccRemind" type="button">Send reminder</button></div></div>
+ <div class="ccInvite"><p id="ccInviteHeadline" class="ccInviteHeadline">Yo! Join the lobby.</p><label>Unique private join link (included automatically when sharing)<input id="ccLink" readonly></label><div class="ccButtons"><button id="ccCopy" type="button">Copy invitation</button><button id="ccWa" type="button">WhatsApp</button><button id="ccTg" type="button">Telegram</button><button id="ccShare" type="button">Share</button></div><div class="ccButtons"><button id="ccRemind" type="button">Send reminder</button></div></div>
  <p id="ccInviteNotice" class="ccInviteNotice" role="status" hidden></p>
  <div class="ccSteps ccStepThree"><b>03 / LOCK YOUR LINE-UP</b><p id="ccSeatHelp">Open places are reserved for friends until you choose to fill them with computer teammates.</p></div>
  <h3>Squad <span id="ccCount">0/4 people</span></h3><div id="ccRoster"></div><div id="ccBotRoster" aria-live="polite"></div>
@@ -2068,7 +2122,7 @@ function ccUI(){
  ccBy('ccClose').onclick=()=>{o.classList.remove('ccOpen')};
  ccBy('ccEnter').onclick=ccEnter;ccBy('ccSave').onclick=ccSave;ccBy('ccRename').onclick=ccRenameLobby;ccBy('ccLobbyName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();ccRenameLobby()}});ccBy('ccStart').onclick=ccStart;
  ccBy('ccFillBots').onclick=ccFillBots;ccBy('ccUnlockBots').onclick=ccUnlockBots;ccBy('ccLeave').onclick=ccLeave;
- ccBy('ccCopy').onclick=()=>navigator.clipboard.writeText(ccInvite()).then(()=>{ccInviteCopiedAtCount=ccPeople.length;ccBy('ccInviteNotice').hidden=false;ccBy('ccInviteNotice').textContent='✓ Link copied! Now send it to your friends and wait for them to join.';ccStatus('Invitation copied.');}).catch(()=>{ccBy('ccLink').select();ccStatus('Link selected. Copy it to share.')});
+ ccBy('ccCopy').onclick=()=>navigator.clipboard.writeText(ccInviteMessage()).then(()=>{ccInviteCopiedAtCount=ccPeople.length;ccBy('ccInviteNotice').hidden=false;ccBy('ccInviteNotice').textContent='✓ Invitation copied! Now send it to your friends and wait for them to join.';ccStatus('Named invitation copied.');}).catch(()=>{ccBy('ccLink').select();ccStatus('Could not copy the invitation automatically. Select the link and copy it manually.')});
  ccBy('ccWa').onclick=()=>ccMessage('wa',false);ccBy('ccTg').onclick=()=>ccMessage('tg',false);ccBy('ccShare').onclick=()=>ccMessage('native',false);ccBy('ccRemind').onclick=()=>ccMessage('native',true);
  ccBy('ccLogo').onchange=ccLoadLogo;ccBy('ccCompany').onchange=()=>{ccPresetChanged();if(ccRoom&&ccRoom.host_id===ccAuth)ccSave()};
  ccBy('ccColour').oninput=()=>ccDrawSquadStage();ccBy('ccColour').onchange=()=>{ccDrawSquadStage();if(ccRoom&&ccRoom.host_id===ccAuth&&!ccBrand(ccBy('ccCompany').value))ccSave()};
@@ -2078,11 +2132,15 @@ function ccUI(){
  if(new URLSearchParams(location.search).has('room')){ccBy('ccEnter').textContent='Join invited lobby';ccBy('ccJoinInfo').hidden=false;ccBy('ccNewLobbyLabel').hidden=true;ccBy('ccNewLobbyHelp').hidden=true}
  ccPresetChanged();
 }
-function ccMessage(app,reminder){const link=ccInvite();if(!link)return;const msg=(reminder?'Reminder: join our practice squad! ':'Join my private snowball squad! ')+link;
+function ccMessage(app,reminder){
+ const link=ccInvite();if(!link)return;
+ const headline=ccInviteHeadline();
+ const intro=reminder?'Reminder! '+headline:headline;
+ const msg=intro+'\n\n'+link;
  if(app==='wa')window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener');
- else if(app==='tg')window.open('https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(reminder?'Reminder: join our squad!':'Join my practice squad!'),'_blank','noopener');
- else if(navigator.share)navigator.share({title:'Practice squad',text:msg,url:link}).catch(()=>{});
- else navigator.clipboard.writeText(msg).then(()=>ccStatus('Message copied. Paste it into WhatsApp or Telegram.')).catch(()=>ccStatus(msg));
+ else if(app==='tg')window.open('https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(intro),'_blank','noopener');
+ else if(navigator.share)navigator.share({title:headline,text:intro,url:link}).catch(()=>{});
+ else navigator.clipboard.writeText(msg).then(()=>ccStatus('Named invitation copied. Send it to your friends.')).catch(()=>ccStatus(msg));
 }
 
 function ccPresetChanged(){
@@ -2146,6 +2204,7 @@ async function ccRefresh(){if(!ccRoom)return;
  const host=ccRoom.host_id===ccAuth,waiting=ccRoom.status==='waiting',locked=!!ccRoom.bots_locked;
  ccBy('ccRole').textContent=host?'HOST':'INVITED PLAYER';ccBy('ccHostEdit').hidden=!host;
  ccBy('ccLobbyTitle').textContent=ccRoom.lobby_name||'Private Practice Squad';
+ ccBy('ccInviteHeadline').textContent=ccInviteHeadline();
  ccBy('ccTeamName').textContent=ccRoom.company;
  const lobbyInput=ccBy('ccLobbyName');if(document.activeElement!==lobbyInput)lobbyInput.value=ccRoom.lobby_name||'Private Practice Squad';
  ccBy('ccRename').disabled=!host||!waiting;
@@ -2203,10 +2262,10 @@ async function ccSave(){if(!ccRoom)return;ccStatus('Saving squad look…');
  }catch(e){ccStatus('Could not save squad look: '+e.message)}}
 async function ccStart(){try{ccBy('ccStart').disabled=true;const t=await ccRpc('cc_start_room',{p_room:ccRoom.id});ccScheduleStart(t);await ccRefresh()}catch(e){ccStatus('Could not start: '+e.message)}finally{ccBy('ccStart').disabled=false}}
 function ccScheduleStart(when){if(ccStartTimer)clearTimeout(ccStartTimer);
- const left=Math.max(0,new Date(when).getTime()-Date.now());ccStatus('Starting together in '+Math.ceil(left/1000)+' seconds…');
+ const left=Math.max(0,new Date(when).getTime()-Date.now());ccStatus((ccIsPortraitPhone()?'↻ Turn your phone sideways for the best view! · ':'')+'Starting together in '+Math.ceil(left/1000)+' seconds…');
  ccStartTimer=setTimeout(()=>{if(ccPlaying||!ccRoom)return;ccPlaying=true;ccBy('ccOverlay').classList.remove('ccOpen');
  const preset=ccBrand(ccRoom.company);
- const im=new Image(),go=()=>{const data={name:ccRoom.company,color:ccRoom.colour,im:im.complete&&im.naturalWidth?im:null,rider:ccRoom.rider||(preset&&preset.rider)||'snow'};startPractice(data)};
+ const im=new Image(),go=()=>{const data={name:ccRoom.company,color:ccRoom.colour,im:im.complete&&im.naturalWidth?im:null,rider:ccRoom.rider||(preset&&preset.rider)||'snow'};startPractice(data,true)};
  if(ccRoom.logo){im.onload=go;im.onerror=go;im.src=ccRoom.logo;}else go();
  ccStatus('Practice match started. Prototype physics run locally on each device.');
  },left)}
