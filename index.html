@@ -332,6 +332,12 @@ body.trailer-open{overflow:hidden}
 /* 2026 accessible low-latency audio, lobby sharing and touch controls */
 .audio-dock{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:9px 14px;margin:0 auto 10px;width:min(100%,1050px);background:rgba(7,18,29,.92);border:1px solid rgba(245,199,91,.28);border-radius:16px;color:#fff;font-size:12px;z-index:3}
 .audio-dock label{display:flex;align-items:center;gap:5px;white-space:nowrap}.audio-dock input{width:clamp(55px,10vw,105px);accent-color:#f5c75b}.audio-dock button{min-height:34px;padding:5px 10px;font-size:12px}.audio-dock output{min-width:28px;font-variant-numeric:tabular-nums}.audio-dock .voice-state{color:#b6c9d3}
+.audio-dock .volume-group{display:flex;align-items:center;gap:6px;padding:4px 6px;border:1px solid rgba(194,231,241,.25);border-radius:12px;background:rgba(255,255,255,.045);white-space:nowrap}
+.audio-dock .volume-name{font-size:12px;font-weight:700;margin-right:2px}.audio-dock .volume-group output{min-width:40px;text-align:center;font-weight:800;color:#f5db91;font-variant-numeric:tabular-nums}
+.audio-dock .volume-group .volume-step{display:grid;place-items:center;width:34px;height:34px;min-width:34px;min-height:34px;padding:0;border:1px solid rgba(178,237,255,.52);border-radius:9px;background:#1c465c;color:#fff;font-size:21px;line-height:1;font-weight:800;touch-action:manipulation;cursor:pointer}
+.audio-dock .volume-group .volume-step:active{transform:scale(.92);background:#316d86}.audio-dock .volume-group .volume-step:focus-visible{outline:3px solid #f5db91;outline-offset:2px}
+.audio-dock .volume-group .volume-step:disabled{opacity:.37;cursor:not-allowed}
+@media(max-width:600px){.audio-dock .volume-group{gap:3px;padding:3px 4px}.audio-dock .volume-name{font-size:11px}.audio-dock .volume-group .volume-step{width:32px;min-width:32px;height:32px;min-height:32px}.audio-dock .volume-group output{min-width:35px;font-size:11px}}
 .lobby-sharing{padding:12px;border:1px solid rgba(245,199,91,.24);border-radius:14px;margin:12px 0;background:#ffffff09}.lobby-sharing .row{justify-content:center;flex-wrap:wrap;gap:7px;margin-top:9px}.lobby-sharing button{min-height:38px;padding:7px 11px;font-size:12px}.lobby-sharing p{font-size:12px;margin:7px 0;line-height:1.5}.lobby-sharing input{width:100%;min-width:0;max-width:100%;padding:9px;background:#07111a;border:1px solid #ffffff44;border-radius:8px;color:#fff}
 .touch-stick{position:absolute;left:15px;bottom:14px;width:118px;height:118px;border-radius:50%;border:2px solid #ffffff80;background:#0714209c;display:none;touch-action:none;z-index:6;align-items:center;justify-content:center;box-shadow:0 6px 20px #0008}.touch-stick:before{content:'MOVE';position:absolute;top:14px;color:#ffffffa0;font-size:10px;letter-spacing:2px}.touch-knob{width:49px;height:49px;border-radius:50%;background:#f5c75b;box-shadow:0 0 0 4px #ffffff77,inset 0 1px 5px #fff;transform:translate(0,0)}
 @media(pointer:coarse){.touch-stick{display:flex}.pad .dpad{display:none}.pad{left:auto;right:14px;bottom:20px}.pad .abs{display:flex;gap:9px}.audio-dock{font-size:11px}.audio-dock label{gap:3px}.audio-dock input{width:60px}}
@@ -439,6 +445,14 @@ body.trailer-open{overflow:hidden}
 #ccCard .ccInviteNotice{margin-top:12px;padding:12px 14px;background:#eef9ef;border:1px solid #b1dec1;border-left:4px solid #2c8c5f;border-radius:10px;color:#19593b;font-size:13px;font-weight:750}
 @media(max-width:600px){#ccCard .ccSquadStage{padding:12px 8px 10px;border-radius:16px}#ccCard .ccStageSquad{gap:4px}#ccCard .ccSnowSeat{padding:5px 2px 7px;border-radius:9px}#ccCard .ccSeatName{font-size:10px}#ccCard .ccSeatRole{font-size:9px}}
 @media(prefers-reduced-motion:reduce){#ccCard .ccSnowSeat canvas{animation:none}}
+
+/* v8: name your private lobby independently from its team identity */
+#ccCard .ccLobbyRename{display:flex;align-items:end;flex-wrap:wrap;gap:9px 12px;margin-bottom:19px;padding:15px;border:1px solid #d9e8e0;border-radius:14px;background:linear-gradient(115deg,#f6fbf8,#fff)}
+#ccCard .ccLobbyRename label{flex:1 1 220px;margin:0!important}
+#ccCard .ccLobbyRename button{margin-bottom:0!important}
+#ccCard .ccLobbyRename small{flex-basis:100%;color:#526c65;font-size:12px}
+#ccCard .ccTop #ccTeamName{display:block;color:#587469!important;font-size:13px!important;margin-top:3px}
+#ccCard .ccTop #ccRoomState{display:block;margin-top:3px}
 </style>
 <style>
 #ccOverlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(3,9,20,.91);overflow-y:auto;padding:16px;color:#f6f8fa;font-family:system-ui,Arial,sans-serif}#ccOverlay.ccOpen{display:flex;align-items:flex-start;justify-content:center}
@@ -527,9 +541,9 @@ body.trailer-open{overflow:hidden}
 <body>
 <audio id="theme" loop preload="none"><source src="audio/theme.mp3" type="audio/mpeg"></audio>
 <header class="bar">
-  <h1 class="sign" aria-label="Coolest Company in the Universe"><span class="wm"><span class="w1b"><svg class="mk" xmlns="http://www.w3.org/2000/svg" viewBox="60 90 400 370" aria-hidden="true"><path d="M92 430 L372 118" stroke="#ffffff" stroke-width="26" stroke-linecap="round"/><g class="sway"><path d="M372 118 V258" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/><path d="M286 256 H458 Q462 256 461 262 L460 270 H284 L283 262 Q282 256 286 256 Z M292 266 H366 L361 306 Q357 328 334 328 H318 Q297 328 294 306 Z M452 266 H378 L383 306 Q387 328 410 328 H426 Q447 328 450 306 Z M362 266 H382 V280 Q372 272 362 280 Z" fill="#07080b" stroke="#ffffff" stroke-width="16" stroke-linejoin="round" paint-order="stroke"/><path d="M312 276 H323 L311 314 H301 Z M398 276 H409 L397 314 H387 Z" fill="#ffffff" opacity=".75"/></g></svg><span class="w1">Coolest<br>Company</span></span><span class="w2">in the Universe</span></span></h1>
+  <h1 class="sign" aria-label="Coolest Company in the Universe"><span class="wm"><span class="w1b"><svg class="mk" xmlns="http://www.w3.org/2000/svg" viewBox="60 90 400 370" aria-hidden="true"><path d="M92 430 L372 118" stroke="#ffffff" stroke-width="26" stroke-linecap="round"/><g class="sway"><path d="M372 118 V258" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/><path d="M288 251 H456" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/><path d="M295 267 H359 L355 300 Q352 318 331 318 H319 Q300 318 299 300 Z" fill="#07080b" stroke="#ffffff" stroke-width="8" stroke-linejoin="round"/><path d="M386 267 H451 L447 300 Q444 318 422 318 H411 Q392 318 390 300 Z" fill="#07080b" stroke="#ffffff" stroke-width="8" stroke-linejoin="round"/><path d="M364 274 Q373 266 382 274" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/><path d="M312 276 H323 L311 314 H301 Z M398 276 H409 L397 314 H387 Z" fill="#ffffff" opacity=".75"/></g></svg><span class="w1">Coolest<br>Company</span></span><span class="w2">in the Universe</span></span></h1>
 </header>
-<div class="trailer-launch"><button id="watchTrailer" type="button" aria-haspopup="dialog" aria-controls="trailerDialog"><span aria-hidden="true">▶</span> Watch game trailer</button><a class="trailer-share-link" id="shareTrailerWhatsApp" href="https://wa.me/?text=Watch%20this%20Christmas%20game%20trailer%20%E2%9D%84%EF%B8%8F%20https%3A%2F%2Fwww.coolestcompanyintheuniverse.com%2Ftrailer%2F" target="_blank" rel="noopener noreferrer">✦ Send trailer on WhatsApp</a></div>
+<div class="trailer-launch"><button id="watchTrailer" type="button" aria-haspopup="dialog" aria-controls="trailerDialog"><span aria-hidden="true">▶</span> Watch game trailer</button></div>
 <div class="trailer-overlay" id="trailerDialog" role="dialog" aria-modal="true" aria-label="Game trailer" hidden><div class="trailer-panel"><div class="trailer-top"><strong>Coolest Company in the Universe — Trailer</strong><button id="closeTrailer" type="button" aria-label="Close trailer">✕ Close</button></div><video id="trailerVideo" controls playsinline preload="none" aria-label="Coolest Company in the Universe game trailer"></video></div></div>
 <div class="gamewrap"><canvas class="snowcap" id="snowCap" aria-hidden="true"></canvas>
 <main class="game" id="stage">
@@ -578,7 +592,7 @@ body.trailer-open{overflow:hidden}
     <div class="row"><button class="gold" id="again">Play again</button><button id="winShare">Share</button><button id="winEnter">Enter · <span class="px">$999</span></button><button class="ghost" id="winBack">Back</button></div>
   </div></div>
 </main></div>
-<div class="audio-dock" role="group" aria-label="Game audio controls"><label>♫ Music <input id="musicVol" type="range" min="0" max="100" value="12" aria-label="Music volume"><output id="musicVal">12%</output></label><label>✦ Effects <input id="fxVol" type="range" min="0" max="100" value="85" aria-label="Sound effects volume"><output id="fxVal">85%</output></label><label>🎙 Voices <input id="voiceVol" type="range" min="0" max="100" value="100" aria-label="Teammate volume"><output id="voiceVal">100%</output></label><button type="button" id="voiceToggle" aria-pressed="false">Mute teammates</button><button type="button" id="micToggle" aria-pressed="false" disabled title="Join a practice room to enable voice">Join voice in lobby</button><span class="voice-state" id="voiceState">Voice is optional; connect from the lobby</span><div class="ccVoiceQuick" id="ccVoiceQuick" aria-label="Mute individual teammates"></div></div>
+<div class="audio-dock" role="group" aria-label="Game audio controls"><div class="volume-group" role="group" aria-label="Music volume"><span class="volume-name">♫ Music</span><button type="button" class="volume-step" data-volume="musicVol" data-step="-1" aria-label="Decrease music volume">−</button><output id="musicVal" aria-live="polite">10%</output><button type="button" class="volume-step" data-volume="musicVol" data-step="1" aria-label="Increase music volume">+</button></div><div class="volume-group" role="group" aria-label="Sound effects volume"><span class="volume-name">✦ Effects</span><button type="button" class="volume-step" data-volume="fxVol" data-step="-1" aria-label="Decrease sound effects volume">−</button><output id="fxVal" aria-live="polite">75%</output><button type="button" class="volume-step" data-volume="fxVol" data-step="1" aria-label="Increase sound effects volume">+</button></div><div class="volume-group" role="group" aria-label="Teammate volume"><span class="volume-name">🎙 Voices</span><button type="button" class="volume-step" data-volume="voiceVol" data-step="-1" aria-label="Decrease teammate volume">−</button><output id="voiceVal" aria-live="polite">100%</output><button type="button" class="volume-step" data-volume="voiceVol" data-step="1" aria-label="Increase teammate volume">+</button></div><button type="button" id="voiceToggle" aria-pressed="false">Mute teammates</button><button type="button" id="micToggle" aria-pressed="false" disabled title="Join a practice room to enable voice">Join voice in lobby</button><span class="voice-state" id="voiceState">Voice is optional; connect from the lobby</span><div class="ccVoiceQuick" id="ccVoiceQuick" aria-label="Mute individual teammates"></div></div>
 
 <div class="lights" id="lights" aria-hidden="true"><svg id="wire" preserveAspectRatio="none"></svg></div>
 <section class="hud2" id="hud2" hidden>
@@ -1773,8 +1787,33 @@ function fadeMusic(){if(aGain&&aCtx){aGain.gain.cancelScheduledValues(aCtx.curre
 // Distinct procedural effects: no network downloads and no assets in the rendering loop.
 function soundFx(kind){if(MODE!=='practice'||!fxLevel||document.hidden)return;const now=performance.now();if(now-(fxLast[kind]||0)<(kind==='tile'?320:85))return;fxLast[kind]=now;
  try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!aCtx){aCtx=new A()}if(aCtx.state==='suspended')aCtx.resume().catch(()=>{});const specs={throw:[570,240,.12,'triangle'],hit:[240,75,.29,'sawtooth'],kill:[360,65,.38,'sawtooth'],zoom:[220,950,.30,'sine'],tile:[490,780,.17,'sine'],hill:[400,650,.20,'triangle'],crash:[180,65,.26,'square'],score:[700,1030,.15,'sine']};const sp=specs[kind]||specs.score;const o=aCtx.createOscillator(),g=aCtx.createGain(),t0=aCtx.currentTime;o.type=sp[3];o.frequency.setValueAtTime(sp[0],t0);o.frequency.exponentialRampToValueAtTime(Math.max(30,sp[1]),t0+sp[2]);g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(Math.max(.0001,fxLevel*.10),t0+.015);g.gain.exponentialRampToValueAtTime(.0001,t0+sp[2]);o.connect(g);g.connect(aCtx.destination);o.start(t0);o.stop(t0+sp[2]+.015)}catch(_){}}
-function bindVolume(id,out,initial,fn){const el=$(id);try{const v=localStorage.getItem('ccu-'+id);if(v!==null)initial=Math.max(0,Math.min(100,+v))}catch(_){}el.value=initial;const update=()=>{const v=+el.value;$(out).textContent=v+'%';fn(v/100);try{localStorage.setItem('ccu-'+id,v)}catch(_){}};el.addEventListener('input',update);update()}
-bindVolume('musicVol','musicVal',12,v=>{musicLevel=v;applyMusicVolume()});bindVolume('fxVol','fxVal',85,v=>fxLevel=v);bindVolume('voiceVol','voiceVal',100,v=>{voiceLevel=v;if(window.__ccVoiceReady)ccVolumePeers()});
+// Fixed, predictable sound settings. Values are stored under the original keys so
+// upgrading does not unexpectedly reset players' preferences.
+const CC_VOLUME_STEPS=[0,10,25,50,75,100];
+const ccVolumeControls={
+ musicVol:{out:'musicVal',defaultValue:10,apply:v=>{musicLevel=v;applyMusicVolume()}},
+ fxVol:{out:'fxVal',defaultValue:75,apply:v=>{fxLevel=v}},
+ voiceVol:{out:'voiceVal',defaultValue:100,apply:v=>{voiceLevel=v;if(window.__ccVoiceReady)ccVolumePeers()}}
+};
+function ccSetVolume(id,value){
+ const cfg=ccVolumeControls[id];if(!cfg)return;
+ const nearest=CC_VOLUME_STEPS.reduce((a,b)=>Math.abs(b-value)<Math.abs(a-value)?b:a,CC_VOLUME_STEPS[0]);
+ cfg.level=nearest;$(cfg.out).textContent=nearest+'%';cfg.apply(nearest/100);
+ try{localStorage.setItem('ccu-'+id,String(nearest))}catch(_){}
+ document.querySelectorAll('.audio-dock .volume-step[data-volume="'+id+'"]').forEach(btn=>{
+  const step=Number(btn.dataset.step);btn.disabled=step<0?nearest===0:nearest===100;
+ });
+}
+Object.entries(ccVolumeControls).forEach(([id,cfg])=>{
+ let initial=cfg.defaultValue;
+ try{const stored=localStorage.getItem('ccu-'+id);if(stored!==null&&stored.trim()!==''&&Number.isFinite(+stored))initial=Math.min(100,Math.max(0,+stored))}catch(_){}
+ ccSetVolume(id,initial);
+});
+document.querySelectorAll('.audio-dock .volume-step').forEach(btn=>btn.addEventListener('click',()=>{
+ const id=btn.dataset.volume,cfg=ccVolumeControls[id];if(!cfg)return;
+ const i=CC_VOLUME_STEPS.indexOf(cfg.level);
+ ccSetVolume(id,CC_VOLUME_STEPS[Math.max(0,Math.min(CC_VOLUME_STEPS.length-1,i+Number(btn.dataset.step)))])
+}));
 $('voiceToggle').onclick=()=>{voiceMuted=!voiceMuted;$('voiceToggle').textContent=voiceMuted?'Unmute teammates':'Mute teammates';$('voiceToggle').setAttribute('aria-pressed',String(voiceMuted));ccVolumePeers()};
 muteBtn.onclick=e=>{e.stopPropagation();if(!started&&!muted){muted=false;startMusic();return}setMuted(!muted)};
 setMuteUI();
@@ -1992,10 +2031,10 @@ function ccUI(){
  <p id="ccJoinInfo" class="ccHint" hidden>You've been invited. Enter your name, then join the waiting lobby.</p>
  <p class="ccHint">No timer runs while you're waiting. Three lives per player.</p></div>
  <div id="ccRoomUI" hidden>
- <div class="ccTop"><div><strong id="ccTeamName">Your Squad</strong><small id="ccRoomState">Waiting for friends · no countdown</small></div><span id="ccRole"></span></div>
+ <div class="ccTop"><div><strong id="ccLobbyTitle">Private Practice Squad</strong><small id="ccTeamName">Your Squad</small><small id="ccRoomState">Waiting for friends · no countdown</small></div><span id="ccRole"></span></div>
  <div class="ccSquadStage" id="ccSquadStage" aria-label="Four snowmen representing lobby seats"><div class="ccStageHead"><span>❄ YOUR SQUAD · READY FOR THE SNOW</span><span class="ccStageBadge" id="ccStageState">Waiting for friends</span></div><div class="ccStageSquad" id="ccStageSquad"></div></div>
  <div class="ccSteps"><b>01 / PICK YOUR COLOURS</b><p>Pick a ready-made team, or upload your own logo and choose a sleigh colour. The default character is a snowman.</p></div>
- <div id="ccHostEdit"><label>Company / snowman style<select id="ccCompany"></select></label>
+ <div id="ccHostEdit"><div class="ccLobbyRename"><label for="ccLobbyName">Name this lobby<input id="ccLobbyName" type="text" maxlength="60" placeholder="e.g. Friday Snowball Crew" autocomplete="off"></label><button id="ccRename" type="button">Save lobby name</button><small>Only the host can rename this lobby. Your private invite link stays exactly the same.</small></div><label>Company / snowman style<select id="ccCompany"></select></label>
  <div class="ccBrandRow"><img id="ccPreview" alt="Team logo preview" hidden><label>Choose sleigh colour<input type="color" id="ccColour" value="#e2283a"></label></div>
  <label class="ccUpload">Your own logo (only for your own team)<input id="ccLogo" type="file" accept="image/png,image/jpeg,image/webp"></label>
  <button id="ccSave" type="button">Apply team selection</button><small id="ccBrandHelp">Ready-made companies set their logo and colour automatically.</small></div>
@@ -2013,7 +2052,7 @@ function ccUI(){
  document.body.appendChild(o);
  ccBy('ccCompany').innerHTML=ccCompanies.map(n=>`<option>${ccText(n)}</option>`).join('');
  ccBy('ccClose').onclick=()=>{o.classList.remove('ccOpen')};
- ccBy('ccEnter').onclick=ccEnter;ccBy('ccSave').onclick=ccSave;ccBy('ccStart').onclick=ccStart;
+ ccBy('ccEnter').onclick=ccEnter;ccBy('ccSave').onclick=ccSave;ccBy('ccRename').onclick=ccRenameLobby;ccBy('ccLobbyName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();ccRenameLobby()}});ccBy('ccStart').onclick=ccStart;
  ccBy('ccFillBots').onclick=ccFillBots;ccBy('ccUnlockBots').onclick=ccUnlockBots;ccBy('ccLeave').onclick=ccLeave;
  ccBy('ccCopy').onclick=()=>navigator.clipboard.writeText(ccInvite()).then(()=>{ccInviteCopiedAtCount=ccPeople.length;ccBy('ccInviteNotice').hidden=false;ccBy('ccInviteNotice').textContent='✓ Link copied! Now send it to your friends and wait for them to join.';ccStatus('Invitation copied.');}).catch(()=>{ccBy('ccLink').select();ccStatus('Link selected. Copy it to share.')});
  ccBy('ccWa').onclick=()=>ccMessage('wa',false);ccBy('ccTg').onclick=()=>ccMessage('tg',false);ccBy('ccShare').onclick=()=>ccMessage('native',false);ccBy('ccRemind').onclick=()=>ccMessage('native',true);
@@ -2047,7 +2086,16 @@ async function ccInit(){if(ccDb)return;
  if(!s||!s.user||!s.access_token)throw Error('No authenticated session. Enable anonymous sign-ins in Supabase.');
  ccAuth=s.user.id;
 }
-async function ccRpc(name,params){let {data,error}=await ccDb.rpc(name,params);if(error)throw Error(error.message);return data}
+async function ccRpc(name,params){
+ let {data,error}=await ccDb.rpc(name,params);
+ if(error){
+  if(error.code==='PGRST202' || /Could not find the function public\.cc_create_room_v3/i.test(error.message||'')){
+   throw Error('The Private Lobby v3 database migration is missing or Supabase has not refreshed its API schema. Run SUPABASE-V8.1-REQUIRED-LOBBY-MIGRATIONS.sql in your project SQL Editor, then refresh the page. ('+error.message+')');
+  }
+  throw Error(error.message);
+ }
+ return data;
+}
 async function ccEnter(){if(ccJoining)return;const name=ccBy('ccName').value.trim();if(!name){ccStatus('Enter your name first.');return}
  ccJoining=true;ccBy('ccEnter').disabled=true;ccStatus('Connecting to Supabase…');
  try{await ccInit();localStorage.setItem('cc_player_name',name);
@@ -2072,7 +2120,10 @@ async function ccRefresh(){if(!ccRoom)return;
  ccRoom=a.data;ccPeople=b.data;
  const host=ccRoom.host_id===ccAuth,waiting=ccRoom.status==='waiting',locked=!!ccRoom.bots_locked;
  ccBy('ccRole').textContent=host?'HOST':'INVITED PLAYER';ccBy('ccHostEdit').hidden=!host;
+ ccBy('ccLobbyTitle').textContent=ccRoom.lobby_name||'Private Practice Squad';
  ccBy('ccTeamName').textContent=ccRoom.company;
+ const lobbyInput=ccBy('ccLobbyName');if(document.activeElement!==lobbyInput)lobbyInput.value=ccRoom.lobby_name||'Private Practice Squad';
+ ccBy('ccRename').disabled=!host||!waiting;
  ccBy('ccRoomState').textContent=waiting?(locked?'Seats locked · ready for host to start':'Waiting for friends · no countdown'):'Match in progress';
  ccBy('ccLink').value=ccInvite();ccBy('ccCompany').value=ccCompanies.includes(ccRoom.company)?ccRoom.company:'Your own logo / Snowman';
  ccBy('ccColour').value=ccRoom.colour;
@@ -2096,6 +2147,15 @@ async function ccRefresh(){if(!ccRoom)return;
  ccBy('ccTeamScore').textContent=ccRoom.status==='playing'?'Squad score reported: '+ccPeople.reduce((n,p)=>n+Number(p.score||0),0).toLocaleString():'';
  ccVoiceUI();
  if(ccRoom.status==='playing'&&ccRoom.starts_at&&!ccPlaying)ccScheduleStart(ccRoom.starts_at);
+}
+async function ccRenameLobby(){
+ if(!ccRoom||ccRoom.host_id!==ccAuth||ccRoom.status!=='waiting')return;
+ const name=ccBy('ccLobbyName').value.trim();
+ if(!name||name.length>60){ccStatus('Enter a lobby name between 1 and 60 characters.');return}
+ const button=ccBy('ccRename');button.disabled=true;
+ try{await ccRpc('cc_rename_room',{p_room:ccRoom.id,p_name:name});await ccRefresh();ccStatus('Lobby renamed. Your invitation link has not changed.')}
+ catch(e){ccStatus('Could not rename lobby: '+e.message)}
+ finally{button.disabled=false}
 }
 async function ccFillBots(){if(!ccRoom)return;try{await ccRpc('cc_lock_bots',{p_room:ccRoom.id});await ccRefresh();ccStatus('Empty seats filled by computers. Ready to start when you choose.')}catch(e){ccStatus('Could not fill seats: '+e.message)}}
 async function ccUnlockBots(){if(!ccRoom)return;try{await ccRpc('cc_unlock_bots',{p_room:ccRoom.id});await ccRefresh();ccStatus('Seats reopened. You can invite more friends.')}catch(e){ccStatus('Could not reopen seats: '+e.message)}}
