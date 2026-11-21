@@ -492,6 +492,18 @@ body.trailer-open{overflow:hidden}
 }
 @media (max-width:600px){ .game{border-radius:13px;box-shadow:0 14px 40px #0008} }
 
+
+/* v8.7: crisp four-arrow touch controller, no joystick or action buttons. */
+#stage .touch-stick,#stage .pad .abs{display:none!important}
+#stage .pad{display:none;position:absolute;z-index:10;bottom:calc(12px + env(safe-area-inset-bottom,0px));left:12px;right:auto;align-items:center}
+@media(pointer:coarse){#stage.playing .pad{display:flex!important}}
+#stage .pad .dpad{display:grid!important;grid-template-columns:repeat(3,clamp(41px,10.2vw,53px));grid-template-rows:repeat(3,clamp(41px,10.2vw,53px));gap:2px;filter:drop-shadow(0 7px 13px #031321aa)}
+#stage .pad .dpad button{display:grid;place-items:center;min-height:0;width:100%;height:100%;padding:0;border:2px solid #c5f5ff;border-radius:13px;background:linear-gradient(145deg,#5eb8dcf0,#123b5cf5);color:#fff;font-size:clamp(23px,6vw,29px);font-weight:900;box-shadow:inset 0 2px 8px #e9fbff35,0 2px 9px #001b37aa;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+#stage .pad .dpad button:active,#stage .pad .dpad button.pressed{background:linear-gradient(140deg,#c2f7ff,#348fc1);color:#09243a;transform:scale(.91);box-shadow:0 0 20px #b6faffaa}
+#stage.left-handed .pad{left:auto;right:12px}
+#stage .hand-toggle{left:calc(12px + clamp(41px,10.2vw,53px)*3 + 10px);right:auto;bottom:calc(20px + env(safe-area-inset-bottom,0px));width:37px;height:37px;min-height:37px;font-size:14px}
+#stage.left-handed .hand-toggle{left:auto;right:calc(12px + clamp(41px,10.2vw,53px)*3 + 10px)}
+@media(max-width:480px){#stage .pad .dpad{grid-template-columns:repeat(3,41px);grid-template-rows:repeat(3,41px)}#stage .hand-toggle{left:145px}#stage.left-handed .hand-toggle{right:145px;left:auto}}
 </style>
 <style>
 #ccOverlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(3,9,20,.91);overflow-y:auto;padding:16px;color:#f6f8fa;font-family:system-ui,Arial,sans-serif}#ccOverlay.ccOpen{display:flex;align-items:flex-start;justify-content:center}
@@ -593,11 +605,11 @@ body.trailer-open{overflow:hidden}
   <div class="glass tl play"><span class="dot"></span><span id="modeLbl">Practice</span><b id="clock">5:00</b><span class="x2" id="x2">×2</span></div>
   <div class="toast play" id="meWarn" aria-live="polite"></div>
   <div class="glass zoomer play" aria-label="Zoom"><button id="zIn" aria-label="Zoom in">+</button><input type="range" id="zRange" min="6" max="34" step="0.5" value="14" aria-label="Zoom level" orient="vertical"><button id="zOut" aria-label="Zoom out">−</button></div>
-  <div class="touch-stick play" id="touchStick" aria-label="Touch joystick for steering"><div class="touch-knob" id="touchKnob"></div></div>
+  <div class="touch-stick" id="touchStick" hidden aria-hidden="true"><div class="touch-knob" id="touchKnob"></div></div>
   <button type="button" class="hand-toggle play" id="handToggle" aria-label="Controls: right-handed. Switch to left-handed" aria-pressed="false" title="Switch touch controls between right and left handed">R</button>
   <div class="pad play" aria-label="Controls">
     <div class="dpad"><button data-d="3" aria-label="Up">▲</button><button data-d="2" aria-label="Left">◀</button><button data-d="0" aria-label="Right">▶</button><button data-d="1" aria-label="Down">▼</button></div>
-    <div class="abs"><button class="ab" id="zoomBtn" aria-label="Boost (Z)"><span>Z</span><b id="zmN">0</b></button><button class="ab" id="throwBtn" aria-label="Throw a snowball (S)"><span>S</span><b id="sbN">0</b></button></div>
+    <div class="abs" hidden aria-hidden="true"><button class="ab" id="zoomBtn" aria-label="Boost (Z)"><span>Z</span><b id="zmN">0</b></button><button class="ab" id="throwBtn" aria-label="Throw a snowball (S)"><span>S</span><b id="sbN">0</b></button></div>
   </div>
   <div class="glass br play">
     <button class="mute" id="muteBtn" aria-label="Mute music" aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><svg class="x" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z" fill="#fff"/><path d="M13 7.5l4 5M17 7.5l-4 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></button>
@@ -693,8 +705,8 @@ body.trailer-open{overflow:hidden}
       </ul></details>
       <details class="rule"><summary><span class="rn">Rule 3</span><span class="rt">Squads, heats and the grand final</span><i aria-hidden="true"></i></summary><ul class="rl">
         <li>The only way out is being engulfed by a rival. A sleigh that's engulfed is out. A company is out when all 4 of its sleighs are.</li>
-        <li>An ice wall closes in and the map keeps getting smaller. Hit it and you stop. It pushes sleighs inwards but never knocks anyone out. Land under the ice is lost.</li>
-        <li>Heats: 25 companies per map, about 15 minutes each. The ice wall makes sure every heat ends on time. The last company standing goes through. If more than one is left at the buzzer, the biggest territory goes through.</li>
+        <li>The ice wall keeps closing until only a tiny final circle remains. At the final squeeze, one surviving squad wins based on territory, then points.</li>
+        <li>Practice: fewer computer rivals, four-way arrow controls, and one winner as the ice circle closes. Official live heats use their separately implemented match rules.</li>
         <li>Heat winners meet heat winners, round after round, until the grand final: one big map, live on the homepage for everyone to watch. The game is played once and never again, so the champion's logo stays on the map forever.</li>
         <li>Scores are kept by our game servers, never by your browser, so everyone sees the same scores. Practice is free and open to everyone now, and never counts on any leaderboard.</li>
       </ul></details>
@@ -784,7 +796,7 @@ body.trailer-open{overflow:hidden}
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 {
-const W=1200,H=1200,N=W*H,CH=32,TS=20,ROUND=300,IDLE=60,NBOTS=600,ZMIN=3,ZMAX=34,LOD=8;
+const W=1200,H=1200,N=W*H,CH=32,TS=20,ROUND=300,IDLE=60,NBOTS=360,ZMIN=3,ZMAX=34,LOD=8;
 // Cardinal indices 0–3 are unchanged for existing bots/live protocol; 4–7 are diagonals for local practice.
 const DIRS=[[1,0],[0,1],[-1,0],[0,-1],[1,-1],[1,1],[-1,1],[-1,-1]];
 const OPPOSITE_DIR=[2,3,0,1,6,7,4,5];
@@ -1118,10 +1130,10 @@ function newRound(){
   for(let y=0;y<H;y+=16)for(let x=0;x<W;x+=16){lctx.fillStyle=snowAt(x,y);lctx.fillRect(x,y,16,16)}
   lctx.fillStyle='#1f6b3a';for(const o of TREES)lctx.fillRect(o.x,o.y,1,1);lctx.fillStyle='#f4f8ff';for(const o of HILLS)lctx.fillRect(o.x,o.y,2,2);lctx.fillStyle='#8b97aa';for(const o of PROPS)lctx.fillRect(o.x,o.y,o.w,o.h);
   SANTA={x:W/2+8,y:H/2+3,dx:1,dy:0,down:0,next:0,turn:0,run:0,tx:W/2,ty:H/2,ret:0};
-  for(let k=0,nb=(MODE==='practice'?200:NBOTS)/SQUAD;k<nb;k++)addBot(1+((Math.random()*3)|0));
+  for(let k=0,nb=(MODE==='practice'?120:NBOTS)/SQUAD;k<nb;k++)addBot(1+((Math.random()*3)|0));
   me=-1;if(MODE==='practice'&&practBrand){me=addSquad(practBrand.name,practBrand.color,3,false,practBrand.im,2);const co=C[me],teamRider=practBrand.rider||myRider();co.members.forEach(m=>m.rider=teamRider);cam.x=co.hx;cam.y=co.hy;cam.zc=14}
   if(MODE==='attract'){seedExample();cam.x=W/2;cam.y=H/2}
-  if(MODE==='practice')$('meWarn').textContent=matchMedia('(pointer:coarse)').matches?'Use the pad or swipe to steer':'Arrows or swipe to steer · S snowball · Z zoom';
+  if(MODE==='practice')$('meWarn').textContent=matchMedia('(pointer:coarse)').matches?'Tap the four arrows to turn':'Use the four arrow keys to turn';
   ccResetVictory();$('over').classList.remove('on');$('again').hidden=false;$('winEnter').hidden=false;liveLabels(false);stage.classList.toggle('playing',MODE==='practice');$('hud2').hidden=MODE!=='practice';PZ=14;$('zRange').value=PZ}
 
 function leader(){let b=null;for(const c of teams())if(!b||c.pts>b.pts)b=c;return b}
@@ -1161,7 +1173,15 @@ function ccPaintVictory(co,img){
 function ccResetVictory(){ccVictoryWinner=null;$('victoryMap').classList.remove('on')}
 addEventListener('resize',()=>{if(ccVictoryWinner)ccPaintVictory(ccVictoryWinner,null)});
 
-function endRound(){over=true;if(me>=0)lastScore=mePts();const L=leader();if(!L)return;$('overTitle').textContent='Practice round over';$('winLogo').hidden=false;
+function endRound(){
+ if(over)return;
+ const survivors=teams();
+ const ranked=survivors.sort((a,b)=>b.cells-a.cells||b.pts-a.pts||a.id-b.id);
+ const L=ranked[0]||leader();
+ if(!L)return;
+ // The final ice circle always crowns one team; all remaining rivals are out.
+ for(const squad of ranked){if(squad!==L)squad.out=true;}
+ over=true;if(me>=0)lastScore=mePts();$('overTitle').textContent='Practice round over';$('winLogo').hidden=false;
   $('winName').textContent=L.name;$('winLogo').src=urlOf(L);
   $('winMe').textContent=practBrand?(me>=0?`Your squad scored ${pts(mePts())}. Practice only, nothing recorded.`:'You were knocked out this round.'):'Practise free to see how you would do.';
   ccShowVictory(L);$('over').classList.add('on')}
@@ -1174,12 +1194,12 @@ function step(dt){
       if(t<co.sleep)continue;
       if(!TM(co).cells&&!co.trail.length)respawn(co);
       if(!co.trail.length&&own[co.hy*W+co.hx]===co.tid&&!co.hero&&Math.random()<dt*.0025){co.sleep=t+15+Math.random()*60;continue}
-      co.last=t;if(Math.random()<dt*(co.hero?.9:.35))botAim(co);if(co.boosts>0&&co.trail.length>8&&Math.random()<dt*.5)zoom(co)}
+      co.last=t;if(MODE!=='practice'&&Math.random()<dt*(co.hero?.9:.35))botAim(co);if(MODE!=='practice'&&co.boosts>0&&co.trail.length>8&&Math.random()<dt*.5)zoom(co)}
     else if(co.parked)continue;
     if((co.stopEnd||0)>t)continue;
     co.acc+=dt*co.speed*(ccIsDiagonal(co.dir)?Math.SQRT1_2:1)*((co.boostEnd||0)>t?3:1)*(co.air>0?2:1);while(co.acc>=1&&!co.parked&&!co.elim&&!((co.stopEnd||0)>t)){co.acc--;stepHead(co)}}
-  stepBalls(dt);
-  if(MODE==='practice'||window.__FRAD){RAD=window.__FRAD||(MODE==='practice'?PR0()*(1-.72*Math.min(1,t/ROUND)):R0()*(1-.74*Math.min(1,t/ROUND)));
+  if(MODE==='practice')balls.length=0;else stepBalls(dt);
+  if(MODE==='practice'||window.__FRAD){RAD=window.__FRAD||(MODE==='practice'?Math.max(10,PR0()*(1-t/ROUND)):R0()*(1-.74*Math.min(1,t/ROUND)));
     if(CRAD-RAD>=1){const nr=Math.ceil(RAD),nr2=nr*nr,cx=W/2,cy=H/2;
       for(let y=Math.max(0,Math.floor(cy-CRAD-1));y<=Math.min(H-1,Math.ceil(cy+CRAD+1));y++){const dy=y+.5-cy,xo=Math.sqrt(Math.max(0,(CRAD+1)**2-dy*dy)),xi=Math.sqrt(Math.max(0,(nr-1)**2-dy*dy));
         for(const [xa,xb] of [[cx-xo,cx-xi],[cx+xi,cx+xo]])for(let x=Math.max(0,Math.floor(xa));x<=Math.min(W-1,Math.ceil(xb));x++){const dx=x+.5-cx;if(dx*dx+dy*dy<RAD*RAD)continue;const i=y*W+x;
@@ -1194,9 +1214,9 @@ function step(dt){
   stepSanta(dt);
   if(me>=0&&C[me].spinEnd&&C[me].spinEnd<=t&&/^(Snowballed|Crash)/.test($('meWarn').textContent)){$('meWarn').textContent=''}
   if(me>=0){const m=C[me];$('throwBtn').style.setProperty('--cd',Math.max(0,Math.min(1,((m.cd||0)-t)/SB_CD)));$('sbN').textContent=$('sbN2').textContent=m.ammo||0;$('zmN').textContent=$('zmN2').textContent=m.boosts||0;$('throwBtn').classList.toggle('empty',!(m.ammo>0));$('zoomBtn').classList.toggle('empty',!(m.boosts>0));$('zoomBtn').style.setProperty('--cd',(m.boostEnd||0)>t?1:0)}
-  if(t>=joinAt&&(MODE==='attract'?C.length<900:t<ROUND-30)){addBot(1);joinAt=t+1+Math.random()*3}
+  if(MODE==='attract'&&t>=joinAt&&C.length<540){addBot(1);joinAt=t+1+Math.random()*3}
   if(me>=0){const co=C[me],[hx,hy]=headPos(co),dd=RAD-Math.hypot(hx-W/2,hy-H/2),mw=$('meWarn');if(MODE==='practice'&&dd<18){if(!/^(You|Snowballed|Crash|Circled|Jump)/.test(mw.textContent))mw.textContent='Ice wall closing in!'}else if(mw.textContent.startsWith('Ice wall'))mw.textContent=''}
-  if(MODE==='practice'&&t>=ROUND)endRound()}
+  if(MODE==='practice'&&(RAD<=10.1||(t>8&&teams().length===1)))endRound()}
 
 // camera
 function size(){const r=cv.getBoundingClientRect(),scale=dpr();const w=Math.max(1,Math.round(r.width*scale)),h=Math.max(1,Math.round(r.height*scale));if(cv.width!==w)cv.width=w;if(cv.height!==h)cv.height=h}
@@ -1422,6 +1442,7 @@ function drawBig(){const r=bm.getBoundingClientRect(),d=dpr(),w=Math.max(1,r.wid
 
 // input
 function steer(d){if(MODE==='live'){if(d!=null&&d<4&&me>=0&&!over)liveSend('d'+d);return}if(me<0||over||frozen)return;const co=C[me];co.last=t;if(d==null)return;if((co.spinEnd||0)>t){co.q=[];return} // spinning: no control
+  if(d==null||d<0||d>3)return;
   if(co.parked){if(!TM(co).cells)respawn(co);co.parked=false;co.acc=0;co.dir=d;co.q=[];$('meWarn').textContent='';return}
   const last=co.q.length?co.q[co.q.length-1]:co.dir;if(d===last||d===OPPOSITE_DIR[last])return;if(co.q.length<3)co.q.push(d)}
 const KEYS={ArrowRight:0,ArrowDown:1,ArrowLeft:2,ArrowUp:3};
@@ -1430,15 +1451,15 @@ function ccKeyboardDirection(){
  let x=(ccHeldArrows.has('ArrowRight')?1:0)-(ccHeldArrows.has('ArrowLeft')?1:0);
  let y=(ccHeldArrows.has('ArrowDown')?1:0)-(ccHeldArrows.has('ArrowUp')?1:0);
  if(!x&&!y)return null;
- return MODE==='live'?(Math.abs(x)>=Math.abs(y)&&x?x>0?0:2:y>0?1:3):ccDirFromVector(x,y);
+ return Math.abs(x)>=Math.abs(y)&&x?(x>0?0:2):(y>0?1:3);
 }
 addEventListener('keyup',e=>{if(e.key in KEYS)ccHeldArrows.delete(e.key)});
 addEventListener('blur',()=>ccHeldArrows.clear());
 const anyModal=()=>document.querySelector('.modal.on');
 addEventListener('keydown',e=>{if(e.key==='Escape'){closeFull();stream(false);document.querySelectorAll('.modal').forEach(m=>m.classList.remove('on'));return}
   if(anyModal())return;
-  if((e.key==='z'||e.key==='Z')&&me>=0){e.preventDefault();if(!frozen&&!over&&zoom(C[me]))C[me].last=t;return}
-  if((e.key==='s'||e.key==='S'||e.key===' '||e.code==='Space')&&me>=0){e.preventDefault();if(!frozen&&!over&&throwBall(C[me]))C[me].last=t;return}
+  if((e.key==='z'||e.key==='Z')&&me>=0){e.preventDefault();if(MODE==='practice')return;if(!frozen&&!over&&zoom(C[me]))C[me].last=t;return}
+  if((e.key==='s'||e.key==='S'||e.key===' '||e.code==='Space')&&me>=0){e.preventDefault();if(MODE==='practice')return;if(!frozen&&!over&&throwBall(C[me]))C[me].last=t;return}
   if(!(e.key in KEYS)||me<0)return;e.preventDefault();ccHeldArrows.add(e.key);const d=ccKeyboardDirection();if(d!==null)steer(d)});
 $('zoomBtn').onclick=e=>{e.stopPropagation();if(me>=0&&!frozen&&!over&&zoom(C[me]))C[me].last=t};
 $('throwBtn').onclick=e=>{e.stopPropagation();if(me>=0&&!frozen&&!over&&throwBall(C[me]))C[me].last=t};
@@ -1458,47 +1479,7 @@ $('throwBtn').onclick=e=>{e.stopPropagation();if(me>=0&&!frozen&&!over&&throwBal
  toggle.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();choice=choice==='L'?'R':'L';try{localStorage.setItem(storageKey,choice)}catch(_){}apply()});
  apply();
 })();
-// Robust joystick lifecycle: never leave a captured finger or visual knob stuck.
-// Navigation is direction-based: the sleigh keeps travelling after release, but input is released immediately.
-(function(){
- const pad=$('touchStick'),knob=$('touchKnob');
- let active=null,lastDir=null;
- function reset(){
-   const old=active;active=null;lastDir=null;
-   pad.classList.remove('engaged');knob.style.transform='translate(0,0)';
-   if(old!==null){try{if(pad.hasPointerCapture(old))pad.releasePointerCapture(old)}catch(_){}}
- }
- function end(e){if(active!==null && e.pointerId===active)reset()}
- function move(e){
-   if(e.pointerId!==active)return;
-   // A lost button state on mouse/trackpad must never leave a stuck joystick.
-   if(e.pointerType==='mouse' && (e.buttons&1)===0){reset();return}
-   const b=pad.getBoundingClientRect();
-   const dx=e.clientX-(b.left+b.width/2),dy=e.clientY-(b.top+b.height/2);
-   const dist=Math.hypot(dx,dy),max=Math.max(8,(Math.min(b.width,b.height)-knob.offsetWidth)/2-5);
-   const scale=dist?Math.min(max,dist)/dist:0;
-   knob.style.transform=`translate(${dx*scale}px,${dy*scale}px)`;
-   if(dist<Math.max(8,b.width*.105)){lastDir=null;return}
-   const dir=MODE==='live'?(Math.abs(dx)>Math.abs(dy)?dx>0?0:2:dy>0?1:3):ccDirFromVector(dx,dy);
-   if(dir!==lastDir){steer(dir);lastDir=dir}
- }
- pad.addEventListener('pointerdown',e=>{
-   if(active!==null || !e.isPrimary || (e.pointerType==='mouse' && e.button!==0))return;
-   active=e.pointerId;lastDir=null;pad.classList.add('engaged');
-   try{pad.setPointerCapture(e.pointerId)}catch(_){}
-   move(e);e.preventDefault();
- });
- pad.addEventListener('pointermove',move);
- // Listen both locally AND globally: released outside the pad/viewport or interrupted gestures must reset.
- pad.addEventListener('pointerup',end);pad.addEventListener('pointercancel',end);
- window.addEventListener('pointerup',end,true);window.addEventListener('pointercancel',end,true);
- pad.addEventListener('lostpointercapture',end);
- window.addEventListener('blur',reset);
- window.addEventListener('pagehide',reset);
- document.addEventListener('visibilitychange',()=>{if(document.hidden)reset()});
- $('handToggle').addEventListener('click',reset,true);
- pad.addEventListener('contextmenu',e=>e.preventDefault());
-})();
+// v8.7: joystick removed; the four directional buttons are the only steering controls.
 const ptrs=new Map();let pinch=null,PZ=14;
 const setPZ=v=>{PZ=Math.max(6,Math.min(34,v));$('zRange').value=PZ};
 $('zRange').addEventListener('input',e=>setPZ(+e.target.value));
@@ -1508,8 +1489,8 @@ cv.addEventListener('pointerdown',e=>{ptrs.set(e.pointerId,{x:e.clientX,y:e.clie
   if(ptrs.size===2){const [a,b]=[...ptrs.values()];pinch={d:Math.hypot(a.x-b.x,a.y-b.y)||1,z:PZ}}if(me>=0)C[me].last=t});
 cv.addEventListener('pointermove',e=>{const a=ptrs.get(e.pointerId);if(!a)return;a.x=e.clientX;a.y=e.clientY;
   if(ptrs.size>=2&&pinch){if(MODE!=='practice')return;const [p,q]=[...ptrs.values()];setPZ(pinch.z*Math.hypot(p.x-q.x,p.y-q.y)/pinch.d);return}
-  if(me<0)return;const dx=e.clientX-a.sx,dy=e.clientY-a.sy,th=Math.max(18,cv.clientWidth*.015);
-  if(Math.hypot(dx,dy)<th)return;steer(MODE==='live'?(Math.abs(dx)>Math.abs(dy)?(dx>0?0:2):(dy>0?1:3)):ccDirFromVector(dx,dy));a.sx=e.clientX;a.sy=e.clientY});
+  // Touch steering is deliberately restricted to the four on-screen arrow buttons.
+});
 const up=e=>{ptrs.delete(e.pointerId);if(ptrs.size<2)pinch=null};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
 // on-screen D-pad: press to turn (no waiting for the finger to lift)
 document.querySelectorAll('.dpad button').forEach(b=>{b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();steer(+b.dataset.d)});b.addEventListener('contextmenu',e=>e.preventDefault())});
@@ -1766,7 +1747,7 @@ function liveInit(m){const S=m.snap;MODE='live';liveLabels(true);over=false;froz
   for(const q of S.sl)liveSleigh(q.st,true);
   for(const c of S.cos){const L=LV.lead[c.id];if(L>=0&&c.out)C[L].out=true}
   me=m.you;LV.you=m.you;const co=C[me];if(co){cam.x=co.hx;cam.y=co.hy}cam.zc=PZ=14;$('zRange').value=PZ;
-  $('over').classList.remove('on');stage.classList.add('playing');$('hud2').hidden=false;$('meWarn').textContent=S.started?'Arrows or swipe to steer · S snowball · Z zoom':'Get ready…';
+  $('over').classList.remove('on');stage.classList.add('playing');$('hud2').hidden=false;$('meWarn').textContent=S.started?'Arrows to steer':'Get ready…';
   $('stage').scrollIntoView({behavior:'smooth',block:'center'})}
 function liveSleigh(a,full){const [id,hx,hy,dir,acc,f,ammo,boosts,tr,add]=a,co=C[id];if(!co||!co.tid&&co.tid!==0)return;
   if(co.hx!==hx||co.hy!==hy){co.px=co.hx||hx;co.py=co.hy||hy;if(Math.abs(co.px-hx)+Math.abs(co.py-hy)>3){co.px=hx;co.py=hy}}co.hx=hx;co.hy=hy;co.dir=dir;co.acc=acc/100;
@@ -1774,7 +1755,7 @@ function liveSleigh(a,full){const [id,hx,hy,dir,acc,f,ammo,boosts,tr,add]=a,co=C
   if(full||tr===-1){for(const i of co.trail)if(trail[i]===id)trail[i]=-1;co.trail=[];co.ts.clear()}
   for(const i of (full?tr:add)){co.trail.push(i);co.ts.add(i);if(trail[i]<0)trail[i]=id}
   if(f&16&&!co.elim){co.elim=true;for(const i of co.trail)if(trail[i]===id)trail[i]=-1;co.trail=[]}}
-function liveTick(m){if(MODE!=='live')return;t=m.t;if(m.t>0&&$('meWarn').textContent==='Get ready…')$('meWarn').textContent='Go! Arrows or swipe to steer · S snowball · Z zoom';RAD=CRAD=m.rad;
+function liveTick(m){if(MODE!=='live')return;t=m.t;if(m.t>0&&$('meWarn').textContent==='Get ready…')$('meWarn').textContent='Go! Arrows to steer';RAD=CRAD=m.rad;
   for(const a of m.s)liveSleigh(a,false);
   for(let k=0;k<m.land.length;k+=3){const o=m.land[k+2]<0?-1:LV.lead[m.land[k+2]];for(let i=m.land[k];i<m.land[k]+m.land[k+1];i++)setOwn(i,o)}
   m.sc.forEach(([p,c,o],cid)=>{const L=LV.lead[cid];if(L>=0){C[L].pts=p;if(o)C[L].out=true}});
