@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Coolest Company in the Universe</title>
+<meta name="description" content="Sleighs, snowballs, Christmas chaos. Watch the trailer, create a private squad and challenge your friends.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Coolest Company in the Universe 🎄 | Watch the trailer">
+<meta property="og:description" content="Sleighs. Snowballs. One champion. Watch the Christmas game trailer and challenge your friends.">
+<meta property="og:url" content="https://www.coolestcompanyintheuniverse.com/">
+<meta property="og:image" content="https://www.coolestcompanyintheuniverse.com/share/trailer-preview.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.coolestcompanyintheuniverse.com/share/trailer-preview.jpg">
+
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%20%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22116%22%20fill%3D%22%230f3a2a%22/%3E%20%20%3Cpath%20d%3D%22M92%20430%20L372%20118%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%2224%22%20stroke-linecap%3D%22round%22/%3E%20%20%3Cpath%20d%3D%22M372%20118%20V214%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22/%3E%20%20%3Cpath%20d%3D%22M356%20214%20L364%20186%20M380%20214%20L392%20190%22%20stroke%3D%22%2343c46a%22%20stroke-width%3D%2216%22%20stroke-linecap%3D%22round%22/%3E%20%20%3Cpath%20d%3D%22M322%20236%20H422%20L378%20424%20Q372%20438%20366%20424%20Z%22%20fill%3D%22%23f26a0f%22%20stroke%3D%22%23f26a0f%22%20stroke-width%3D%2214%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -383,6 +393,52 @@ body.trailer-open{overflow:hidden}
 #ccCard #ccVoiceHint{font-size:12px;margin:8px 0 3px;color:#b3d7e5}
 .audio-dock .ccVoiceQuick{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;width:100%}.audio-dock .ccVoiceQuick:empty{display:none}.audio-dock .ccVoiceQuick button{background:#163e55;border:1px solid #9ee4ed88;border-radius:999px;padding:5px 10px;min-height:28px;font-size:11px;color:#fff}
 #ccCard .ccVoiceBox button[aria-pressed=true]{background:#a5eaff;color:#092135}
+/* Compact phone controls: sized to fit short screens, safe areas and handedness mode. */
+@media (pointer:coarse) and (max-width:600px){
+ #stage .touch-stick{width:84px;height:84px;left:10px;bottom:calc(11px + env(safe-area-inset-bottom,0px));border-width:1.5px}
+ #stage .touch-stick::before{top:7px;font-size:7px;letter-spacing:.5px}
+ #stage .touch-stick::after{inset:8px}
+ #stage .touch-knob{width:34px;height:34px;border-width:1.5px;box-shadow:inset -2px -3px 6px #1676aa60,0 0 0 3px #a9f0ff77,0 0 8px #64dfffaa}
+ #stage .hand-toggle{width:32px;height:32px;min-width:32px;min-height:32px;left:100px;right:auto;bottom:calc(17px + env(safe-area-inset-bottom,0px));font-size:12px;border-width:1.5px}
+ #stage.left-handed .touch-stick{left:auto;right:10px}
+ #stage.left-handed .hand-toggle{left:auto;right:100px;bottom:calc(17px + env(safe-area-inset-bottom,0px))}
+ #stage .pad{right:8px;left:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+ #stage.left-handed .pad{right:auto;left:8px}
+ #stage .pad .abs{gap:6px}
+ #stage .pad .ab{width:46px;height:46px;min-width:46px;min-height:46px;border-width:1.5px}
+ #stage #throwBtn span::before{font-size:25px}
+ #stage #zoomBtn span::before{font-size:25px}
+ #stage .pad .ab b{min-width:16px;line-height:16px;top:-5px;font-size:10px}
+ #stage .zoomer{right:8px;left:auto;transform:scale(.82);transform-origin:bottom right}
+ #stage.left-handed .zoomer{left:8px;right:auto;transform-origin:bottom left}
+}
+@media (pointer:coarse) and (max-width:360px){
+ #stage .touch-stick{width:76px;height:76px}
+ #stage .hand-toggle{left:91px}
+ #stage.left-handed .hand-toggle{right:91px;left:auto}
+ #stage .pad .ab{width:42px;height:42px;min-width:42px;min-height:42px}
+}
+
+/* V7: cinematic snowy four-snowman squad staging */
+#ccCard .ccSquadStage{position:relative;isolation:isolate;margin:18px 0 14px;border:1px solid #d7e9e4;border-radius:20px;overflow:hidden;padding:16px 14px 12px;background:radial-gradient(circle at 50% 0%,#ffffff 0%,#eefaff 40%,#cce8ed 100%);box-shadow:0 10px 30px #0d435013,inset 0 1px #fff}
+#ccCard .ccSquadStage:before{content:"";position:absolute;inset:0 0 44%;background:radial-gradient(circle,#fff 1.2px,transparent 1.8px) 0 0/33px 31px,radial-gradient(circle,#fff 1.7px,transparent 2.3px) 12px 8px/61px 42px;opacity:.65;pointer-events:none;z-index:-1}
+#ccCard .ccSquadStage:after{content:"";position:absolute;left:-8%;right:-8%;bottom:-34px;height:94px;border-radius:50% 50% 0 0;background:linear-gradient(#fff,#e9f6fa);z-index:-1}
+#ccCard .ccStageHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;color:#234a53;font-size:12px;font-weight:800;letter-spacing:.065em;text-transform:uppercase}
+#ccCard .ccStageBadge{font-size:11px;letter-spacing:0;text-transform:none;color:#386c67;background:#fff9;border:1px solid #d6e7e2;padding:5px 9px;border-radius:999px}
+#ccCard .ccStageSquad{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:end;gap:8px}
+#ccCard .ccSnowSeat{min-width:0;border:1px solid #d7e9e9aa;border-radius:13px;padding:8px 5px 10px;text-align:center;background:linear-gradient(#ffffff48,#ffffffd4);box-shadow:0 5px 18px #123e480e;transition:background .25s,border-color .25s,transform .25s;position:relative}
+#ccCard .ccSnowSeat.ccHuman{background:#ffffffc9;border-color:#76bba6;box-shadow:0 7px 22px #2e8f6330}
+#ccCard .ccSnowSeat.ccComputer{background:#e5f5fdd0;border-color:#79b3d8}
+#ccCard .ccSnowSeat canvas{display:block;width:100%;max-width:142px;aspect-ratio:140/164;margin:0 auto;filter:drop-shadow(0 6px 5px #183b4a25);animation:ccSnowBreathe 3.2s ease-in-out infinite}
+#ccCard .ccSnowSeat:nth-child(2) canvas{animation-delay:-.65s}
+#ccCard .ccSnowSeat:nth-child(3) canvas{animation-delay:-1.3s}
+#ccCard .ccSnowSeat:nth-child(4) canvas{animation-delay:-1.95s}
+@keyframes ccSnowBreathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+#ccCard .ccSeatName{font-weight:850;color:#1b3640;font-size:clamp(10px,1.6vw,14px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#ccCard .ccSeatRole{color:#59727c;font-size:clamp(9px,1.3vw,11px);margin-top:4px}
+#ccCard .ccInviteNotice{margin-top:12px;padding:12px 14px;background:#eef9ef;border:1px solid #b1dec1;border-left:4px solid #2c8c5f;border-radius:10px;color:#19593b;font-size:13px;font-weight:750}
+@media(max-width:600px){#ccCard .ccSquadStage{padding:12px 8px 10px;border-radius:16px}#ccCard .ccStageSquad{gap:4px}#ccCard .ccSnowSeat{padding:5px 2px 7px;border-radius:9px}#ccCard .ccSeatName{font-size:10px}#ccCard .ccSeatRole{font-size:9px}}
+@media(prefers-reduced-motion:reduce){#ccCard .ccSnowSeat canvas{animation:none}}
 </style>
 <style>
 #ccOverlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(3,9,20,.91);overflow-y:auto;padding:16px;color:#f6f8fa;font-family:system-ui,Arial,sans-serif}#ccOverlay.ccOpen{display:flex;align-items:flex-start;justify-content:center}
@@ -396,13 +452,84 @@ body.trailer-open{overflow:hidden}
 #ccCard .ccInvite{margin-top:17px;padding:12px;border:1px solid #536a76;border-radius:11px}#ccCard .ccButtons{display:flex;flex-wrap:wrap;gap:3px}#ccCard .ccPlayer{border-bottom:1px solid #39525f;padding:9px 2px}#ccCard .ccPlayer span{flex:1}#ccCard .ccPlayer i{width:12px;height:12px;border-radius:50%}#ccCard #ccPreview{width:80px;height:80px;object-fit:contain;display:block;margin:10px auto}#ccCard #ccStatus{color:#f3d883;min-height:20px}
 #ccOverlay [hidden]{display:none!important}
 </style>
+<style>
+/* Christmas lobby v3: contrast-first, clean winter aesthetic */
+#ccOverlay{background:rgba(12,25,34,.58);backdrop-filter:blur(5px);color:#16232a}
+#ccCard{max-width:660px;background:linear-gradient(180deg,#fffefa 0%,#f8fcff 100%);color:#16232a;border:2px solid #d5e6e8;border-top:7px solid #b82632;box-shadow:0 25px 85px #0917227d}
+#ccCard h2,#ccCard h3,#ccCard strong,#ccCard label{color:#17232b}
+#ccCard p,#ccCard small,#ccCard .ccHint{color:#4c5c65}
+#ccCard .ccHeader small{color:#9c2735;font-size:12px;letter-spacing:.07em;font-weight:800}
+#ccCard .ccTop{background:#f1f8f6;border:1px solid #c7e1d6;color:#1c3233}
+#ccCard .ccTop small{color:#4a625d}
+#ccCard .ccSteps{margin:18px 0 9px;border-left:4px solid #b82632;padding:5px 12px;background:#f3f8f4;border-radius:3px 10px 10px 3px}
+#ccCard .ccSteps b{color:#245b47;font-size:15px}
+#ccCard .ccSteps p{margin:3px 0 0;font-size:13px}
+#ccCard input:not([type=file]),#ccCard select{background:#fff;border:1.5px solid #9eb8bd;color:#17232b}
+#ccCard button{background:#edf4f5;color:#173b40;border:1px solid #b2cdd0;font-weight:650}
+#ccCard button:hover:not(:disabled){background:#dff1ed;border-color:#6baca6}
+#ccCard .ccGold{background:#b12635;color:#fff;border-color:#b12635}
+#ccCard .ccGold:hover:not(:disabled){background:#921a28;color:#fff}
+#ccCard .ccInvite{background:#f8fbfd;border:1px solid #c0dce2}
+#ccCard .ccPlayer{border-bottom:1px solid #dce8e6}
+#ccCard #ccStatus{color:#8b2831;font-weight:650}
+#ccCard .ccVoiceBox{background:#eff9fc;border:1px solid #c2e3ec}
+#ccCard #ccVoiceHint{color:#435a64}
+#ccCard #ccVoiceRoster .ccVoiceUser{border-color:#d5e6eb}
+#ccCard .ccBrandRow{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+#ccCard .ccBrandRow #ccPreview{margin:8px 0;width:108px;height:78px;object-fit:contain;background:white;border:1px solid #d4e7e8;border-radius:10px;padding:6px}
+#ccCard .ccBrandRow label{flex:1;min-width:150px}
+#ccCard .ccUpload:has(input:disabled){opacity:.55}
+#ccCard button:disabled{cursor:not-allowed;opacity:.45}
+#ccCard #ccStart:disabled{background:#d8e2e4;color:#4b6366;border-color:#c1d1d2}
+</style>
+<style>
+/* V6: Nordic holiday private-room UI, bright and compact. */
+#ccOverlay{background:rgba(5,16,25,.73)!important;backdrop-filter:blur(11px)!important;-webkit-backdrop-filter:blur(11px)!important;padding:clamp(8px,3vw,28px)!important}
+#ccCard{max-width:760px!important;margin:clamp(12px,3vw,40px) auto!important;border:1px solid #e3e9e4!important;border-top:6px solid #bc2636!important;border-radius:24px!important;background:linear-gradient(150deg,#fffefa 0%,#fcfdfd 56%,#f1f9f5 100%)!important;box-shadow:0 34px 110px rgba(0,0,0,.52),inset 0 1px white!important;padding:clamp(17px,3vw,32px)!important;color:#172a32!important}
+#ccCard .ccHeader{align-items:flex-start!important;gap:16px!important;padding-bottom:14px;border-bottom:1px solid #e7ecec;margin-bottom:16px}
+#ccCard .ccHeader small{font-size:11px!important;color:#a02e3c!important;letter-spacing:.13em!important}
+#ccCard .ccHeader h2{font-size:clamp(26px,4vw,38px)!important;letter-spacing:-.045em!important;line-height:1.09!important;margin:8px 0 0!important;color:#102a34!important}
+#ccCard #ccClose{background:#f3f6f6!important;border:1px solid #e0e9e9!important;border-radius:12px!important;color:#2b3b42!important;width:43px;height:43px;min-height:43px;padding:0!important;margin:0!important;font-size:25px!important}
+#ccCard .ccTop{padding:18px!important;border-radius:16px!important;background:linear-gradient(115deg,#eaf6f1,#f4f9f5)!important;border:1px solid #d2e6dc!important;box-shadow:inset 4px 0 #2d8566!important}
+#ccCard .ccTop strong{font-size:19px!important;color:#12392e!important}
+#ccCard #ccRole{font-size:11px;font-weight:850;letter-spacing:.1em;border-radius:999px;background:#d5ede3;color:#23614a;padding:7px 12px;white-space:nowrap}
+#ccCard .ccSteps{margin:22px 0 12px!important;padding:13px 15px!important;background:linear-gradient(95deg,#f0f7f3,#ffffff)!important;border:1px solid #e0ebe5!important;border-left:4px solid #be3442!important;border-radius:12px!important}
+#ccCard .ccSteps b{font-size:15px!important;color:#164b3b!important}
+#ccCard .ccSteps p{font-size:13px!important;color:#52636c!important;margin-top:4px!important}
+#ccCard label{font-size:13px!important;color:#243b44!important;letter-spacing:.01em!important}
+#ccCard input:not([type=file]),#ccCard select{border-radius:12px!important;background:#ffffff!important;border:1.5px solid #c8d7d7!important;min-height:46px!important;box-shadow:0 2px 8px #1434250a!important;color:#17303b!important;padding:10px 14px!important}
+#ccCard input:focus,#ccCard select:focus{outline:2px solid #75bca2!important;outline-offset:1px!important}
+#ccCard button{border-radius:11px!important;background:#ffffff!important;border:1px solid #ccdbd9!important;color:#29494b!important;box-shadow:0 2px 7px #0027190c!important;padding:10px 16px!important;margin:4px 5px 4px 0!important;min-height:44px!important}
+#ccCard button:hover:not(:disabled){background:#edf8f3!important;border-color:#91c7b4!important}
+#ccCard button.ccGold{background:linear-gradient(125deg,#b92538,#cf3a4b)!important;color:#fff!important;border-color:#a52232!important;box-shadow:0 6px 15px #ac24332a!important}
+#ccCard button.ccGold:hover:not(:disabled){background:#a92336!important}
+#ccCard .ccInvite{background:linear-gradient(120deg,#f4faf6,#f6faff)!important;border:1px solid #cbded9!important;border-radius:16px!important;padding:18px!important}
+#ccCard .ccInvite label{margin-top:0!important}
+#ccCard .ccButtons{display:flex!important;flex-wrap:wrap!important;gap:6px!important}
+#ccCard .ccInvite #ccWa{background:#197d54!important;color:white!important;border-color:#197d54!important}
+#ccCard #ccRoster,#ccCard #ccBotRoster{border-radius:12px;overflow:hidden}
+#ccCard .ccPlayer{padding:12px 10px!important;background:#fff;border-bottom:1px solid #eef0ec!important;font-size:14px;color:#28434e}
+#ccCard .ccVoiceBox{border-radius:15px!important;background:#f1f7fb!important;border:1px solid #cee0e8!important;padding:16px!important}
+#ccCard #ccVoiceHint{color:#506c7a!important}
+#ccCard #ccStatus{color:#a12d3b!important;font-size:13px!important;line-height:1.45!important}
+#ccCard .ccBrandRow{display:flex!important;gap:14px!important;align-items:center!important}
+#ccCard .ccBrandRow #ccPreview{width:120px!important;height:86px!important;border-radius:12px!important;object-fit:contain!important;background:#fff!important;border:1px solid #d8e6e2!important}
+#ccCard #ccCount{font-size:14px;color:#59706b}
+#ccCard .ccHint{font-size:12px!important;color:#5a6c73!important}
+#ccCard #ccLink{font-size:13px!important}
+.trailer-launch{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+.trailer-share-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 18px;border-radius:999px;background:#146b49;color:#fff!important;border:1px solid #62b389;font-weight:800;text-decoration:none;box-shadow:0 6px 16px #001b1336}
+.trailer-share-link:hover{background:#1b8b5f}
+@media(max-width:600px){#ccCard{padding:18px!important}#ccCard .ccSteps{margin:17px 0 9px!important}#ccCard .ccTop{padding:12px!important}#ccCard .ccButtons button{flex:1 1 120px}#ccCard .ccHeader h2{font-size:27px!important}}
+@media(prefers-reduced-motion:reduce){#ccOverlay{backdrop-filter:none!important}}
+</style>
 </head>
 <body>
 <audio id="theme" loop preload="none"><source src="audio/theme.mp3" type="audio/mpeg"></audio>
 <header class="bar">
   <h1 class="sign" aria-label="Coolest Company in the Universe"><span class="wm"><span class="w1b"><svg class="mk" xmlns="http://www.w3.org/2000/svg" viewBox="60 90 400 370" aria-hidden="true"><path d="M92 430 L372 118" stroke="#ffffff" stroke-width="26" stroke-linecap="round"/><g class="sway"><path d="M372 118 V258" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/><path d="M286 256 H458 Q462 256 461 262 L460 270 H284 L283 262 Q282 256 286 256 Z M292 266 H366 L361 306 Q357 328 334 328 H318 Q297 328 294 306 Z M452 266 H378 L383 306 Q387 328 410 328 H426 Q447 328 450 306 Z M362 266 H382 V280 Q372 272 362 280 Z" fill="#07080b" stroke="#ffffff" stroke-width="16" stroke-linejoin="round" paint-order="stroke"/><path d="M312 276 H323 L311 314 H301 Z M398 276 H409 L397 314 H387 Z" fill="#ffffff" opacity=".75"/></g></svg><span class="w1">Coolest<br>Company</span></span><span class="w2">in the Universe</span></span></h1>
 </header>
-<div class="trailer-launch"><button id="watchTrailer" type="button" aria-haspopup="dialog" aria-controls="trailerDialog"><span aria-hidden="true">▶</span> Watch game trailer</button></div>
+<div class="trailer-launch"><button id="watchTrailer" type="button" aria-haspopup="dialog" aria-controls="trailerDialog"><span aria-hidden="true">▶</span> Watch game trailer</button><a class="trailer-share-link" id="shareTrailerWhatsApp" href="https://wa.me/?text=Watch%20this%20Christmas%20game%20trailer%20%E2%9D%84%EF%B8%8F%20https%3A%2F%2Fwww.coolestcompanyintheuniverse.com%2Ftrailer%2F" target="_blank" rel="noopener noreferrer">✦ Send trailer on WhatsApp</a></div>
 <div class="trailer-overlay" id="trailerDialog" role="dialog" aria-modal="true" aria-label="Game trailer" hidden><div class="trailer-panel"><div class="trailer-top"><strong>Coolest Company in the Universe — Trailer</strong><button id="closeTrailer" type="button" aria-label="Close trailer">✕ Close</button></div><video id="trailerVideo" controls playsinline preload="none" aria-label="Coolest Company in the Universe game trailer"></video></div></div>
 <div class="gamewrap"><canvas class="snowcap" id="snowCap" aria-hidden="true"></canvas>
 <main class="game" id="stage">
@@ -595,7 +722,14 @@ body.trailer-open{overflow:hidden}
 <script>
 {
 const W=1200,H=1200,N=W*H,CH=32,TS=20,ROUND=300,IDLE=60,NBOTS=600,ZMIN=3,ZMAX=34,LOD=8;
-const DIRS=[[1,0],[0,1],[-1,0],[0,-1]];
+// Cardinal indices 0–3 are unchanged for existing bots/live protocol; 4–7 are diagonals for local practice.
+const DIRS=[[1,0],[0,1],[-1,0],[0,-1],[1,-1],[1,1],[-1,1],[-1,-1]];
+const OPPOSITE_DIR=[2,3,0,1,6,7,4,5];
+const ccIsDiagonal=d=>d>=4&&d<=7;
+const ccDirFromVector=(dx,dy)=>{
+ const a=(Math.atan2(dy,dx)+2*Math.PI)%(2*Math.PI);
+ return [0,5,1,6,2,7,3,4][Math.round(a/(Math.PI/4))%8];
+};
 const LIVE=Date.UTC(2026,11,24,1,0,0); // game starts Wed 23 Dec, 8pm New York
 const $=id=>document.getElementById(id);
 const stage=$('stage'),cv=$('cv'),mini=$('mini'),mctx=mini.getContext('2d');let ctx=cv.getContext('2d');
@@ -700,7 +834,7 @@ const CC_PRESET_BRANDS={
  'China':{src:'logos/china.png',color:'#de2910',rider:'snow'},
  'United Kingdom':{src:'logos/uk.svg',color:'#012169',rider:'snow'}
 };
-const CC_PRESET_NAMES=['Custom Team',...Object.keys(CC_PRESET_BRANDS)];
+const CC_PRESET_NAMES=['Your own logo / Snowman',...Object.keys(CC_PRESET_BRANDS)];
 const ccBrand=name=>CC_PRESET_BRANDS[name]||null;
 const ccBrandImageCache=new Map();
 function ccLoadBrandImage(src){
@@ -763,7 +897,7 @@ function getChunk(cx,cy){const key=cx+cy*CX;let c=chunks.get(key);
 
 function addCo(name,color,shape,bot,im,sz=1,lead=null){
   const id=C.length,logo=lead?lead.logo:makeLogo(name,color,shape,im);
-  const co={id,tid:lead?lead.id:id,name,color,bot,logo,tile:lead?lead.tile:makeTile(logo,color),url:null,cells:0,last:t,elim:false,sleep:0,x0:W,y0:H,x1:0,y1:0,
+  const co={id,tid:lead?lead.id:id,name,color,bot,lives:3,logo,tile:lead?lead.tile:makeTile(logo,color),url:null,cells:0,last:t,elim:false,sleep:0,x0:W,y0:H,x1:0,y1:0,
     rider:RIDER_IDS[(id*5+(name.length||0))%4],hx:0,hy:0,px:0,py:0,dir:0,q:[],parked:!bot,trail:[],acc:Math.random(),speed:BASE_SPEED,greed:3+Math.random()*6,plan:[],dis:null,pts:0,ts:new Set()};
   C.push(co);if(lead)lead.members.push(co);else co.members=[co];respawn(co,sz);return id}
 // a squad: one company, SQUAD sleighs sharing one colour, one logo and one territory
@@ -833,7 +967,13 @@ function botThink(co){
 
 function stepHead(co){
   if((co.spinEnd||0)>t){}else if(co.bot)botThink(co);else if(co.q.length)co.dir=co.q.shift();
-  const nx=co.hx+DIRS[co.dir][0],ny=co.hy+DIRS[co.dir][1];co.px=co.hx;co.py=co.hy;
+  const v=DIRS[co.dir]||DIRS[0],nx=co.hx+v[0],ny=co.hy+v[1];co.px=co.hx;co.py=co.hy;
+  // Prevent cutting diagonally through the corner of a tree, block or arena boundary.
+  if(ccIsDiagonal(co.dir)&&co.air<=0){const ax=co.hx+v[0],ay=co.hy,bx=co.hx,by=co.hy+v[1];
+    if(!inB(ax,ay)||!inB(bx,by)||blocked(ay*W+ax)||blocked(by*W+bx)){
+      co.acc=0;if(co.bot){co.plan=[];co.sleep=t+.25}else{co.parked=true;co.q=[];if(co.id===me){soundFx('hit');$('meWarn').textContent='Corner blocked! Steer to continue.'}}return;
+    }
+  }
   if(!inB(nx,ny)){co.acc=0;burst(nx+.5,ny+.5,'#dff3ff',14,6);if(co.bot){co.plan=[];co.sleep=t+.25}else{co.parked=true;co.q=[];if(co.id===me){soundFx('hit');shake(false);$('meWarn').textContent='You hit the ice wall! Steer to go again.'}}return}
   const i=ny*W+nx;
   if(co.air>0)co.air--;
@@ -881,7 +1021,17 @@ function stepSanta(dt){const S=SANTA;if(!S)return;
   for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const a=buckets.get(bk(S.x|0,S.y|0)+dx+dy*100);if(a)for(const o of a){if(o.elim)continue;const [hx,hy]=headPos(o);
     if(Math.abs(hx-S.x)<1&&Math.abs(hy-S.y)<1){addPts(o,10*mult());S.down=t+2.2;S.run=t+5;S.turn=t+2.2;const a2=Math.random()*7;S.dx=Math.cos(a2);S.dy=Math.sin(a2);burst(S.x,S.y,'#e2283a',20,8);burst(S.x,S.y,'#ffffff',14,7);
       if(o.id===me){soundFx('score');shake(false);$('meWarn').textContent='You knocked Santa over! +10'}return}}}}
-function eliminate(co,by){co.elim=true;for(const i of co.trail)if(trail[i]===co.id)trail[i]=-1;co.trail=[];co.ts.clear();
+function eliminate(co,by){
+ if(MODE==='practice'&&!co.elim){
+  if(!Number.isFinite(co.lives))co.lives=3;
+  co.lives--;
+  if(co.lives>0){
+   crash(co,'Life lost! '+co.lives+' remaining.');
+   if(co.id===me)$('meWarn').textContent='♥ '.repeat(co.lives)+' — '+co.lives+' lives remaining';
+   return;
+  }
+ }
+ co.elim=true;for(const i of co.trail)if(trail[i]===co.id)trail[i]=-1;co.trail=[];co.ts.clear();
   const T=TM(co);if(T.members.every(m=>m.elim)&&!T.out){T.out=true;T.dis=[];for(let y=T.y0;y<=T.y1;y++)for(let x=T.x0;x<=T.x1;x++)if(own[y*W+x]===T.id)T.dis.push(y*W+x);T.dis.sort(()=>Math.random()-.5)}
   if(co.id===me){soundFx('kill');shake(true);const fin=T.pts;lastScore=fin;me=-1;if(MODE==='practice'&&!over)setTimeout(()=>{if(over)return;
     $('overTitle').textContent='Game over';$('winLogo').hidden=!by;if(by)$('winLogo').src=urlOf(by);$('winName').textContent=`${pts(fin)} points`;
@@ -964,7 +1114,7 @@ function step(dt){
       co.last=t;if(Math.random()<dt*(co.hero?.9:.35))botAim(co);if(co.boosts>0&&co.trail.length>8&&Math.random()<dt*.5)zoom(co)}
     else if(co.parked)continue;
     if((co.stopEnd||0)>t)continue;
-    co.acc+=dt*co.speed*((co.boostEnd||0)>t?3:1)*(co.air>0?2:1);while(co.acc>=1&&!co.parked&&!co.elim&&!((co.stopEnd||0)>t)){co.acc--;stepHead(co)}}
+    co.acc+=dt*co.speed*(ccIsDiagonal(co.dir)?Math.SQRT1_2:1)*((co.boostEnd||0)>t?3:1)*(co.air>0?2:1);while(co.acc>=1&&!co.parked&&!co.elim&&!((co.stopEnd||0)>t)){co.acc--;stepHead(co)}}
   stepBalls(dt);
   if(MODE==='practice'||window.__FRAD){RAD=window.__FRAD||(MODE==='practice'?PR0()*(1-.72*Math.min(1,t/ROUND)):R0()*(1-.74*Math.min(1,t/ROUND)));
     if(CRAD-RAD>=1){const nr=Math.ceil(RAD),nr2=nr*nr,cx=W/2,cy=H/2;
@@ -1208,16 +1358,25 @@ function drawBig(){const r=bm.getBoundingClientRect(),d=dpr(),w=Math.max(1,r.wid
   if(SANTA){const rr=Math.max(3*d,rd),px=X(SANTA.x),py=Y(SANTA.y);bctx.fillStyle='#d81f33';bctx.beginPath();bctx.arc(px,py,rr,0,7);bctx.fill();bctx.fillStyle='#fff';bctx.beginPath();bctx.arc(px,py-rr*.6,rr*.35,0,7);bctx.fill()}}
 
 // input
-function steer(d){if(MODE==='live'){if(d!=null&&me>=0&&!over)liveSend('d'+d);return}if(me<0||over||frozen)return;const co=C[me];co.last=t;if(d==null)return;if((co.spinEnd||0)>t){co.q=[];return} // spinning: no control
+function steer(d){if(MODE==='live'){if(d!=null&&d<4&&me>=0&&!over)liveSend('d'+d);return}if(me<0||over||frozen)return;const co=C[me];co.last=t;if(d==null)return;if((co.spinEnd||0)>t){co.q=[];return} // spinning: no control
   if(co.parked){if(!TM(co).cells)respawn(co);co.parked=false;co.acc=0;co.dir=d;co.q=[];$('meWarn').textContent='';return}
-  const last=co.q.length?co.q[co.q.length-1]:co.dir;if(d===last||d===(last+2)%4)return;if(co.q.length<3)co.q.push(d)}
+  const last=co.q.length?co.q[co.q.length-1]:co.dir;if(d===last||d===OPPOSITE_DIR[last])return;if(co.q.length<3)co.q.push(d)}
 const KEYS={ArrowRight:0,ArrowDown:1,ArrowLeft:2,ArrowUp:3};
+const ccHeldArrows=new Set();
+function ccKeyboardDirection(){
+ let x=(ccHeldArrows.has('ArrowRight')?1:0)-(ccHeldArrows.has('ArrowLeft')?1:0);
+ let y=(ccHeldArrows.has('ArrowDown')?1:0)-(ccHeldArrows.has('ArrowUp')?1:0);
+ if(!x&&!y)return null;
+ return MODE==='live'?(Math.abs(x)>=Math.abs(y)&&x?x>0?0:2:y>0?1:3):ccDirFromVector(x,y);
+}
+addEventListener('keyup',e=>{if(e.key in KEYS)ccHeldArrows.delete(e.key)});
+addEventListener('blur',()=>ccHeldArrows.clear());
 const anyModal=()=>document.querySelector('.modal.on');
 addEventListener('keydown',e=>{if(e.key==='Escape'){closeFull();stream(false);document.querySelectorAll('.modal').forEach(m=>m.classList.remove('on'));return}
   if(anyModal())return;
   if((e.key==='z'||e.key==='Z')&&me>=0){e.preventDefault();if(!frozen&&!over&&zoom(C[me]))C[me].last=t;return}
   if((e.key==='s'||e.key==='S'||e.key===' '||e.code==='Space')&&me>=0){e.preventDefault();if(!frozen&&!over&&throwBall(C[me]))C[me].last=t;return}
-  if(!(e.key in KEYS)||me<0)return;e.preventDefault();steer(KEYS[e.key])});
+  if(!(e.key in KEYS)||me<0)return;e.preventDefault();ccHeldArrows.add(e.key);const d=ccKeyboardDirection();if(d!==null)steer(d)});
 $('zoomBtn').onclick=e=>{e.stopPropagation();if(me>=0&&!frozen&&!over&&zoom(C[me]))C[me].last=t};
 $('throwBtn').onclick=e=>{e.stopPropagation();if(me>=0&&!frozen&&!over&&throwBall(C[me]))C[me].last=t};
 // Touch layout selection persists on this device; desktop arrow/S/Z controls are unchanged.
@@ -1236,8 +1395,47 @@ $('throwBtn').onclick=e=>{e.stopPropagation();if(me>=0&&!frozen&&!over&&throwBal
  toggle.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();choice=choice==='L'?'R':'L';try{localStorage.setItem(storageKey,choice)}catch(_){}apply()});
  apply();
 })();
-(function(){const pad=$('touchStick'),knob=$('touchKnob');let active=null,lastDir=null;function move(e){if(e.pointerId!==active)return;const b=pad.getBoundingClientRect(),dx=e.clientX-(b.left+b.width/2),dy=e.clientY-(b.top+b.height/2),dist=Math.hypot(dx,dy),max=32,scale=dist?Math.min(max,dist)/dist:0;knob.style.transform=`translate(${dx*scale}px,${dy*scale}px)`;if(dist<13)return;const dir=Math.abs(dx)>Math.abs(dy)?dx>0?0:2:dy>0?1:3;if(dir!==lastDir){steer(dir);lastDir=dir}}
-pad.addEventListener('pointerdown',e=>{if(active!==null)return;active=e.pointerId;lastDir=null;pad.classList.add('engaged');pad.setPointerCapture(e.pointerId);move(e);e.preventDefault()});pad.addEventListener('pointermove',move);function end(e){if(e.pointerId!==active)return;active=null;lastDir=null;pad.classList.remove('engaged');knob.style.transform='translate(0,0)'}pad.addEventListener('pointerup',end);pad.addEventListener('pointercancel',end)})();
+// Robust joystick lifecycle: never leave a captured finger or visual knob stuck.
+// Navigation is direction-based: the sleigh keeps travelling after release, but input is released immediately.
+(function(){
+ const pad=$('touchStick'),knob=$('touchKnob');
+ let active=null,lastDir=null;
+ function reset(){
+   const old=active;active=null;lastDir=null;
+   pad.classList.remove('engaged');knob.style.transform='translate(0,0)';
+   if(old!==null){try{if(pad.hasPointerCapture(old))pad.releasePointerCapture(old)}catch(_){}}
+ }
+ function end(e){if(active!==null && e.pointerId===active)reset()}
+ function move(e){
+   if(e.pointerId!==active)return;
+   // A lost button state on mouse/trackpad must never leave a stuck joystick.
+   if(e.pointerType==='mouse' && (e.buttons&1)===0){reset();return}
+   const b=pad.getBoundingClientRect();
+   const dx=e.clientX-(b.left+b.width/2),dy=e.clientY-(b.top+b.height/2);
+   const dist=Math.hypot(dx,dy),max=Math.max(8,(Math.min(b.width,b.height)-knob.offsetWidth)/2-5);
+   const scale=dist?Math.min(max,dist)/dist:0;
+   knob.style.transform=`translate(${dx*scale}px,${dy*scale}px)`;
+   if(dist<Math.max(8,b.width*.105)){lastDir=null;return}
+   const dir=MODE==='live'?(Math.abs(dx)>Math.abs(dy)?dx>0?0:2:dy>0?1:3):ccDirFromVector(dx,dy);
+   if(dir!==lastDir){steer(dir);lastDir=dir}
+ }
+ pad.addEventListener('pointerdown',e=>{
+   if(active!==null || !e.isPrimary || (e.pointerType==='mouse' && e.button!==0))return;
+   active=e.pointerId;lastDir=null;pad.classList.add('engaged');
+   try{pad.setPointerCapture(e.pointerId)}catch(_){}
+   move(e);e.preventDefault();
+ });
+ pad.addEventListener('pointermove',move);
+ // Listen both locally AND globally: released outside the pad/viewport or interrupted gestures must reset.
+ pad.addEventListener('pointerup',end);pad.addEventListener('pointercancel',end);
+ window.addEventListener('pointerup',end,true);window.addEventListener('pointercancel',end,true);
+ pad.addEventListener('lostpointercapture',end);
+ window.addEventListener('blur',reset);
+ window.addEventListener('pagehide',reset);
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)reset()});
+ $('handToggle').addEventListener('click',reset,true);
+ pad.addEventListener('contextmenu',e=>e.preventDefault());
+})();
 const ptrs=new Map();let pinch=null,PZ=14;
 const setPZ=v=>{PZ=Math.max(6,Math.min(34,v));$('zRange').value=PZ};
 $('zRange').addEventListener('input',e=>setPZ(+e.target.value));
@@ -1248,7 +1446,7 @@ cv.addEventListener('pointerdown',e=>{ptrs.set(e.pointerId,{x:e.clientX,y:e.clie
 cv.addEventListener('pointermove',e=>{const a=ptrs.get(e.pointerId);if(!a)return;a.x=e.clientX;a.y=e.clientY;
   if(ptrs.size>=2&&pinch){if(MODE!=='practice')return;const [p,q]=[...ptrs.values()];setPZ(pinch.z*Math.hypot(p.x-q.x,p.y-q.y)/pinch.d);return}
   if(me<0)return;const dx=e.clientX-a.sx,dy=e.clientY-a.sy,th=Math.max(18,cv.clientWidth*.015);
-  if(Math.hypot(dx,dy)<th)return;steer(Math.abs(dx)>Math.abs(dy)?(dx>0?0:2):(dy>0?1:3));a.sx=e.clientX;a.sy=e.clientY});
+  if(Math.hypot(dx,dy)<th)return;steer(MODE==='live'?(Math.abs(dx)>Math.abs(dy)?(dx>0?0:2):(dy>0?1:3)):ccDirFromVector(dx,dy));a.sx=e.clientX;a.sy=e.clientY});
 const up=e=>{ptrs.delete(e.pointerId);if(ptrs.size<2)pinch=null};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
 // on-screen D-pad: press to turn (no waiting for the finger to lift)
 document.querySelectorAll('.dpad button').forEach(b=>{b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();steer(+b.dataset.d)});b.addEventListener('contextmenu',e=>e.preventDefault())});
@@ -1637,7 +1835,7 @@ const CC_SUPABASE_URL='https://fwroeughsfsgbbcszfcw.supabase.co';
 const CC_SUPABASE_KEY='sb_publishable_Ngwc7PAq1TqL5eHd36vGcw_4ogTe9uC';
 let ccDb=null,ccRoom=null,ccPeople=[],ccAuth=null,ccChannel=null,ccTimer=null,ccStartTimer=null,ccJoining=false,ccPlaying=false;
 const ccSeats=()=>Number(ccRoom&&ccRoom.max_players||4);
-const ccBots=()=>Math.max(0,4-ccPeople.length); // Display-only until server-authoritative simulation exists.
+const ccBots=()=>ccRoom&&ccRoom.bots_locked?Math.max(0,4-ccPeople.length):0; // Local AI only; per-device gameplay is not synchronized.
 const ccCompanies=CC_PRESET_NAMES;
 const ccColors=['#ff4747','#3485ff','#31d16f','#ffd93d'];
 const ccText=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1689,6 +1887,7 @@ async function ccVoiceOffer(id){const p=ccPeer(id);if(!p||p.offering||p.pc.signa
  p.offering=true;try{await p.pc.setLocalDescription(await p.pc.createOffer());await ccVoiceSignalSend(id,'offer',p.pc.localDescription)}catch(e){ccVoiceHint('Voice signalling failed: '+e.message)}finally{p.offering=false}}
 async function ccVoiceReceive(msg){if(!ccVoiceStream||!ccRoom||!msg||msg.from===ccAuth||(msg.to&&msg.to!==ccAuth))return;
  const id=msg.from;
+ if(!ccPeople.some(p=>p.user_id===id))return;
  try{
   if(msg.kind==='hello'){await ccVoiceSignalSend(id,'hello-ack',null);if(ccAuth<id)await ccVoiceOffer(id);return}
   if(msg.kind==='hello-ack'){if(ccAuth<id)await ccVoiceOffer(id);return}
@@ -1709,7 +1908,8 @@ async function ccStartVoice(){if(ccVoiceWanted||ccVoiceStream||!ccRoom)return;
   if(!navigator.mediaDevices?.getUserMedia||!window.RTCPeerConnection)throw Error('A recent browser and HTTPS are required');
   ccVoiceStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1},video:false});
   if(!ccRoom){ccVoiceStream.getTracks().forEach(t=>t.stop());ccVoiceStream=null;return}
-  ccVoiceSignal=ccDb.channel('cc-voice-'+ccRoom.id,{config:{broadcast:{ack:true}}});
+  await ccDb.realtime.setAuth();
+  ccVoiceSignal=ccDb.channel('cc-voice-'+ccRoom.id,{config:{private:true,broadcast:{ack:true}}});
   ccVoiceSignal.on('broadcast',{event:'signal'},({payload})=>{ccVoiceReceive(payload).catch(()=>{})});
   await new Promise((resolve,reject)=>{let settled=false;ccVoiceSignal.subscribe(status=>{if(status==='SUBSCRIBED'&&!settled){settled=true;resolve()}else if(['CLOSED','CHANNEL_ERROR','TIMED_OUT'].includes(status)&&!settled){settled=true;reject(Error(status))}})});
   await ccVoiceSignal.send({type:'broadcast',event:'signal',payload:{from:ccAuth,kind:'hello'}});
@@ -1724,37 +1924,106 @@ async function ccStopVoice(){
  ccVoiceMuted=false;ccVoiceHint('Voice disconnected. Join again when ready.');ccVoiceUI();
 }
 function ccToggleMic(){if(!ccVoiceStream)return ccStartVoice();ccVoiceMuted=!ccVoiceMuted;ccVoiceStream.getAudioTracks().forEach(t=>t.enabled=!ccVoiceMuted);ccVoiceUI()}
+
+// V7 premium snowy staging. Four figures always match four squad places;
+// nothing assigns computer seats until the host explicitly locks them.
+let ccInviteCopiedAtCount=-1;
+const ccStageImageCache=new Map();
+function ccStageImage(src){
+ if(!src)return null;
+ if(!ccStageImageCache.has(src)){
+   const image=new Image();image.src=src;
+   image.onload=()=>{if(ccRoom)ccDrawSquadStage()};
+   ccStageImageCache.set(src,image);
+ }
+ const image=ccStageImageCache.get(src);
+ return image.complete&&image.naturalWidth?image:null;
+}
+function ccPaintSnowman(canvas,rider,colour,logo,seatState,index){
+ const c=canvas.getContext('2d');if(!c)return;
+ const w=140,h=164;canvas.width=w;canvas.height=h;c.clearRect(0,0,w,h);
+ // Snow under the sleigh + soft ground shadow.
+ c.fillStyle='rgba(37,80,102,.11)';c.beginPath();c.ellipse(70,150,57,8,0,0,Math.PI*2);c.fill();
+ const fill=c.createLinearGradient(35,84,99,140);fill.addColorStop(0,'#fff');fill.addColorStop(1,'#d5ecf5');
+ c.fillStyle=fill;c.strokeStyle='#a1c5cf';c.lineWidth=1.7;
+ c.beginPath();c.arc(70,110,30,0,Math.PI*2);c.fill();c.stroke();
+ c.beginPath();c.arc(70,82,23,0,Math.PI*2);c.fill();c.stroke();
+ // Sleigh runners + branded edge, same identity as arena sleighs.
+ c.strokeStyle='#a46b31';c.lineWidth=4;c.lineCap='round';
+ c.beginPath();c.moveTo(27,132);c.quadraticCurveTo(47,146,110,137);c.quadraticCurveTo(119,133,116,124);c.stroke();
+ c.strokeStyle=colour;c.lineWidth=9;c.beginPath();c.moveTo(33,125);c.quadraticCurveTo(70,138,111,126);c.stroke();
+ c.fillStyle=colour;c.beginPath();c.roundRect(42,100,56,18,9);c.fill();
+ // The actual existing rider art (including Aramco's wrapped white shemagh).
+ riderTop(rider||'snow',70,61,78,colour,c);
+ // Logo shield on torso, with fallback company-colour crest.
+ c.fillStyle='#fff';c.strokeStyle='#9fc3cc';c.lineWidth=2;c.beginPath();c.arc(70,109,15,0,Math.PI*2);c.fill();c.stroke();
+ if(logo){c.save();c.beginPath();c.arc(70,109,12.6,0,Math.PI*2);c.clip();const scale=Math.min(25/logo.width,25/logo.height);c.drawImage(logo,70-logo.width*scale/2,109-logo.height*scale/2,logo.width*scale,logo.height*scale);c.restore()}
+ else {c.fillStyle=colour;c.font='bold 16px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('❄',70,110)}
+ if(seatState==='empty'){c.fillStyle='rgba(255,255,255,.38)';c.fillRect(0,0,w,h)}
+}
+function ccDrawSquadStage(){
+ const stage=ccBy('ccStageSquad');if(!stage)return;
+ const editing=ccRoom&&ccRoom.host_id===ccAuth&&ccRoom.status==='waiting';
+ const company=editing?ccBy('ccCompany').value:(ccRoom?.company||ccBy('ccCompany').value);
+ const preset=ccBrand(company),rider=preset?.rider||'snow';
+ const colour=(editing?ccBy('ccColour').value:ccRoom?.colour)||preset?.color||'#e2283a';
+ const preview=ccBy('ccPreview');
+ const source=editing&&preview&&!preview.hidden&&preview.src?preview.src:(ccRoom?.logo||preset?.src||null);
+ const logo=ccStageImage(source);
+ const people=ccPeople||[],locked=!!ccRoom?.bots_locked;
+ const fragment=document.createDocumentFragment();
+ for(let i=0;i<4;i++){
+  const person=people[i],state=person?'human':locked?'computer':'empty';
+  const seat=document.createElement('div');seat.className='ccSnowSeat cc'+state.charAt(0).toUpperCase()+state.slice(1);
+  const canvas=document.createElement('canvas');canvas.setAttribute('aria-hidden','true');ccPaintSnowman(canvas,rider,colour,logo,state,i);
+  const name=document.createElement('div');name.className='ccSeatName';name.textContent=person?person.display_name:locked?'Computer '+(i+1):'Open seat '+(i+1);
+  const role=document.createElement('div');role.className='ccSeatRole';role.textContent=person?(person.user_id===ccRoom?.host_id?'★ Host':'✓ Joined'):locked?'❄ AI ready':'Waiting for friend';
+  seat.append(canvas,name,role);fragment.append(seat);
+ }
+ stage.replaceChildren(fragment);
+ ccBy('ccStageState').textContent=locked?'Line-up locked':(people.length||0)+'/4 players joined';
+}
 function ccUI(){
- const o=document.createElement('div');o.id='ccOverlay';o.innerHTML=`<section id="ccCard" role="dialog" aria-modal="true" aria-label="Practice squad lobby">
- <div class="ccHeader"><div><small>COOLEST COMPANY · PRACTICE</small><h2>Squad lobby</h2></div><button id="ccClose" type="button" title="Close">×</button></div>
- <div id="ccWelcome"><p>Enter your name to create a private squad or join a friend's room.</p><label>Your name<input id="ccName" maxlength="40" autocomplete="nickname" placeholder="Your name"></label><label>Practice mode<select id="ccMode"><option value="1">Solo (1 player + 3 computer teammates)</option><option value="2">Duo (up to 2 friends + computer teammates)</option><option value="4" selected>Squad (up to 4 friends; empty seats filled by computer)</option></select></label><button id="ccEnter" class="ccGold">Create / join lobby</button><p class="ccHint">Invited players join the host’s chosen mode. You can start with fewer people and use computer teammates.</p></div>
+ const o=document.createElement('div');o.id='ccOverlay';o.innerHTML=`<section id="ccCard" role="dialog" aria-modal="true" aria-label="Private practice lobby">
+ <div class="ccHeader"><div><small>❄ COOLEST COMPANY · CHRISTMAS PRACTICE</small><h2>The Christmas Clubhouse ❄</h2></div><button id="ccClose" type="button" title="Close">×</button></div>
+ <div id="ccWelcome"><p>Set up a private match for up to four friends. Nobody joins unless you send them the invitation.</p>
+ <label>Your player name<input id="ccName" maxlength="40" autocomplete="nickname" placeholder="Your name"></label>
+ <button id="ccEnter" class="ccGold" type="button">Create my clubhouse</button>
+ <p id="ccJoinInfo" class="ccHint" hidden>You've been invited. Enter your name, then join the waiting lobby.</p>
+ <p class="ccHint">No timer runs while you're waiting. Three lives per player.</p></div>
  <div id="ccRoomUI" hidden>
- <div class="ccTop"><div><strong id="ccTeamName">Custom Team</strong><small id="ccRoomState">Waiting for friends</small></div><span id="ccRole"></span></div>
- <div id="ccHostEdit"><label>Team / company<select id="ccCompany"></select></label><label>Team colour<input type="color" id="ccColour" value="#e2283a"></label><label class="ccUpload">Upload team logo<input id="ccLogo" type="file" accept="image/png,image/jpeg,image/webp"></label><button id="ccSave" type="button">Save team choice</button><img id="ccPreview" alt="Chosen logo" hidden></div>
- <div class="ccInvite"><label>Private room link<input id="ccLink" readonly></label><div class="ccButtons"><button id="ccCopy">Copy link</button><button id="ccWa">WhatsApp</button><button id="ccTg">Telegram</button><button id="ccShare">Share / Messages</button></div><div class="ccButtons"><button id="ccRemind">Send reminder</button></div></div>
- <h3>Players <span id="ccCount">0/4</span></h3><div id="ccRoster"></div><div id="ccBotRoster" aria-live="polite"></div>
- <div class="ccVoiceBox" aria-label="Team voice"><strong>🎙 Team voice</strong><div class="ccVoiceButtons"><button type="button" id="ccVoiceJoin">Join voice</button><button type="button" id="ccVoiceMute" disabled aria-pressed="false">Mute my mic</button><button type="button" id="ccVoiceLeave" disabled>Leave voice</button></div><div id="ccVoiceRoster" aria-live="polite"></div><p id="ccVoiceHint">Opt-in voice. Microphone consent required. Some networks may need TURN relay; a connection is not guaranteed.</p></div>
- <p class="ccHint">The host chooses one team and character for the squad. Other players see changes live. Voice requires microphone permission and compatible networks. Shared movement is not yet active in this prototype.</p>
- <button id="ccStart" class="ccGold">Start practice together</button><button id="ccLeave">Leave room</button><p id="ccTeamScore"></p></div>
+ <div class="ccTop"><div><strong id="ccTeamName">Your Squad</strong><small id="ccRoomState">Waiting for friends · no countdown</small></div><span id="ccRole"></span></div>
+ <div class="ccSquadStage" id="ccSquadStage" aria-label="Four snowmen representing lobby seats"><div class="ccStageHead"><span>❄ YOUR SQUAD · READY FOR THE SNOW</span><span class="ccStageBadge" id="ccStageState">Waiting for friends</span></div><div class="ccStageSquad" id="ccStageSquad"></div></div>
+ <div class="ccSteps"><b>01 / PICK YOUR COLOURS</b><p>Pick a ready-made team, or upload your own logo and choose a sleigh colour. The default character is a snowman.</p></div>
+ <div id="ccHostEdit"><label>Company / snowman style<select id="ccCompany"></select></label>
+ <div class="ccBrandRow"><img id="ccPreview" alt="Team logo preview" hidden><label>Choose sleigh colour<input type="color" id="ccColour" value="#e2283a"></label></div>
+ <label class="ccUpload">Your own logo (only for your own team)<input id="ccLogo" type="file" accept="image/png,image/jpeg,image/webp"></label>
+ <button id="ccSave" type="button">Apply team selection</button><small id="ccBrandHelp">Ready-made companies set their logo and colour automatically.</small></div>
+ <div class="ccSteps"><b>02 / INVITE YOUR SQUAD</b><p>Send this private link now. Friends appear below when they join. Nothing starts until the host decides.</p></div>
+ <div class="ccInvite"><label>Invite-only link · share before you start<input id="ccLink" readonly></label><div class="ccButtons"><button id="ccCopy" type="button">Copy invitation</button><button id="ccWa" type="button">WhatsApp</button><button id="ccTg" type="button">Telegram</button><button id="ccShare" type="button">Share</button></div><div class="ccButtons"><button id="ccRemind" type="button">Send reminder</button></div></div>
+ <p id="ccInviteNotice" class="ccInviteNotice" role="status" hidden></p>
+ <div class="ccSteps"><b>03 / LOCK YOUR LINE-UP</b><p id="ccSeatHelp">Open places are reserved for friends until you choose to fill them with computer teammates.</p></div>
+ <h3>Squad <span id="ccCount">0/4 people</span></h3><div id="ccRoster"></div><div id="ccBotRoster" aria-live="polite"></div>
+ <div class="ccButtons" id="ccBotActions"><button id="ccFillBots" type="button">Fill empty seats with computers</button><button id="ccUnlockBots" type="button" hidden>Reopen seats for friends</button></div>
+ <div class="ccVoiceBox" aria-label="Team voice"><strong>🎙 Team voice (experimental)</strong><div class="ccVoiceButtons"><button type="button" id="ccVoiceJoin">Join voice</button><button type="button" id="ccVoiceMute" disabled aria-pressed="false">Mute my mic</button><button type="button" id="ccVoiceLeave" disabled>Leave voice</button></div><div id="ccVoiceRoster" aria-live="polite"></div><p id="ccVoiceHint">Microphone optional. Voice needs network testing and may require a TURN server.</p></div>
+ <div class="ccSteps"><b>04 / LAUNCH THE MATCH</b><p>Once you're happy with the squad, press Start. The five-second countdown happens <strong>after</strong> this click.</p></div>
+ <button id="ccStart" class="ccGold" type="button" disabled>Start match · 5-second countdown</button><button id="ccLeave" type="button">Leave lobby</button><p id="ccTeamScore"></p>
+ <p class="ccHint">This is a lobby prototype. Gameplay is currently simulated independently on each device; shared real-time movement is not yet implemented.</p></div>
  <p id="ccStatus" role="status"></p></section>`;
  document.body.appendChild(o);
  ccBy('ccCompany').innerHTML=ccCompanies.map(n=>`<option>${ccText(n)}</option>`).join('');
  ccBy('ccClose').onclick=()=>{o.classList.remove('ccOpen')};
- ccBy('ccEnter').onclick=ccEnter;
- ccBy('ccSave').onclick=ccSave;
- ccBy('ccStart').onclick=ccStart;
- ccBy('ccLeave').onclick=ccLeave;
- ccBy('ccCopy').onclick=()=>navigator.clipboard.writeText(ccInvite()).then(()=>ccStatus('Link copied.')).catch(()=>ccStatus('Select the link and copy it.'));
- ccBy('ccWa').onclick=()=>ccMessage('wa',false);
- ccBy('ccTg').onclick=()=>ccMessage('tg',false);
- ccBy('ccShare').onclick=()=>ccMessage('native',false);
- ccBy('ccRemind').onclick=()=>ccMessage('native',true);
- ccBy('ccLogo').onchange=ccLoadLogo;
- ccBy('ccVoiceJoin').onclick=ccStartVoice;ccBy('ccVoiceMute').onclick=ccToggleMic;ccBy('ccVoiceLeave').onclick=ccStopVoice;
- ccBy('micToggle').onclick=ccToggleMic;
+ ccBy('ccEnter').onclick=ccEnter;ccBy('ccSave').onclick=ccSave;ccBy('ccStart').onclick=ccStart;
+ ccBy('ccFillBots').onclick=ccFillBots;ccBy('ccUnlockBots').onclick=ccUnlockBots;ccBy('ccLeave').onclick=ccLeave;
+ ccBy('ccCopy').onclick=()=>navigator.clipboard.writeText(ccInvite()).then(()=>{ccInviteCopiedAtCount=ccPeople.length;ccBy('ccInviteNotice').hidden=false;ccBy('ccInviteNotice').textContent='✓ Link copied! Now send it to your friends and wait for them to join.';ccStatus('Invitation copied.');}).catch(()=>{ccBy('ccLink').select();ccStatus('Link selected. Copy it to share.')});
+ ccBy('ccWa').onclick=()=>ccMessage('wa',false);ccBy('ccTg').onclick=()=>ccMessage('tg',false);ccBy('ccShare').onclick=()=>ccMessage('native',false);ccBy('ccRemind').onclick=()=>ccMessage('native',true);
+ ccBy('ccLogo').onchange=ccLoadLogo;ccBy('ccCompany').onchange=()=>{ccPresetChanged();if(ccRoom&&ccRoom.host_id===ccAuth)ccSave()};
+ ccBy('ccColour').oninput=()=>ccDrawSquadStage();ccBy('ccColour').onchange=()=>{ccDrawSquadStage();if(ccRoom&&ccRoom.host_id===ccAuth&&!ccBrand(ccBy('ccCompany').value))ccSave()};
+ ccBy('ccVoiceJoin').onclick=ccStartVoice;ccBy('ccVoiceMute').onclick=ccToggleMic;ccBy('ccVoiceLeave').onclick=ccStopVoice;ccBy('micToggle').onclick=ccToggleMic;
  ccBy('ccName').value=localStorage.getItem('cc_player_name')||'';
  ccBy('ccName').addEventListener('keydown',e=>{if(e.key==='Enter')ccEnter()});
- if(new URLSearchParams(location.search).has('room')){ccBy('ccMode').disabled=true;ccBy('ccMode').title='The host chooses the number of human seats.'}
+ if(new URLSearchParams(location.search).has('room')){ccBy('ccEnter').textContent='Join invited lobby';ccBy('ccJoinInfo').hidden=false}
+ ccPresetChanged();
 }
 function ccMessage(app,reminder){const link=ccInvite();if(!link)return;const msg=(reminder?'Reminder: join our practice squad! ':'Join my private snowball squad! ')+link;
  if(app==='wa')window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener');
@@ -1765,8 +2034,10 @@ function ccMessage(app,reminder){const link=ccInvite();if(!link)return;const msg
 
 function ccPresetChanged(){
  const company=ccBy('ccCompany').value,b=ccBrand(company),preview=ccBy('ccPreview');
- if(b){delete preview.dataset.custom;ccBy('ccColour').value=b.color; if(b.src){preview.src=b.src;preview.hidden=false}else{preview.hidden=true;preview.removeAttribute('src')}}
- else if(!preview.dataset.custom){preview.hidden=true;preview.removeAttribute('src')}
+ delete preview.dataset.custom;
+ if(b){ccBy('ccColour').value=b.color;preview.src=b.src;preview.hidden=false;ccBy('ccLogo').disabled=true;ccBy('ccBrandHelp').textContent='Preloaded logo and colour. Click Apply team selection to share with friends.'}
+ else {ccBy('ccLogo').disabled=false;preview.hidden=true;preview.removeAttribute('src');ccBy('ccBrandHelp').textContent='Snowman character. Upload your logo and choose any sleigh colour.'}
+ ccDrawSquadStage();
 }
 async function ccInit(){if(ccDb)return;
  if(!window.supabase||!window.supabase.createClient)throw Error('Supabase library could not load. Check your connection.');
@@ -1782,7 +2053,7 @@ async function ccEnter(){if(ccJoining)return;const name=ccBy('ccName').value.tri
  try{await ccInit();localStorage.setItem('cc_player_name',name);
  const invite=new URLSearchParams(location.search).get('room');let id;
  if(invite){id=await ccRpc('cc_join_room',{p_invite:invite,p_name:name})}
- else {const created=await ccRpc('cc_create_room_v2',{p_name:name,p_max_players:Number(ccBy('ccMode').value)});id=created.room_id}
+ else {const created=await ccRpc('cc_create_room_v3',{p_name:name});id=created.room_id}
  await ccOpenRoom(id);
  }catch(e){ccStatus('Could not enter room: '+e.message)}finally{ccJoining=false;ccBy('ccEnter').disabled=false}}
 async function ccOpenRoom(id){if(ccChannel)await ccDb.removeChannel(ccChannel);ccRoom={id};ccPlaying=false;
@@ -1797,45 +2068,54 @@ async function ccOpenRoom(id){if(ccChannel)await ccDb.removeChannel(ccChannel);c
 async function ccRefresh(){if(!ccRoom)return;
  const [a,b]=await Promise.all([ccDb.from('cc_rooms').select('*').eq('id',ccRoom.id).single(),ccDb.from('cc_players').select('*').eq('room_id',ccRoom.id).order('joined_at')]);
  if(a.error)throw Error(a.error.message);if(b.error)throw Error(b.error.message);
+ if(!ccRoom||a.data.id!==ccRoom.id)return;
  ccRoom=a.data;ccPeople=b.data;
- const host=ccRoom.host_id===ccAuth;
- ccBy('ccRole').textContent=host?'HOST':'TEAMMATE';
- ccBy('ccHostEdit').hidden=!host;
+ const host=ccRoom.host_id===ccAuth,waiting=ccRoom.status==='waiting',locked=!!ccRoom.bots_locked;
+ ccBy('ccRole').textContent=host?'HOST':'INVITED PLAYER';ccBy('ccHostEdit').hidden=!host;
  ccBy('ccTeamName').textContent=ccRoom.company;
- ccBy('ccRoomState').textContent=ccRoom.status==='waiting'?'Waiting for friends':'Match in progress';
- ccBy('ccLink').value=ccInvite();ccBy('ccMode').disabled=true;ccBy('ccCompany').value=ccCompanies.includes(ccRoom.company)?ccRoom.company:'Custom Team';
+ ccBy('ccRoomState').textContent=waiting?(locked?'Seats locked · ready for host to start':'Waiting for friends · no countdown'):'Match in progress';
+ ccBy('ccLink').value=ccInvite();ccBy('ccCompany').value=ccCompanies.includes(ccRoom.company)?ccRoom.company:'Your own logo / Snowman';
  ccBy('ccColour').value=ccRoom.colour;
- ccBy('ccCount').textContent=ccPeople.length+'/'+ccSeats()+' humans';
- ccBy('ccBotRoster').replaceChildren(...Array.from({length:ccBots()},(_,i)=>{const row=document.createElement('div');row.className='ccPlayer';const dot=document.createElement('i');dot.style.background='#9aa9b9';const name=document.createElement('span');name.textContent='Computer teammate '+(i+1);row.append(dot,name);return row}));
+ const preview=ccBy('ccPreview');
+ if(ccRoom.logo){if(preview.src!==ccRoom.logo)preview.src=ccRoom.logo;preview.hidden=false}
+ else if(!preview.dataset.custom){const preset=ccBrand(ccRoom.company);if(preset&&preset.src){preview.src=preset.src;preview.hidden=false}else{preview.hidden=true;preview.removeAttribute('src')}}
+ ccBy('ccCount').textContent=ccPeople.length+'/4 people';
+ ccDrawSquadStage();
+ if(ccInviteCopiedAtCount>=0 && ccPeople.length>ccInviteCopiedAtCount && ccRoom.status==='waiting'){
+   ccBy('ccInviteNotice').hidden=false;
+   ccBy('ccInviteNotice').textContent='❄ '+ccPeople.length+' of 4 players joined. You can keep inviting friends or fill the remaining seats when ready.';
+ }
  ccBy('ccRoster').replaceChildren(...ccPeople.map((p,i)=>{const row=document.createElement('div');row.className='ccPlayer';
- const color=document.createElement('i');color.style.background=p.player_colour||ccColors[i%4];
- const name=document.createElement('span');name.textContent=p.display_name+(p.user_id===ccRoom.host_id?' ★':'')+(p.user_id===ccAuth?' (you)':'');
- const points=document.createElement('small');points.textContent=ccRoom.status==='playing'?p.score.toLocaleString()+' pts':'';
- row.append(color,name,points);return row}));
+ const dot=document.createElement('i');dot.style.background=p.player_colour||ccColors[i%4];const name=document.createElement('span');name.textContent=p.display_name+(p.user_id===ccRoom.host_id?' ★':'')+(p.user_id===ccAuth?' (you)':'');
+ const pts=document.createElement('small');pts.textContent=ccRoom.status==='playing'?Number(p.score||0).toLocaleString()+' points':'♥ ♥ ♥';row.append(dot,name,pts);return row}));
+ ccBy('ccBotRoster').replaceChildren(...Array.from({length:Math.max(0,4-ccPeople.length)},(_,i)=>{const row=document.createElement('div');row.className='ccPlayer';const dot=document.createElement('i');dot.style.background=locked?'#448eab':'#b8c4d1';const name=document.createElement('span');name.textContent=locked?'❄ Computer teammate '+(i+1):'○ Empty seat · waiting for friend';row.append(dot,name);return row}));
+ ccBy('ccSeatHelp').textContent=locked?'Unused seats are now assigned to computer teammates. To accept more friends, reopen seats before starting.':'Invite friends now. Empty seats stay open until you deliberately add computer teammates.';
+ ccBy('ccFillBots').hidden=!host||!waiting||locked;ccBy('ccUnlockBots').hidden=!host||!waiting||!locked;
+ ccBy('ccStart').hidden=!host||!waiting;ccBy('ccStart').disabled=!locked;
+ ccBy('ccSave').hidden=!host||!waiting;
  ccBy('ccTeamScore').textContent=ccRoom.status==='playing'?'Squad score reported: '+ccPeople.reduce((n,p)=>n+Number(p.score||0),0).toLocaleString():'';
  ccVoiceUI();
- ccBy('ccStart').hidden=!host||ccRoom.status!=='waiting';
- ccBy('ccSave').hidden=ccRoom.status!=='waiting';
  if(ccRoom.status==='playing'&&ccRoom.starts_at&&!ccPlaying)ccScheduleStart(ccRoom.starts_at);
 }
+async function ccFillBots(){if(!ccRoom)return;try{await ccRpc('cc_lock_bots',{p_room:ccRoom.id});await ccRefresh();ccStatus('Empty seats filled by computers. Ready to start when you choose.')}catch(e){ccStatus('Could not fill seats: '+e.message)}}
+async function ccUnlockBots(){if(!ccRoom)return;try{await ccRpc('cc_unlock_bots',{p_room:ccRoom.id});await ccRefresh();ccStatus('Seats reopened. You can invite more friends.')}catch(e){ccStatus('Could not reopen seats: '+e.message)}}
 async function ccLoadLogo(){const file=ccBy('ccLogo').files[0];if(!file)return;
  if(file.size>5e6){ccStatus('Choose a picture smaller than 5 MB.');return}
  if(!['image/png','image/jpeg','image/webp'].includes(file.type)){ccStatus('Only PNG, JPEG and WebP images are supported.');return}
  const url=URL.createObjectURL(file),im=new Image();
  im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=96;const x=c.getContext('2d');x.clearRect(0,0,96,96);const scale=Math.min(96/im.width,96/im.height);x.drawImage(im,(96-im.width*scale)/2,(96-im.height*scale)/2,im.width*scale,im.height*scale);
- ccBy('ccPreview').src=c.toDataURL('image/jpeg',0.68);ccBy('ccPreview').hidden=false;ccBy('ccPreview').dataset.custom='1';URL.revokeObjectURL(url);ccStatus('Logo selected. Click Save team choice.')};
+ ccBy('ccPreview').src=c.toDataURL('image/jpeg',0.68);ccBy('ccPreview').hidden=false;ccBy('ccPreview').dataset.custom='1';ccDrawSquadStage();URL.revokeObjectURL(url);ccStatus('Your logo is ready. Saving to this lobby…');if(ccRoom&&ccRoom.host_id===ccAuth)ccSave()};
  im.onerror=()=>{URL.revokeObjectURL(url);ccStatus('Could not read this image.')};im.src=url;
 }
-async function ccSave(){if(!ccRoom)return;ccStatus('Saving shared team…');
- try{const company=ccBy('ccCompany').value,b=ccBrand(company);
- const colour=b&&b.color?b.color:ccBy('ccColour').value;
- const custom=ccBy('ccPreview').dataset.custom==='1';
- const logo=await ccLogoAsDataUrl(custom?ccBy('ccPreview').src:(b&&b.src?b.src:(ccBy('ccPreview').hidden?null:ccBy('ccPreview').src)));
- const rider=(b&&b.rider)||(ccRoom.rider||myRider()||'snow');
+async function ccSave(){if(!ccRoom)return;ccStatus('Saving squad look…');
+ try{const choice=ccBy('ccCompany').value,b=ccBrand(choice),custom=!b;
+ const company=custom?'Your Squad':choice;
+ const colour=custom?ccBy('ccColour').value:b.color;
+ const logo=await ccLogoAsDataUrl(custom?(ccBy('ccPreview').dataset.custom==='1'?ccBy('ccPreview').src:null):b.src);
+ const rider=custom?'snow':b.rider;
  await ccRpc('cc_update_team',{p_room:ccRoom.id,p_company:company,p_colour:colour,p_logo:logo||null,p_rider:rider});
- delete ccBy('ccPreview').dataset.custom;
- await ccRefresh();ccStatus('Team updated for everyone.')
- }catch(e){ccStatus('Could not save: '+e.message)}}
+ delete ccBy('ccPreview').dataset.custom;await ccRefresh();ccStatus('Squad look saved for everyone in this lobby.')
+ }catch(e){ccStatus('Could not save squad look: '+e.message)}}
 async function ccStart(){try{ccBy('ccStart').disabled=true;const t=await ccRpc('cc_start_room',{p_room:ccRoom.id});ccScheduleStart(t);await ccRefresh()}catch(e){ccStatus('Could not start: '+e.message)}finally{ccBy('ccStart').disabled=false}}
 function ccScheduleStart(when){if(ccStartTimer)clearTimeout(ccStartTimer);
  const left=Math.max(0,new Date(when).getTime()-Date.now());ccStatus('Starting together in '+Math.ceil(left/1000)+' seconds…');
@@ -1846,7 +2126,7 @@ function ccScheduleStart(when){if(ccStartTimer)clearTimeout(ccStartTimer);
  ccStatus('Practice match started. Prototype physics run locally on each device.');
  },left)}
 async function ccLeave(){await ccStopVoice();if(ccRoom)try{await ccRpc('cc_leave_room',{p_room:ccRoom.id})}catch(e){ccStatus('Leave failed: '+e.message);return}
- if(ccTimer)clearInterval(ccTimer);if(ccChannel)ccDb.removeChannel(ccChannel);ccRoom=null;ccPlaying=false;ccBy('ccMode').disabled=false;ccBy('ccWelcome').hidden=false;ccBy('ccRoomUI').hidden=true;ccBy('ccPreview').hidden=true;ccBy('ccPreview').removeAttribute('src');delete ccBy('ccPreview').dataset.custom;
+ if(ccTimer)clearInterval(ccTimer);if(ccChannel)ccDb.removeChannel(ccChannel);ccRoom=null;ccPlaying=false;ccInviteCopiedAtCount=-1;ccBy('ccInviteNotice').hidden=true;ccBy('ccWelcome').hidden=false;ccBy('ccRoomUI').hidden=true;ccBy('ccPreview').hidden=true;ccBy('ccPreview').removeAttribute('src');delete ccBy('ccPreview').dataset.custom;
  history.replaceState({},'',location.pathname);ccStatus('Left the squad.')}
 function ccShow(){ccBy('ccOverlay').classList.add('ccOpen');ccBy('ccName').focus()}
 ccUI();
