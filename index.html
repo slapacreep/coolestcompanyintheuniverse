@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Coolest Company in the Universe</title>
-<meta name="description" content="Sleighs, snowballs, Christmas chaos. Watch the trailer, create a private squad and challenge your friends.">
+<meta name="description" content="Sleighs, snowballs and Christmas chaos. Join a private squad and challenge your friends.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Coolest Company in the Universe 🎄 | Watch the trailer">
-<meta property="og:description" content="Sleighs. Snowballs. One champion. Watch the Christmas game trailer and challenge your friends.">
+<meta property="og:title" content="Coolest Company in the Universe 🎄 | Join the Game">
+<meta property="og:description" content="Your private Christmas squad awaits. Join the game, choose a company and ride together.">
 <meta property="og:url" content="https://www.coolestcompanyintheuniverse.com/">
-<meta property="og:image" content="https://www.coolestcompanyintheuniverse.com/share/trailer-preview.jpg">
+<meta property="og:image" content="https://www.coolestcompanyintheuniverse.com/share/game-preview.jpg">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.coolestcompanyintheuniverse.com/share/trailer-preview.jpg">
+<meta name="twitter:image" content="https://www.coolestcompanyintheuniverse.com/share/game-preview.jpg">
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%20%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22116%22%20fill%3D%22%230f3a2a%22/%3E%20%20%3Cpath%20d%3D%22M92%20430%20L372%20118%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%2224%22%20stroke-linecap%3D%22round%22/%3E%20%20%3Cpath%20d%3D%22M372%20118%20V214%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22/%3E%20%20%3Cpath%20d%3D%22M356%20214%20L364%20186%20M380%20214%20L392%20190%22%20stroke%3D%22%2343c46a%22%20stroke-width%3D%2216%22%20stroke-linecap%3D%22round%22/%3E%20%20%3Cpath%20d%3D%22M322%20236%20H422%20L378%20424%20Q372%20438%20366%20424%20Z%22%20fill%3D%22%23f26a0f%22%20stroke%3D%22%23f26a0f%22%20stroke-width%3D%2214%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -453,6 +453,18 @@ body.trailer-open{overflow:hidden}
 #ccCard .ccLobbyRename small{flex-basis:100%;color:#526c65;font-size:12px}
 #ccCard .ccTop #ccTeamName{display:block;color:#587469!important;font-size:13px!important;margin-top:3px}
 #ccCard .ccTop #ccRoomState{display:block;margin-top:3px}
+
+/* v8.3: Create-time lobby naming and progressively darker, high-contrast stages. */
+#ccCard #ccWelcome #ccNewLobbyLabel{display:block;margin-top:14px}
+#ccCard #ccWelcome #ccNewLobbyName{width:100%;background:#fff;color:#14252a;border:1.5px solid #94b6a5;border-radius:10px;padding:12px 13px;font-weight:700}
+#ccCard #ccWelcome #ccNewLobbyLabel[hidden],#ccCard #ccWelcome #ccNewLobbyHelp[hidden]{display:none!important}
+#ccCard .ccSteps.ccStepOne{background:#f4faf6!important;border-color:#d5e7dc!important;border-left:5px solid #498f70!important}
+#ccCard .ccSteps.ccStepTwo{background:#e3f0e9!important;border-color:#bdd9c9!important;border-left:5px solid #267251!important}
+#ccCard .ccSteps.ccStepThree{background:#c9e1d3!important;border-color:#91bba5!important;border-left:5px solid #185b40!important}
+#ccCard .ccSteps.ccStepFour{background:#b3d0c0!important;border-color:#83aa95!important;border-left:5px solid #124a36!important}
+#ccCard .ccSteps:is(.ccStepOne,.ccStepTwo,.ccStepThree,.ccStepFour) b{color:#103e2f!important}
+#ccCard .ccSteps:is(.ccStepOne,.ccStepTwo,.ccStepThree,.ccStepFour) p{color:#19382e!important}
+#ccCard .ccSteps:is(.ccStepOne,.ccStepTwo,.ccStepThree,.ccStepFour) strong{color:#103e2f!important}
 </style>
 <style>
 #ccOverlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(3,9,20,.91);overflow-y:auto;padding:16px;color:#f6f8fa;font-family:system-ui,Arial,sans-serif}#ccOverlay.ccOpen{display:flex;align-items:flex-start;justify-content:center}
@@ -2027,25 +2039,27 @@ function ccUI(){
  <div class="ccHeader"><div><small>❄ COOLEST COMPANY · CHRISTMAS PRACTICE</small><h2>The Christmas Clubhouse ❄</h2></div><button id="ccClose" type="button" title="Close">×</button></div>
  <div id="ccWelcome"><p>Set up a private match for up to four friends. Nobody joins unless you send them the invitation.</p>
  <label>Your player name<input id="ccName" maxlength="40" autocomplete="nickname" placeholder="Your name"></label>
+ <label id="ccNewLobbyLabel">Name your private lobby<input id="ccNewLobbyName" maxlength="60" autocomplete="off" placeholder="e.g. Aramco Snowball Crew" value="My Snowball Squad"></label>
+ <p id="ccNewLobbyHelp" class="ccHint">Only invited friends can join. You can change the lobby name later without changing its invite link.</p>
  <button id="ccEnter" class="ccGold" type="button">Create my clubhouse</button>
  <p id="ccJoinInfo" class="ccHint" hidden>You've been invited. Enter your name, then join the waiting lobby.</p>
  <p class="ccHint">No timer runs while you're waiting. Three lives per player.</p></div>
  <div id="ccRoomUI" hidden>
  <div class="ccTop"><div><strong id="ccLobbyTitle">Private Practice Squad</strong><small id="ccTeamName">Your Squad</small><small id="ccRoomState">Waiting for friends · no countdown</small></div><span id="ccRole"></span></div>
  <div class="ccSquadStage" id="ccSquadStage" aria-label="Four snowmen representing lobby seats"><div class="ccStageHead"><span>❄ YOUR SQUAD · READY FOR THE SNOW</span><span class="ccStageBadge" id="ccStageState">Waiting for friends</span></div><div class="ccStageSquad" id="ccStageSquad"></div></div>
- <div class="ccSteps"><b>01 / PICK YOUR COLOURS</b><p>Pick a ready-made team, or upload your own logo and choose a sleigh colour. The default character is a snowman.</p></div>
+ <div class="ccSteps ccStepOne"><b>01 / PICK YOUR COLOURS</b><p>Pick a ready-made team, or upload your own logo and choose a sleigh colour. The default character is a snowman.</p></div>
  <div id="ccHostEdit"><div class="ccLobbyRename"><label for="ccLobbyName">Name this lobby<input id="ccLobbyName" type="text" maxlength="60" placeholder="e.g. Friday Snowball Crew" autocomplete="off"></label><button id="ccRename" type="button">Save lobby name</button><small>Only the host can rename this lobby. Your private invite link stays exactly the same.</small></div><label>Company / snowman style<select id="ccCompany"></select></label>
  <div class="ccBrandRow"><img id="ccPreview" alt="Team logo preview" hidden><label>Choose sleigh colour<input type="color" id="ccColour" value="#e2283a"></label></div>
  <label class="ccUpload">Your own logo (only for your own team)<input id="ccLogo" type="file" accept="image/png,image/jpeg,image/webp"></label>
  <button id="ccSave" type="button">Apply team selection</button><small id="ccBrandHelp">Ready-made companies set their logo and colour automatically.</small></div>
- <div class="ccSteps"><b>02 / INVITE YOUR SQUAD</b><p>Send this private link now. Friends appear below when they join. Nothing starts until the host decides.</p></div>
+ <div class="ccSteps ccStepTwo"><b>02 / INVITE YOUR SQUAD</b><p>Send this private link now. Friends appear below when they join. Nothing starts until the host decides.</p></div>
  <div class="ccInvite"><label>Invite-only link · share before you start<input id="ccLink" readonly></label><div class="ccButtons"><button id="ccCopy" type="button">Copy invitation</button><button id="ccWa" type="button">WhatsApp</button><button id="ccTg" type="button">Telegram</button><button id="ccShare" type="button">Share</button></div><div class="ccButtons"><button id="ccRemind" type="button">Send reminder</button></div></div>
  <p id="ccInviteNotice" class="ccInviteNotice" role="status" hidden></p>
- <div class="ccSteps"><b>03 / LOCK YOUR LINE-UP</b><p id="ccSeatHelp">Open places are reserved for friends until you choose to fill them with computer teammates.</p></div>
+ <div class="ccSteps ccStepThree"><b>03 / LOCK YOUR LINE-UP</b><p id="ccSeatHelp">Open places are reserved for friends until you choose to fill them with computer teammates.</p></div>
  <h3>Squad <span id="ccCount">0/4 people</span></h3><div id="ccRoster"></div><div id="ccBotRoster" aria-live="polite"></div>
  <div class="ccButtons" id="ccBotActions"><button id="ccFillBots" type="button">Fill empty seats with computers</button><button id="ccUnlockBots" type="button" hidden>Reopen seats for friends</button></div>
  <div class="ccVoiceBox" aria-label="Team voice"><strong>🎙 Team voice (experimental)</strong><div class="ccVoiceButtons"><button type="button" id="ccVoiceJoin">Join voice</button><button type="button" id="ccVoiceMute" disabled aria-pressed="false">Mute my mic</button><button type="button" id="ccVoiceLeave" disabled>Leave voice</button></div><div id="ccVoiceRoster" aria-live="polite"></div><p id="ccVoiceHint">Microphone optional. Voice needs network testing and may require a TURN server.</p></div>
- <div class="ccSteps"><b>04 / LAUNCH THE MATCH</b><p>Once you're happy with the squad, press Start. The five-second countdown happens <strong>after</strong> this click.</p></div>
+ <div class="ccSteps ccStepFour"><b>04 / LAUNCH THE MATCH</b><p>Once you're happy with the squad, press Start. The five-second countdown happens <strong>after</strong> this click.</p></div>
  <button id="ccStart" class="ccGold" type="button" disabled>Start match · 5-second countdown</button><button id="ccLeave" type="button">Leave lobby</button><p id="ccTeamScore"></p>
  <p class="ccHint">This is a lobby prototype. Gameplay is currently simulated independently on each device; shared real-time movement is not yet implemented.</p></div>
  <p id="ccStatus" role="status"></p></section>`;
@@ -2061,7 +2075,7 @@ function ccUI(){
  ccBy('ccVoiceJoin').onclick=ccStartVoice;ccBy('ccVoiceMute').onclick=ccToggleMic;ccBy('ccVoiceLeave').onclick=ccStopVoice;ccBy('micToggle').onclick=ccToggleMic;
  ccBy('ccName').value=localStorage.getItem('cc_player_name')||'';
  ccBy('ccName').addEventListener('keydown',e=>{if(e.key==='Enter')ccEnter()});
- if(new URLSearchParams(location.search).has('room')){ccBy('ccEnter').textContent='Join invited lobby';ccBy('ccJoinInfo').hidden=false}
+ if(new URLSearchParams(location.search).has('room')){ccBy('ccEnter').textContent='Join invited lobby';ccBy('ccJoinInfo').hidden=false;ccBy('ccNewLobbyLabel').hidden=true;ccBy('ccNewLobbyHelp').hidden=true}
  ccPresetChanged();
 }
 function ccMessage(app,reminder){const link=ccInvite();if(!link)return;const msg=(reminder?'Reminder: join our practice squad! ':'Join my private snowball squad! ')+link;
@@ -2096,13 +2110,24 @@ async function ccRpc(name,params){
  }
  return data;
 }
-async function ccEnter(){if(ccJoining)return;const name=ccBy('ccName').value.trim();if(!name){ccStatus('Enter your name first.');return}
+async function ccEnter(){if(ccJoining)return;
+ const name=ccBy('ccName').value.trim();if(!name){ccStatus('Enter your player name first.');return}
+ const invite=new URLSearchParams(location.search).get('room');
+ const lobbyName=invite?'':ccBy('ccNewLobbyName').value.trim();
+ if(!invite && (!lobbyName||lobbyName.length>60)){ccStatus('Name your private lobby (1–60 characters).');ccBy('ccNewLobbyName').focus();return}
  ccJoining=true;ccBy('ccEnter').disabled=true;ccStatus('Connecting to Supabase…');
- try{await ccInit();localStorage.setItem('cc_player_name',name);
- const invite=new URLSearchParams(location.search).get('room');let id;
- if(invite){id=await ccRpc('cc_join_room',{p_invite:invite,p_name:name})}
- else {const created=await ccRpc('cc_create_room_v3',{p_name:name});id=created.room_id}
- await ccOpenRoom(id);
+ try{
+  await ccInit();localStorage.setItem('cc_player_name',name);
+  let id,renameError=null;
+  if(invite){id=await ccRpc('cc_join_room',{p_invite:invite,p_name:name})}
+  else {
+   const created=await ccRpc('cc_create_room_v3',{p_name:name});id=created.room_id;
+   // Rename the newly created room server-side; invite UUID remains unchanged.
+   try{await ccRpc('cc_rename_room',{p_room:id,p_name:lobbyName})}
+   catch(e){renameError=e.message}
+  }
+  await ccOpenRoom(id);
+  if(renameError){ccBy('ccLobbyName').value=lobbyName;ccStatus('Lobby created, but its custom name was not saved: '+renameError+'. Try Save lobby name below.')}
  }catch(e){ccStatus('Could not enter room: '+e.message)}finally{ccJoining=false;ccBy('ccEnter').disabled=false}}
 async function ccOpenRoom(id){if(ccChannel)await ccDb.removeChannel(ccChannel);ccRoom={id};ccPlaying=false;
  await ccRefresh();ccBy('ccWelcome').hidden=true;ccBy('ccRoomUI').hidden=false;
