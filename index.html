@@ -135,7 +135,16 @@ button.ghost{background:transparent}
 .ok{color:#9ff0b8;font-size:14px;min-height:20px;margin-top:8px}
 .cta{left:50%;bottom:22px;transform:translateX(-50%);padding:6px;border-radius:999px;display:flex;gap:6px}
 .over{position:absolute;inset:0;display:none;place-items:center;background:radial-gradient(#06101acc,#030810f2)}
-.over.on{display:grid}
+ .over.on{display:grid}
+/* Championship reveal: the whole arena becomes ONE company emblem, never tiled. */
+#victoryMap{position:absolute;inset:0;width:100%;height:100%;z-index:20;display:none;pointer-events:none;background:#091725}
+#victoryMap.on{display:block;animation:ccVictoryAppear 1.1s ease both}
+@keyframes ccVictoryAppear{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:scale(1)}}
+.over.on{z-index:21;background:transparent;align-items:end;padding:0 10px 12px;pointer-events:none}
+.over.on .card{pointer-events:auto;max-width:min(560px,96vw);padding:12px 18px;background:#07101de8;border:1px solid #ffffff33;border-radius:18px;backdrop-filter:blur(10px)}
+.over.on .card #winLogo{height:42px;width:42px;border-radius:10px;margin:0 auto}
+.over.on .card h2{font-size:clamp(18px,2.8vw,26px)}
+@media(prefers-reduced-motion:reduce){#victoryMap.on{animation:none}}
 .over .card{text-align:center;padding:28px;max-width:420px}
 .over img{width:96px;height:96px;border-radius:24px;box-shadow:0 0 50px #f5c75b66;margin:10px auto;display:block}
 .over h2{margin:4px 0;font-size:clamp(24px,3.4vw,36px);font-weight:800;letter-spacing:-.02em}
@@ -309,6 +318,26 @@ footer{color:#8fa597}
 .trailer-top button{border:1px solid #ffffff44;background:#ffffff13;min-height:42px}
 #trailerVideo{display:block;width:100%;max-height:calc(100dvh - 110px);aspect-ratio:16/9;border-radius:12px;background:#000;object-fit:contain}
 body.trailer-open{overflow:hidden}
+
+/* 2026 accessible low-latency audio, lobby sharing and touch controls */
+.audio-dock{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:9px 14px;margin:0 auto 10px;width:min(100%,1050px);background:rgba(7,18,29,.92);border:1px solid rgba(245,199,91,.28);border-radius:16px;color:#fff;font-size:12px;z-index:3}
+.audio-dock label{display:flex;align-items:center;gap:5px;white-space:nowrap}.audio-dock input{width:clamp(55px,10vw,105px);accent-color:#f5c75b}.audio-dock button{min-height:34px;padding:5px 10px;font-size:12px}.audio-dock output{min-width:28px;font-variant-numeric:tabular-nums}.audio-dock .voice-state{color:#b6c9d3}
+.lobby-sharing{padding:12px;border:1px solid rgba(245,199,91,.24);border-radius:14px;margin:12px 0;background:#ffffff09}.lobby-sharing .row{justify-content:center;flex-wrap:wrap;gap:7px;margin-top:9px}.lobby-sharing button{min-height:38px;padding:7px 11px;font-size:12px}.lobby-sharing p{font-size:12px;margin:7px 0;line-height:1.5}.lobby-sharing input{width:100%;min-width:0;max-width:100%;padding:9px;background:#07111a;border:1px solid #ffffff44;border-radius:8px;color:#fff}
+.touch-stick{position:absolute;left:15px;bottom:14px;width:118px;height:118px;border-radius:50%;border:2px solid #ffffff80;background:#0714209c;display:none;touch-action:none;z-index:6;align-items:center;justify-content:center;box-shadow:0 6px 20px #0008}.touch-stick:before{content:'MOVE';position:absolute;top:14px;color:#ffffffa0;font-size:10px;letter-spacing:2px}.touch-knob{width:49px;height:49px;border-radius:50%;background:#f5c75b;box-shadow:0 0 0 4px #ffffff77,inset 0 1px 5px #fff;transform:translate(0,0)}
+@media(pointer:coarse){.touch-stick{display:flex}.pad .dpad{display:none}.pad{left:auto;right:14px;bottom:20px}.pad .abs{display:flex;gap:9px}.audio-dock{font-size:11px}.audio-dock label{gap:3px}.audio-dock input{width:60px}}
+@media(max-width:600px){.audio-dock{padding:7px 3px;gap:5px}.audio-dock .voice-state{flex-basis:100%;text-align:center}.lobby .card{padding:14px}}
+</style>
+<style>
+#ccOverlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(3,9,20,.91);overflow-y:auto;padding:16px;color:#f6f8fa;font-family:system-ui,Arial,sans-serif}#ccOverlay.ccOpen{display:flex;align-items:flex-start;justify-content:center}
+#ccCard{background:#14212b;border:1px solid #536a76;border-radius:20px;padding:24px;max-width:600px;width:100%;margin:24px auto;box-shadow:0 15px 60px #0008}
+#ccCard h2{font-size:28px;margin:0 0 8px;color:white}#ccCard h3{margin:18px 0 6px;color:white}#ccCard p{line-height:1.5;color:#d9e4eb}
+#ccCard small,#ccCard .ccHint{font-size:12px;color:#c6d5db}#ccCard label{display:block;margin:12px 0;font-size:13px;font-weight:600}
+#ccCard input:not([type=file]),#ccCard select{width:100%;margin-top:5px;padding:11px;border-radius:8px;background:#09151c;color:white;border:1px solid #78909a;font-size:16px}
+#ccCard button{background:#263c4c;color:#fff;border:1px solid #627784;border-radius:9px;padding:11px;margin:4px;cursor:pointer;font-size:14px;min-height:44px}#ccCard button:disabled{opacity:.45}#ccCard .ccGold{background:#efc55d;color:#16222c;border-color:#efc55d;font-weight:800}
+#ccCard .ccHeader,.ccTop,.ccPlayer{display:flex;justify-content:space-between;align-items:center;gap:10px}#ccClose{font-size:26px!important}
+#ccCard .ccTop{padding:12px;background:#213642;border-radius:11px}#ccCard .ccTop strong,#ccCard .ccTop small{display:block}
+#ccCard .ccInvite{margin-top:17px;padding:12px;border:1px solid #536a76;border-radius:11px}#ccCard .ccButtons{display:flex;flex-wrap:wrap;gap:3px}#ccCard .ccPlayer{border-bottom:1px solid #39525f;padding:9px 2px}#ccCard .ccPlayer span{flex:1}#ccCard .ccPlayer i{width:12px;height:12px;border-radius:50%}#ccCard #ccPreview{width:80px;height:80px;object-fit:contain;display:block;margin:10px auto}#ccCard #ccStatus{color:#f3d883;min-height:20px}
+#ccOverlay [hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -321,13 +350,15 @@ body.trailer-open{overflow:hidden}
 <div class="gamewrap"><canvas class="snowcap" id="snowCap" aria-hidden="true"></canvas>
 <main class="game" id="stage">
   <canvas id="cv" aria-label="Example of the game board"></canvas>
+  <canvas id="victoryMap" aria-label="Full arena bearing one giant winning company logo" role="img"></canvas>
   <div class="ex">example</div>
   <div class="glass tl play"><span class="dot"></span><span id="modeLbl">Practice</span><b id="clock">5:00</b><span class="x2" id="x2">×2</span></div>
   <div class="toast play" id="meWarn" aria-live="polite"></div>
   <div class="glass zoomer play" aria-label="Zoom"><button id="zIn" aria-label="Zoom in">+</button><input type="range" id="zRange" min="6" max="34" step="0.5" value="14" aria-label="Zoom level" orient="vertical"><button id="zOut" aria-label="Zoom out">−</button></div>
+  <div class="touch-stick play" id="touchStick" aria-label="Touch joystick for steering"><div class="touch-knob" id="touchKnob"></div></div>
   <div class="pad play" aria-label="Controls">
     <div class="dpad"><button data-d="3" aria-label="Up">▲</button><button data-d="2" aria-label="Left">◀</button><button data-d="0" aria-label="Right">▶</button><button data-d="1" aria-label="Down">▼</button></div>
-    <div class="abs"><button class="ab" id="zoomBtn" aria-label="Zoom (A)"><span>A</span><b id="zmN">0</b></button><button class="ab" id="throwBtn" aria-label="Throw a snowball (S)"><span>S</span><b id="sbN">0</b></button></div>
+    <div class="abs"><button class="ab" id="zoomBtn" aria-label="Boost (Z)"><span>Z</span><b id="zmN">0</b></button><button class="ab" id="throwBtn" aria-label="Throw a snowball (S)"><span>S</span><b id="sbN">0</b></button></div>
   </div>
   <div class="glass br play">
     <button class="mute" id="muteBtn" aria-label="Mute music" aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><svg class="x" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z" fill="#fff"/><path d="M13 7.5l4 5M17 7.5l-4 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></button>
@@ -343,6 +374,7 @@ body.trailer-open{overflow:hidden}
     <h2 id="lobName">Company</h2>
     <div class="lobcd"><span>Game starts in</span><b id="lobCd">–</b><span>Wed 23 Dec · waiting area opens 6:30pm New York · heats from 8pm · practice open now</span></div>
     <div class="gnbox" id="gnBox"><div class="lobk">Game Night</div><p class="sqnote" id="gnTxt">The waiting area opens Wed 23 Dec, 6:30pm New York. Keep this page open and you'll be checked in.</p><div class="row" id="gnRow" hidden><button class="gold" id="gnGo" type="button">Enter the waiting area</button></div></div>
+    <div class="lobby-sharing" aria-label="Invite and remind teammates"><b>Invite your squad</b><p>Send a private squad link using your preferred app. Reminder buttons open a new message — they never message anyone without your approval.</p><input id="inviteLink" readonly aria-label="Squad invite link" placeholder="Invite link appears here"><div class="row"><button type="button" id="inviteCopy">Copy link</button><button type="button" id="inviteWa">WhatsApp</button><button type="button" id="inviteTg">Telegram</button><button type="button" id="inviteNative">Share / Messages</button></div><div class="row"><button type="button" id="remindWa">Remind via WhatsApp</button><button type="button" id="remindTg">Remind via Telegram</button><button type="button" id="remindNative">Remind via Share</button></div><p id="inviteNote" role="status">Internet messaging depends on the recipient's app. SMS sent through a carrier may incur charges; choose an internet messenger to avoid SMS charges.</p></div>
     <div class="squadbox"><div class="lobk">Your sleigh squad (<span id="sqN">1</span>/4)</div><ul class="loblist" id="sqList"></ul>
       <div class="row" id="sqRow"><button class="gold" id="sqInvite" type="button">Copy invite link</button></div>
       <p class="sqnote" id="sqNote">Share the link with 3 teammates. Each joins with their own work email at your company's domain.</p></div>
@@ -361,12 +393,13 @@ body.trailer-open{overflow:hidden}
     <div class="row"><button class="gold" id="again">Play again</button><button id="winShare">Share</button><button id="winEnter">Enter · <span class="px">$999</span></button><button class="ghost" id="winBack">Back</button></div>
   </div></div>
 </main></div>
+<div class="audio-dock" role="group" aria-label="Game audio controls"><label>♫ Music <input id="musicVol" type="range" min="0" max="100" value="12" aria-label="Music volume"><output id="musicVal">12%</output></label><label>✦ Effects <input id="fxVol" type="range" min="0" max="100" value="85" aria-label="Sound effects volume"><output id="fxVal">85%</output></label><label>🎙 Voices <input id="voiceVol" type="range" min="0" max="100" value="100" aria-label="Teammate volume"><output id="voiceVal">100%</output></label><button type="button" id="voiceToggle" aria-pressed="false">Mute teammates</button><button type="button" id="micToggle" aria-pressed="true" disabled title="Requires the game voice server">Mic unavailable</button><span class="voice-state" id="voiceState">Voice chat unavailable until a voice/signalling service is connected</span></div>
 
 <div class="lights" id="lights" aria-hidden="true"><svg id="wire" preserveAspectRatio="none"></svg></div>
 <section class="hud2" id="hud2" hidden>
   <div class="hcard"><div class="k" id="meK">Your score · practice, not recorded</div><div class="v" id="meScore">0</div>
     <div class="hstats"><span>Snowballs <b id="sbN2">0</b></span><span>Zooms <b id="zmN2">0</b></span></div>
-    <div class="keys">Arrows steer · S snowball · A zoom · pinch or scroll to zoom the map</div></div>
+    <div class="keys">Arrows steer · S snowball · Z boost · pinch or scroll to zoom the map</div></div>
   <div class="hcard"><div class="k">Map<button class="max" data-open="mapFull" aria-label="Open the full map">⤢ Full map</button></div><canvas id="mini" width="140" height="140" aria-hidden="true"></canvas></div>
   <div class="hcard lbcard"><div class="k"><span id="lbK">Leaderboard · practice, not recorded</span><button class="max" data-open="lbFull" aria-label="Open the full leaderboard">⤢ Full leaderboard</button></div><ol id="lb"></ol></div>
 </section>
@@ -405,7 +438,7 @@ body.trailer-open{overflow:hidden}
       <details class="rule"><summary><span class="rn">Rule 2</span><span class="rt">Controls, snowballs, Zoom and the map</span><i aria-hidden="true"></i></summary><ul class="rl">
         <li>Steer with the arrow keys, or swipe on a phone.</li>
         <li>S throws a snowball. You earn one for every 10 points. A hit does no damage, but the rival spins round once and loses control. Santa throws snowballs at anyone.</li>
-        <li>A is Zoom: nitro, triple speed for a moment. You earn a Zoom every time you circle a rival.</li>
+        <li>Z is Zoom: nitro, triple speed for a moment. You earn a Zoom every time you circle a rival.</li>
         <li>Hills launch you into a short jump at double speed, over anything in the way.</li>
         <li>Trees, blocks, the rocket, the van and the alien spaceship stop you dead. Steer to ride on.</li>
         <li>Two rival sleighs that crash head-on both spin to a stop, then ride on. Teammates ride straight through each other, and can never engulf each other.</li>
@@ -500,6 +533,7 @@ body.trailer-open{overflow:hidden}
   <div class="row"><button type="submit" class="gold">Enter lobby</button><button type="button" class="ghost" id="forgotBtn">Forgotten code?</button><button type="button" class="cancel ghost">Cancel</button></div>
 </form></div>
 
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 {
 const W=1200,H=1200,N=W*H,CH=32,TS=20,ROUND=300,IDLE=60,NBOTS=600,ZMIN=3,ZMAX=34,LOD=8;
@@ -653,7 +687,7 @@ const inView=(x,y,m=4)=>{const v=view();return x>v.x0-m&&x<v.x1+m&&y>v.y0-m&&y<v
 function shake(hard){const now=performance.now();if(!hard&&now-lastShake<600)return;lastShake=now;if(rec){shk=(hard?16:7)*dpr();return}stage.classList.remove('shake','shake2');void stage.offsetWidth;stage.classList.add(hard?'shake2':'shake')}
 function burst(x,y,col,n=14,v=7){if(!inView(x,y,10))return;for(let k=0;k<n;k++){const a=Math.random()*7,s=v*(.4+Math.random());parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l:.9,col:k%3?col:'#fff'})}}
 
-function crash(co,why){for(const i of co.trail)if(trail[i]===co.id)trail[i]=-1;co.trail=[];co.ts.clear();co.plan=[];co.q=[];if(co.id===me){shake(true);$('meWarn').textContent=(why||'Sent home!')+' Steer to ride again.'}co.air=0;co.boostEnd=0;
+function crash(co,why){for(const i of co.trail)if(trail[i]===co.id)trail[i]=-1;co.trail=[];co.ts.clear();co.plan=[];co.q=[];if(co.id===me){soundFx('crash');shake(true);$('meWarn').textContent=(why||'Sent home!')+' Steer to ride again.'}co.air=0;co.boostEnd=0;
   burst(co.hx+.5,co.hy+.5,co.color);
   const p=nearestOwn(co);if(p){co.hx=co.px=p[0];co.hy=co.py=p[1]}else if(!co.elim)respawn(co);
   if(!co.bot)co.parked=true}
@@ -667,10 +701,10 @@ function claim(co){const path=co.trail;co.trail=[];co.ts.clear();let x0=W,y0=H,x
   while(st.length){const k=st.pop(),x=x0+k%bw,y=y0+((k/bw)|0);if(x>x0)push(x-1,y);if(x<x1)push(x+1,y);if(y>y0)push(x,y-1);if(y<y1)push(x,y+1)}
   const fresh=new Uint8Array(bw*bh);
   for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const i=y*W+x,k=(y-y0)*bw+(x-x0);if(!seen[k]&&own[i]!==co.tid){if(own[i]>=0)stolen++;else empt++;setOwn(i,co.tid);fresh[k]=1}}
-  addPts(co,(stolen*5+empt)*mult());
+  addPts(co,(stolen*5+empt)*mult());if(co.id===me)soundFx('tile');
   // a rival whose sleigh is inside the newly wrapped area has been circled: sent home
   for(const o of C){if(o.tid===co.tid||o.elim||o.hx<x0||o.hx>x1||o.hy<y0||o.hy>y1)continue;
-    if(fresh[(o.hy-y0)*bw+(o.hx-x0)]){addPts(co,10*mult());co.boosts=(co.boosts||0)+1;if(co.id===me)$('meWarn').textContent='Engulfed one! +10 and a Zoom (A)';burst(o.hx+.5,o.hy+.5,o.color,24,9);
+    if(fresh[(o.hy-y0)*bw+(o.hx-x0)]){addPts(co,10*mult());co.boosts=(co.boosts||0)+1;if(co.id===me)soundFx('kill');if(co.id===me)$('meWarn').textContent='Engulfed one! +10 and a Zoom (Z)';burst(o.hx+.5,o.hy+.5,o.color,24,9);
       if(o.id===me||co.id===me)shake(true);else if(inView(o.hx,o.hy))shake(false);if(MODE==='attract'&&o.hero)crash(o);else eliminate(o,co)}}if(path.length>6)burst(co.hx+.5,co.hy+.5,co.color,10,5)}
 
 // spatial buckets for nearby heads
@@ -698,15 +732,15 @@ function botThink(co){
 function stepHead(co){
   if((co.spinEnd||0)>t){}else if(co.bot)botThink(co);else if(co.q.length)co.dir=co.q.shift();
   const nx=co.hx+DIRS[co.dir][0],ny=co.hy+DIRS[co.dir][1];co.px=co.hx;co.py=co.hy;
-  if(!inB(nx,ny)){co.acc=0;burst(nx+.5,ny+.5,'#dff3ff',14,6);if(co.bot){co.plan=[];co.sleep=t+.25}else{co.parked=true;co.q=[];if(co.id===me){shake(false);$('meWarn').textContent='You hit the ice wall! Steer to go again.'}}return}
+  if(!inB(nx,ny)){co.acc=0;burst(nx+.5,ny+.5,'#dff3ff',14,6);if(co.bot){co.plan=[];co.sleep=t+.25}else{co.parked=true;co.q=[];if(co.id===me){soundFx('hit');shake(false);$('meWarn').textContent='You hit the ice wall! Steer to go again.'}}return}
   const i=ny*W+nx;
   if(co.air>0)co.air--;
   else if(blocked(i)){co.acc=0;burst(nx+.5,ny+.5,terr[i]===1?'#2f8f4e':'#c9d3e2',8,4);
-    if(co.bot){co.plan=[];co.sleep=t+.25}else{co.parked=true;co.q=[];if(co.id===me){shake(false);$('meWarn').textContent=terr[i]===1?'You hit a tree! Steer to go again.':'Blocked! Steer to go again.'}}return}
-  else if(terr[i]===2){co.air=6;if(co.id===me)$('meWarn').textContent='Jump!'}
+    if(co.bot){co.plan=[];co.sleep=t+.25}else{co.parked=true;co.q=[];if(co.id===me){soundFx('hit');shake(false);$('meWarn').textContent=terr[i]===1?'You hit a tree! Steer to go again.':'Blocked! Steer to go again.'}}return}
+  else if(terr[i]===2){co.air=6;if(co.id===me){soundFx('hill');$('meWarn').textContent='Jump!'}}
   if(co.air<=0){for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const a=buckets.get(bk(nx,ny)+dx+dy*100);if(a)for(const o of a){if(o.tid===co.tid||o.elim||o.air>0||(o.imm||0)>t||(co.imm||0)>t)continue;
     if((o.hx===nx&&o.hy===ny)||(o.hx===co.hx&&o.hy===co.hy&&o.px===nx&&o.py===ny)){for(const q of [co,o]){q.spinEnd=t+SPIN;q.stopEnd=t+SPIN;q.spinDir=q===co?1:-1;q.imm=t+SPIN+.7;q.q=[];q.plan=[]}
-      burst(nx+.5,ny+.5,'#ffffff',22,9);if(co.id===me||o.id===me){shake(true);$('meWarn').textContent='Crash! Both sleighs spin out.'}return}}}}
+      burst(nx+.5,ny+.5,'#ffffff',22,9);if(co.id===me||o.id===me){soundFx('crash');shake(true);$('meWarn').textContent='Crash! Both sleighs spin out.'}return}}}}
   if(co.ts.has(i)){co.hx=nx;co.hy=ny;claim(co);return}
   {const o=trail[i];if(o>=0&&o!==co.id&&C[o]&&C[o].tid===co.tid&&!C[o].elim){const m=C[o];co.hx=nx;co.hy=ny;co.trail.push(i);for(const j of m.trail){co.trail.push(j);if(trail[j]===m.id)trail[j]=co.id}m.trail=[];m.ts.clear();m.plan=[];
     if(co.id===me||m.id===me)$('meWarn').textContent='Teamwork! Box closed together.';claim(co);return}}
@@ -715,12 +749,12 @@ function stepHead(co){
 
 // snowballs: Space or the ❄ button throws one ahead; a hit spins the rival round once (they skid straight on, unable to steer)
 const BASE_SPEED=10;const SB_SPEED=26,SB_LIFE=1.5,SB_CD=.45,SPIN=.9;let balls=[];
-function zoom(co){if(MODE==='live'){if(co&&co.id===me)liveSend('z');return false}if(co.elim||!(co.boosts>0)||(co.boostEnd||0)>t)return false;co.boosts--;co.boostEnd=t+1.6;if(co.parked){co.parked=false;co.acc=0}burst(co.hx+.5,co.hy+.5,'#f5c75b',12,6);return true}
-function throwBall(co){if(MODE==='live'){if(co&&co.id===me)liveSend('s');return false}if(co.elim||co.parked||t<(co.cd||0)||(co.spinEnd||0)>t||!(co.ammo>0))return false;co.ammo--;co.cd=t+SB_CD;SBS.throws++;const [hx,hy]=headPos(co),d=DIRS[co.dir];
+function zoom(co){if(MODE==='live'){if(co&&co.id===me)liveSend('z');return false}if(co.elim||!(co.boosts>0)||(co.boostEnd||0)>t)return false;co.boosts--;co.boostEnd=t+1.6;if(co.id===me)soundFx('zoom');if(co.parked){co.parked=false;co.acc=0}burst(co.hx+.5,co.hy+.5,'#f5c75b',12,6);return true}
+function throwBall(co){if(MODE==='live'){if(co&&co.id===me)liveSend('s');return false}if(co.elim||co.parked||t<(co.cd||0)||(co.spinEnd||0)>t||!(co.ammo>0))return false;co.ammo--;co.cd=t+SB_CD;if(co.id===me)soundFx('throw');SBS.throws++;const [hx,hy]=headPos(co),d=DIRS[co.dir];
   balls.push({x:hx+d[0]*.7,y:hy+d[1]*.7,dx:d[0],dy:d[1],o:co.id,l:SB_LIFE});return true}
 const SBS={throws:0,hits:0};window.__sb=()=>({...SBS,live:balls.length});
 function spinHit(co,b){SBS.hits++;if(co.air>0)return;co.spinEnd=t+SPIN;co.spinDir=Math.random()<.5?-1:1;co.q=[];co.plan=[];burst(co.hx+.5,co.hy+.5,'#ffffff',18,8);
-  if(co.id===me){shake(true);$('meWarn').textContent='Snowballed! Spinning…'}else if(b.o===me)shake(false)}
+  if(co.id===me){soundFx('hit');shake(true);$('meWarn').textContent='Snowballed! Spinning…'}else if(b.o===me)shake(false)}
 function stepBalls(dt){for(const b of balls){const n=Math.max(1,Math.ceil(SB_SPEED*dt/.5));
   for(let k=0;k<n&&b.l>0;k++){b.x+=b.dx*SB_SPEED*dt/n;b.y+=b.dy*SB_SPEED*dt/n;
     if(b.x<0||b.y<0||b.x>=W||b.y>=H){b.l=0;break}
@@ -744,12 +778,12 @@ function stepSanta(dt){const S=SANTA;if(!S)return;
     const v=DIRS[d];balls.push({x:S.x+v[0]*.8,y:S.y+v[1]*.8,dx:v[0],dy:v[1],o:-2,l:SB_LIFE})}
   for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const a=buckets.get(bk(S.x|0,S.y|0)+dx+dy*100);if(a)for(const o of a){if(o.elim)continue;const [hx,hy]=headPos(o);
     if(Math.abs(hx-S.x)<1&&Math.abs(hy-S.y)<1){addPts(o,10*mult());S.down=t+2.2;S.run=t+5;S.turn=t+2.2;const a2=Math.random()*7;S.dx=Math.cos(a2);S.dy=Math.sin(a2);burst(S.x,S.y,'#e2283a',20,8);burst(S.x,S.y,'#ffffff',14,7);
-      if(o.id===me){shake(false);$('meWarn').textContent='You knocked Santa over! +10'}return}}}}
+      if(o.id===me){soundFx('score');shake(false);$('meWarn').textContent='You knocked Santa over! +10'}return}}}}
 function eliminate(co,by){co.elim=true;for(const i of co.trail)if(trail[i]===co.id)trail[i]=-1;co.trail=[];co.ts.clear();
   const T=TM(co);if(T.members.every(m=>m.elim)&&!T.out){T.out=true;T.dis=[];for(let y=T.y0;y<=T.y1;y++)for(let x=T.x0;x<=T.x1;x++)if(own[y*W+x]===T.id)T.dis.push(y*W+x);T.dis.sort(()=>Math.random()-.5)}
-  if(co.id===me){shake(true);const fin=T.pts;lastScore=fin;me=-1;if(MODE==='practice'&&!over)setTimeout(()=>{if(over)return;over=true;
+  if(co.id===me){soundFx('kill');shake(true);const fin=T.pts;lastScore=fin;me=-1;if(MODE==='practice'&&!over)setTimeout(()=>{if(over)return;
     $('overTitle').textContent='Game over';$('winLogo').hidden=!by;if(by)$('winLogo').src=urlOf(by);$('winName').textContent=`${pts(fin)} points`;
-    $('winMe').textContent=(by?`Engulfed by ${by.name}. `:'')+(T.out?'Your whole squad is out. ':'Your squad rides on without you. ')+'Practice scores are not recorded on any leaderboard.';$('over').classList.add('on')},900)}else if(inView(co.hx,co.hy))shake(false)}
+    $('winMe').textContent=(by?`Engulfed by ${by.name}. `:'')+(T.out?'Your whole squad is out. ':'Your squad rides on without you. ')+'Practice scores are not recorded on any leaderboard.';$('meWarn').textContent='Eliminated — spectating the rest of the match. The full-map winner reveal appears at the end.'},900)}else if(inView(co.hx,co.hy))shake(false)}
 
 let nameN=0;const usedNames=new Set();
 function botName(){for(let k=0;k<50;k++){const n=PRE[(Math.random()*PRE.length)|0]+' '+SUF[(Math.random()*SUF.length)|0];if(!usedNames.has(n)){usedNames.add(n);return n}}return 'Company '+(++nameN)}
@@ -772,15 +806,50 @@ function newRound(){
   for(let k=0,nb=(MODE==='practice'?200:NBOTS)/SQUAD;k<nb;k++)addBot(1+((Math.random()*3)|0));
   me=-1;if(MODE==='practice'&&practBrand){me=addSquad(practBrand.name,practBrand.color,3,false,practBrand.im,2);const co=C[me];co.rider=myRider();cam.x=co.hx;cam.y=co.hy;cam.zc=14}
   if(MODE==='attract'){seedExample();cam.x=W/2;cam.y=H/2}
-  if(MODE==='practice')$('meWarn').textContent=matchMedia('(pointer:coarse)').matches?'Use the pad or swipe to steer':'Arrows or swipe to steer · S snowball · A zoom';
-  $('over').classList.remove('on');$('again').hidden=false;$('winEnter').hidden=false;liveLabels(false);stage.classList.toggle('playing',MODE==='practice');$('hud2').hidden=MODE!=='practice';PZ=14;$('zRange').value=PZ}
+  if(MODE==='practice')$('meWarn').textContent=matchMedia('(pointer:coarse)').matches?'Use the pad or swipe to steer':'Arrows or swipe to steer · S snowball · Z zoom';
+  ccResetVictory();$('over').classList.remove('on');$('again').hidden=false;$('winEnter').hidden=false;liveLabels(false);stage.classList.toggle('playing',MODE==='practice');$('hud2').hidden=MODE!=='practice';PZ=14;$('zRange').value=PZ}
 
 function leader(){let b=null;for(const c of teams())if(!b||c.pts>b.pts)b=c;return b}
 let lastScore=null;
+// Championship reveal: a single uninterrupted emblem covers the arena.
+// Runs only when a match has actually ended; the map remains available underneath.
+let ccVictoryWinner=null;
+function ccShowVictory(co){
+  if(!co)return;
+  ccVictoryWinner=co;
+  const canvas=$('victoryMap');canvas.classList.add('on');
+  const img=new Image();img.onload=()=>ccPaintVictory(co,img);img.onerror=()=>ccPaintVictory(co,null);
+  img.src=urlOf(co);
+  ccPaintVictory(co,null);
+}
+function ccPaintVictory(co,img){
+  if(!co||ccVictoryWinner!==co)return;
+  const canvas=$('victoryMap'),r=stage.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);
+  canvas.width=Math.max(2,Math.round(r.width*d));canvas.height=Math.max(2,Math.round(r.height*d));
+  const g=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
+  g.fillStyle='#06101d';g.fillRect(0,0,w,h);
+  const radius=Math.min(w,h)*.44,cx=w/2,cy=h/2;
+  g.save();g.beginPath();g.arc(cx,cy,radius,0,Math.PI*2);g.clip();
+  const grad=g.createRadialGradient(cx,cy,0,cx,cy,radius);grad.addColorStop(0,'#edf9ff');grad.addColorStop(1,'#b6d8ea');g.fillStyle=grad;g.fillRect(cx-radius,cy-radius,radius*2,radius*2);
+  // ONE coherent enlarged logo, clipped inside the full-map outline.
+  if(img&&img.complete&&img.naturalWidth){
+    const scale=Math.min(radius*1.85/img.naturalWidth,radius*1.85/img.naturalHeight);
+    const iw=img.naturalWidth*scale,ih=img.naturalHeight*scale;
+    g.drawImage(img,cx-iw/2,cy-ih/2,iw,ih);
+  }else{g.fillStyle=co.color||'#e2283a';g.beginPath();g.arc(cx,cy,radius*.8,0,Math.PI*2);g.fill()}
+  g.restore();g.strokeStyle='#f2faff';g.lineWidth=Math.max(3,d*5);g.beginPath();g.arc(cx,cy,radius,0,Math.PI*2);g.stroke();
+  g.fillStyle='#ffffff';g.font=`bold ${Math.max(16,Math.round(19*d))}px sans-serif`;g.textAlign='center';
+  g.fillText('THE WHOLE MAP BELONGS TO',cx,Math.max(28,cy-radius-24*d));
+  g.font=`bold ${Math.max(20,Math.round(28*d))}px sans-serif`;
+  g.fillText(String(co.name||'Winning team').slice(0,30),cx,Math.min(h-20*d,cy+radius+36*d));
+}
+function ccResetVictory(){ccVictoryWinner=null;$('victoryMap').classList.remove('on')}
+addEventListener('resize',()=>{if(ccVictoryWinner)ccPaintVictory(ccVictoryWinner,null)});
+
 function endRound(){over=true;if(me>=0)lastScore=mePts();const L=leader();if(!L)return;$('overTitle').textContent='Practice round over';$('winLogo').hidden=false;
   $('winName').textContent=L.name;$('winLogo').src=urlOf(L);
   $('winMe').textContent=practBrand?(me>=0?`Your squad scored ${pts(mePts())}. Practice only, nothing recorded.`:'You were knocked out this round.'):'Practise free to see how you would do.';
-  $('over').classList.add('on')}
+  ccShowVictory(L);$('over').classList.add('on')}
 
 function step(dt){
   t+=dt;dblOn=false;rebucket();
@@ -1035,11 +1104,13 @@ const KEYS={ArrowRight:0,ArrowDown:1,ArrowLeft:2,ArrowUp:3};
 const anyModal=()=>document.querySelector('.modal.on');
 addEventListener('keydown',e=>{if(e.key==='Escape'){closeFull();stream(false);document.querySelectorAll('.modal').forEach(m=>m.classList.remove('on'));return}
   if(anyModal())return;
-  if((e.key==='a'||e.key==='A')&&me>=0){e.preventDefault();if(!frozen&&!over&&zoom(C[me]))C[me].last=t;return}
+  if((e.key==='z'||e.key==='Z')&&me>=0){e.preventDefault();if(!frozen&&!over&&zoom(C[me]))C[me].last=t;return}
   if((e.key==='s'||e.key==='S'||e.key===' '||e.code==='Space')&&me>=0){e.preventDefault();if(!frozen&&!over&&throwBall(C[me]))C[me].last=t;return}
   if(!(e.key in KEYS)||me<0)return;e.preventDefault();steer(KEYS[e.key])});
 $('zoomBtn').onclick=e=>{e.stopPropagation();if(me>=0&&!frozen&&!over&&zoom(C[me]))C[me].last=t};
 $('throwBtn').onclick=e=>{e.stopPropagation();if(me>=0&&!frozen&&!over&&throwBall(C[me]))C[me].last=t};
+(function(){const pad=$('touchStick'),knob=$('touchKnob');let active=null,lastDir=null;function move(e){if(e.pointerId!==active)return;const b=pad.getBoundingClientRect(),dx=e.clientX-(b.left+b.width/2),dy=e.clientY-(b.top+b.height/2),dist=Math.hypot(dx,dy),max=32,scale=dist?Math.min(max,dist)/dist:0;knob.style.transform=`translate(${dx*scale}px,${dy*scale}px)`;if(dist<13)return;const dir=Math.abs(dx)>Math.abs(dy)?dx>0?0:2:dy>0?1:3;if(dir!==lastDir){steer(dir);lastDir=dir}}
+pad.addEventListener('pointerdown',e=>{if(active!==null)return;active=e.pointerId;lastDir=null;pad.setPointerCapture(e.pointerId);move(e);e.preventDefault()});pad.addEventListener('pointermove',move);function end(e){if(e.pointerId!==active)return;active=null;lastDir=null;knob.style.transform='translate(0,0)'}pad.addEventListener('pointerup',end);pad.addEventListener('pointercancel',end)})();
 const ptrs=new Map();let pinch=null,PZ=14;
 const setPZ=v=>{PZ=Math.max(6,Math.min(34,v));$('zRange').value=PZ};
 $('zRange').addEventListener('input',e=>setPZ(+e.target.value));
@@ -1182,6 +1253,13 @@ function renderSquad(){const q=SQ||{size:4,joined:1,captain:true,members:[{name:
   if(q.joined>=q.size)$('sqNote').innerHTML='<b>Squad complete.</b> On Game Night, all 4 check in at the waiting area from 6:30pm New York and you\'re placed in a heat with 24 other companies.';
   else if(!q.captain)$('sqNote').textContent=`${q.size-q.joined} seat${q.size-q.joined===1?'':'s'} left. Your captain shares the invite link.`;
   $('sqList').querySelectorAll('.rm').forEach(b=>b.onclick=()=>{if(!confirm('Remove this teammate from your squad?'))return;api('/squad/remove',{id:+b.dataset.id}).then(()=>api('/squad')).then(j=>{SQ=j;renderSquad()}).catch(err=>alert(err.message))})}
+// Squad invitation UX. A real room token is requested from the existing backend when available.
+let activeInvite='';
+function inviteMessage(remind=false){return (remind?'Quick reminder — join our sleigh squad! ':'Join my sleigh squad in Coolest Company in the Universe! ')+(activeInvite||'https://www.coolestcompanyintheuniverse.com/')}
+function shareApp(app,remind=false){const msg=inviteMessage(remind),url=activeInvite||'https://www.coolestcompanyintheuniverse.com/';if(app==='wa')window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer');else if(app==='tg')window.open('https://t.me/share/url?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(remind?'Reminder: join our sleigh squad!':'Join my sleigh squad!'),'_blank','noopener,noreferrer');else if(navigator.share)navigator.share({title:'Sleigh squad invite',text:msg,url}).catch(()=>{});else navigator.clipboard?.writeText(msg).then(()=>{$('inviteNote').textContent='Message copied. Paste it in your preferred internet messaging app.'}).catch(()=>{$('inviteNote').textContent=msg})}
+async function refreshInvite(){const note=$('inviteNote');if(LIVEAPI&&session){try{const j=await api('/squad/invite',{});activeInvite=j.link;note.textContent='Private invite ready. Only teammates with valid registration can join.'}catch(e){note.textContent='Could not create private invite: '+e.message;activeInvite=''}}else{activeInvite='';note.textContent='Preview mode: sharing opens the public website only. Private squad links require the multiplayer backend. SMS may incur charges.'}$('inviteLink').value=activeInvite||'https://www.coolestcompanyintheuniverse.com/'}
+$('inviteCopy').onclick=async()=>{if(!activeInvite)await refreshInvite();try{await navigator.clipboard.writeText($('inviteLink').value);$('inviteNote').textContent='Link copied.'}catch(_){$('inviteNote').textContent=$('inviteLink').value}};
+for(const [id,app,reminder] of [['inviteWa','wa',false],['inviteTg','tg',false],['inviteNative','native',false],['remindWa','wa',true],['remindTg','tg',true],['remindNative','native',true]])$(id).onclick=()=>shareApp(app,reminder);
 $('sqInvite').onclick=async()=>{const n=$('sqNote');if(!LIVEAPI){n.textContent='Invite links work once the site is live. Each teammate joins with their own work email at your company\'s domain.';return}
   try{const j=await api('/squad/invite',{});try{await navigator.clipboard.writeText(j.link);n.innerHTML=`<b>Invite link copied.</b> Teammates must use an <b>@${esc(j.domain)}</b> email. Making a new link retires the old one.`}catch(_){n.innerHTML=`Share this link: <b>${esc(j.link)}</b>`}}catch(err){n.textContent=err.message}};
 
@@ -1283,7 +1361,7 @@ function liveInit(m){const S=m.snap;MODE='live';liveLabels(true);over=false;froz
   for(const q of S.sl)liveSleigh(q.st,true);
   for(const c of S.cos){const L=LV.lead[c.id];if(L>=0&&c.out)C[L].out=true}
   me=m.you;LV.you=m.you;const co=C[me];if(co){cam.x=co.hx;cam.y=co.hy}cam.zc=PZ=14;$('zRange').value=PZ;
-  $('over').classList.remove('on');stage.classList.add('playing');$('hud2').hidden=false;$('meWarn').textContent=S.started?'Arrows or swipe to steer · S snowball · A zoom':'Get ready…';
+  $('over').classList.remove('on');stage.classList.add('playing');$('hud2').hidden=false;$('meWarn').textContent=S.started?'Arrows or swipe to steer · S snowball · Z zoom':'Get ready…';
   $('stage').scrollIntoView({behavior:'smooth',block:'center'})}
 function liveSleigh(a,full){const [id,hx,hy,dir,acc,f,ammo,boosts,tr,add]=a,co=C[id];if(!co||!co.tid&&co.tid!==0)return;
   if(co.hx!==hx||co.hy!==hy){co.px=co.hx||hx;co.py=co.hy||hy;if(Math.abs(co.px-hx)+Math.abs(co.py-hy)>3){co.px=hx;co.py=hy}}co.hx=hx;co.hy=hy;co.dir=dir;co.acc=acc/100;
@@ -1291,7 +1369,7 @@ function liveSleigh(a,full){const [id,hx,hy,dir,acc,f,ammo,boosts,tr,add]=a,co=C
   if(full||tr===-1){for(const i of co.trail)if(trail[i]===id)trail[i]=-1;co.trail=[];co.ts.clear()}
   for(const i of (full?tr:add)){co.trail.push(i);co.ts.add(i);if(trail[i]<0)trail[i]=id}
   if(f&16&&!co.elim){co.elim=true;for(const i of co.trail)if(trail[i]===id)trail[i]=-1;co.trail=[]}}
-function liveTick(m){if(MODE!=='live')return;t=m.t;if(m.t>0&&$('meWarn').textContent==='Get ready…')$('meWarn').textContent='Go! Arrows or swipe to steer · S snowball · A zoom';RAD=CRAD=m.rad;
+function liveTick(m){if(MODE!=='live')return;t=m.t;if(m.t>0&&$('meWarn').textContent==='Get ready…')$('meWarn').textContent='Go! Arrows or swipe to steer · S snowball · Z zoom';RAD=CRAD=m.rad;
   for(const a of m.s)liveSleigh(a,false);
   for(let k=0;k<m.land.length;k+=3){const o=m.land[k+2]<0?-1:LV.lead[m.land[k+2]];for(let i=m.land[k];i<m.land[k]+m.land[k+1];i++)setOwn(i,o)}
   m.sc.forEach(([p,c,o],cid)=>{const L=LV.lead[cid];if(L>=0){C[L].pts=p;if(o)C[L].out=true}});
@@ -1299,12 +1377,12 @@ function liveTick(m){if(MODE!=='live')return;t=m.t;if(m.t>0&&$('meWarn').textCon
   for(const e of m.ev){const [k,a,b]=e,co=C[a];
     if(k==='hit'&&co){burst(co.hx+.5,co.hy+.5,'#ffffff',18,8);if(a===me){shake(true);$('meWarn').textContent='Snowballed! Spinning…'}else if(b===me)shake(false)}
     else if(k==='crash'&&co){burst(co.hx+.5,co.hy+.5,'#ffffff',22,9);if(a===me||b===me){shake(true);$('meWarn').textContent='Crash! Both sleighs spin out.'}}
-    else if(k==='out'&&co){burst(co.hx+.5,co.hy+.5,co.color||'#fff',24,9);if(a===me){shake(true);$('meWarn').textContent=C[co.tid].out?'Engulfed. Your squad is out.':'Engulfed! Your squad rides on: watch them.'}else if(b===me){$('meWarn').textContent='Engulfed one! +10 and a Zoom (A)'}}
+    else if(k==='out'&&co){burst(co.hx+.5,co.hy+.5,co.color||'#fff',24,9);if(a===me){shake(true);$('meWarn').textContent=C[co.tid].out?'Engulfed. Your squad is out.':'Engulfed! Your squad rides on: watch them.'}else if(b===me){$('meWarn').textContent='Engulfed one! +10 and a Zoom (Z)'}}
     else if(k==='team'&&(a===me||b===me))$('meWarn').textContent='Teamwork! Box closed together.';
     else if(k==='santa'&&a===me)$('meWarn').textContent='You knocked Santa over! +10'}
   if(m.end&&!over){over=true;const L=LV.lead[m.end.winner],W0=C[L];$('overTitle').textContent=LV.final?'The grand final is over':'Heat over';$('winLogo').hidden=false;$('winLogo').src=urlOf(W0);$('winName').textContent=W0.name;
     const mine=me>=0&&C[me]&&C[me].cid===m.end.winner;$('winMe').textContent=LV.final?(mine?'You are the Coolest Company in the Universe!':'The Coolest Company in the Universe.'):(mine?'You\'re through to the next round! Stay on this page.':'goes through to the next round.');
-    $('again').hidden=true;$('winEnter').hidden=true;$('over').classList.add('on');LV.heat=null}}
+    $('again').hidden=true;$('winEnter').hidden=true;ccShowVictory(W0);$('over').classList.add('on');LV.heat=null}}
 // between ticks, slide sleighs smoothly towards their next square
 function liveAdvance(dt){t+=dt;for(const co of C){if(!co||co.elim||co.parked)continue;co.acc=Math.min(1,co.acc+dt*BASE_SPEED*((co.boostEnd||0)>t?3:1)*((co.air||0)>0?2:1))}}
 // the homepage during Game Night: the live feed of the featured heat (the grand final once it starts)
@@ -1328,7 +1406,7 @@ function liveWatchLoop(){if(LIVEAPI&&MODE!=='live'&&MODE!=='practice'){const p=L
 
 // the lobby
 const START=LIVE;
-function openLobby(r){session=r;MODE='attract';practBrand=null;newRound();renderLobby();$('lobby').classList.add('on');$('stage').scrollIntoView({behavior:'smooth',block:'center'})}
+function openLobby(r){session=r;setTimeout(refreshInvite,0);MODE='attract';practBrand=null;newRound();renderLobby();$('lobby').classList.add('on');$('stage').scrollIntoView({behavior:'smooth',block:'center'})}
 let LOBBY=null;
 function myRider(){let r=session&&session.rider;if(!RIDER_IDS.includes(r)){try{r=localStorage.getItem('ccu_rider')}catch(_){}}return RIDER_IDS.includes(r)?r:'snow'}
 function renderChars(){const box=$('lobChars');if(!box||!session)return;const cur=myRider(),col=session.color||'#e2283a';
@@ -1353,15 +1431,24 @@ setInterval(lobbyTick,500);
 
 // theme tune: starts on the first tap/click/key (browsers block sound before that), loops, mute top-left
 const theme=$('theme'),muteBtn=$('muteBtn');let aCtx=null,aGain=null,aDest=null,muted=false,started=false;
+let musicLevel=.12,fxLevel=.85,voiceLevel=1,voiceMuted=false,fxLast={};
 try{muted=localStorage.getItem('bcu-muted')==='1'}catch(_){}
 function setMuteUI(){muteBtn.classList.toggle('off',muted);muteBtn.setAttribute('aria-pressed',muted?'true':'false');muteBtn.setAttribute('aria-label',muted?'Unmute music':'Mute music');muteBtn.classList.toggle('idle',!started)}
-function startMusic(){if(MODE!=='practice'||muted)return;if(started){theme.play().catch(()=>{});return}
-  try{if(!aCtx&&(window.AudioContext||window.webkitAudioContext)){aCtx=new(window.AudioContext||window.webkitAudioContext)();const src=aCtx.createMediaElementSource(theme);aGain=aCtx.createGain();aGain.gain.value=.55;src.connect(aGain);aGain.connect(aCtx.destination);aDest=aCtx.createMediaStreamDestination();aGain.connect(aDest)}
+function startMusic(){if(MODE!=='practice'||muted)return;if(started){theme.play().then(applyMusicVolume).catch(()=>{});return}
+  try{if(!aCtx&&(window.AudioContext||window.webkitAudioContext)){aCtx=new(window.AudioContext||window.webkitAudioContext)();const src=aCtx.createMediaElementSource(theme);aGain=aCtx.createGain();aGain.gain.value=0;src.connect(aGain);aGain.connect(aCtx.destination);aDest=aCtx.createMediaStreamDestination();aGain.connect(aDest)}
     if(aCtx&&aCtx.state==='suspended')aCtx.resume().catch(()=>{});}catch(_){aCtx=null}
-  if(!aCtx)theme.volume=.55;
-  const p=theme.play();if(p&&p.then)p.then(()=>{started=true;setMuteUI()}).catch(()=>{});else{started=true;setMuteUI()}}
+  if(!aCtx)theme.volume=0;
+  const p=theme.play();if(p&&p.then)p.then(()=>{started=true;fadeMusic();setMuteUI()}).catch(()=>{});else{started=true;fadeMusic();setMuteUI()}}
 function setMuted(m){muted=m;try{localStorage.setItem('bcu-muted',m?'1':'0')}catch(_){}
-  if(aGain)aGain.gain.value=m?0:.55;else theme.muted=m;if(!m)startMusic();setMuteUI()}
+  applyMusicVolume();if(!m)startMusic();setMuteUI()}
+function applyMusicVolume(){const target=muted?0:musicLevel;if(aGain&&aCtx){aGain.gain.cancelScheduledValues(aCtx.currentTime);aGain.gain.setTargetAtTime(target,aCtx.currentTime,.3)}else{theme.muted=muted;theme.volume=target}}
+function fadeMusic(){if(aGain&&aCtx){aGain.gain.cancelScheduledValues(aCtx.currentTime);aGain.gain.setValueAtTime(0,aCtx.currentTime);aGain.gain.linearRampToValueAtTime(muted?0:musicLevel,aCtx.currentTime+2.8)}else{theme.volume=muted?0:musicLevel}}
+// Distinct procedural effects: no network downloads and no assets in the rendering loop.
+function soundFx(kind){if(MODE!=='practice'||!fxLevel||document.hidden)return;const now=performance.now();if(now-(fxLast[kind]||0)<(kind==='tile'?320:85))return;fxLast[kind]=now;
+ try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!aCtx){aCtx=new A()}if(aCtx.state==='suspended')aCtx.resume().catch(()=>{});const specs={throw:[570,240,.12,'triangle'],hit:[240,75,.29,'sawtooth'],kill:[360,65,.38,'sawtooth'],zoom:[220,950,.30,'sine'],tile:[490,780,.17,'sine'],hill:[400,650,.20,'triangle'],crash:[180,65,.26,'square'],score:[700,1030,.15,'sine']};const sp=specs[kind]||specs.score;const o=aCtx.createOscillator(),g=aCtx.createGain(),t0=aCtx.currentTime;o.type=sp[3];o.frequency.setValueAtTime(sp[0],t0);o.frequency.exponentialRampToValueAtTime(Math.max(30,sp[1]),t0+sp[2]);g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(Math.max(.0001,fxLevel*.10),t0+.015);g.gain.exponentialRampToValueAtTime(.0001,t0+sp[2]);o.connect(g);g.connect(aCtx.destination);o.start(t0);o.stop(t0+sp[2]+.015)}catch(_){}}
+function bindVolume(id,out,initial,fn){const el=$(id);try{const v=localStorage.getItem('ccu-'+id);if(v!==null)initial=Math.max(0,Math.min(100,+v))}catch(_){}el.value=initial;const update=()=>{const v=+el.value;$(out).textContent=v+'%';fn(v/100);try{localStorage.setItem('ccu-'+id,v)}catch(_){}};el.addEventListener('input',update);update()}
+bindVolume('musicVol','musicVal',12,v=>{musicLevel=v;applyMusicVolume()});bindVolume('fxVol','fxVal',85,v=>fxLevel=v);bindVolume('voiceVol','voiceVal',100,v=>{voiceLevel=v;document.querySelectorAll('audio[data-teammate]').forEach(a=>a.volume=voiceMuted?0:v)});
+$('voiceToggle').onclick=()=>{voiceMuted=!voiceMuted;$('voiceToggle').textContent=voiceMuted?'Unmute teammates':'Mute teammates';$('voiceToggle').setAttribute('aria-pressed',String(voiceMuted));document.querySelectorAll('audio[data-teammate]').forEach(a=>a.volume=voiceMuted?0:voiceLevel)};
 muteBtn.onclick=e=>{e.stopPropagation();if(!started&&!muted){muted=false;startMusic();return}setMuted(!muted)};
 setMuteUI();
 document.addEventListener('visibilitychange',()=>{if(!started||MODE!=='practice')return;if(document.hidden)theme.pause();else if(!muted)theme.play().catch(()=>{})});
@@ -1415,6 +1502,134 @@ function openShare(keepSub,score){
 async function copy(id,okText){const el=$(id);try{await navigator.clipboard.writeText(el.value);$('shOk').textContent=okText}catch(_){el.select();$('shOk').textContent='Selected. Press Ctrl+C or ⌘C to copy.'}}
 $('shCopyLink').onclick=()=>copy('shLink','Link copied.');$('shCopyMsg').onclick=()=>copy('shMsg','Message copied.');
 $('shareBtn').onclick=()=>openShare();$('winShare').onclick=()=>openShare(false,me>=0&&C[me]?mePts():(practBrand?lastScore:null));
+
+// SUPABASE REAL ROOMS v1. Integrates with existing game closure; no paid flow changes.
+const CC_SUPABASE_URL='https://fwroeughsfsgbbcszfcw.supabase.co';
+const CC_SUPABASE_KEY='sb_publishable_Ngwc7PAq1TqL5eHd36vGcw_4ogTe9uC';
+let ccDb=null,ccRoom=null,ccPeople=[],ccAuth=null,ccChannel=null,ccTimer=null,ccStartTimer=null,ccJoining=false,ccPlaying=false;
+const ccCompanies=['Custom Team','Qatar Airways','Amazon','Meta','X','NVIDIA','China','United Kingdom','Google','Apple','Microsoft','Tesla','OpenAI'];
+const ccColors=['#ff4747','#3485ff','#31d16f','#ffd93d'];
+const ccText=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ccBy=id=>document.getElementById(id);
+const ccStatus=m=>{ccBy('ccStatus').textContent=m};
+const ccInvite=()=>ccRoom?location.origin+location.pathname+'?room='+encodeURIComponent(ccRoom.invite):'';
+function ccUI(){
+ const o=document.createElement('div');o.id='ccOverlay';o.innerHTML=`<section id="ccCard" role="dialog" aria-modal="true" aria-label="Practice squad lobby">
+ <div class="ccHeader"><div><small>COOLEST COMPANY · PRACTICE</small><h2>Squad lobby</h2></div><button id="ccClose" type="button" title="Close">×</button></div>
+ <div id="ccWelcome"><p>Enter your name to create a private squad or join a friend's room.</p><label>Your name<input id="ccName" maxlength="40" autocomplete="nickname" placeholder="Your name"></label><button id="ccEnter" class="ccGold">Continue</button><p class="ccHint">Free practice. Up to 4 players per room. Your name will be visible to teammates.</p></div>
+ <div id="ccRoomUI" hidden>
+ <div class="ccTop"><div><strong id="ccTeamName">Custom Team</strong><small id="ccRoomState">Waiting for friends</small></div><span id="ccRole"></span></div>
+ <div id="ccHostEdit"><label>Team / company<select id="ccCompany"></select></label><label>Team colour<input type="color" id="ccColour" value="#e2283a"></label><label class="ccUpload">Upload team logo<input id="ccLogo" type="file" accept="image/png,image/jpeg,image/webp"></label><button id="ccSave" type="button">Save team choice</button><img id="ccPreview" alt="Chosen logo" hidden></div>
+ <div class="ccInvite"><label>Private room link<input id="ccLink" readonly></label><div class="ccButtons"><button id="ccCopy">Copy link</button><button id="ccWa">WhatsApp</button><button id="ccTg">Telegram</button><button id="ccShare">Share / Messages</button></div><div class="ccButtons"><button id="ccRemind">Send reminder</button></div></div>
+ <h3>Players <span id="ccCount">0/4</span></h3><div id="ccRoster"></div>
+ <p class="ccHint">The host chooses one team and character for the squad. Other players see changes live. Voice chat and shared movement are not active in this prototype.</p>
+ <button id="ccStart" class="ccGold">Start practice together</button><button id="ccLeave">Leave room</button><p id="ccTeamScore"></p></div>
+ <p id="ccStatus" role="status"></p></section>`;
+ document.body.appendChild(o);
+ ccBy('ccCompany').innerHTML=ccCompanies.map(n=>`<option>${ccText(n)}</option>`).join('');
+ ccBy('ccClose').onclick=()=>{o.classList.remove('ccOpen')};
+ ccBy('ccEnter').onclick=ccEnter;
+ ccBy('ccSave').onclick=ccSave;
+ ccBy('ccStart').onclick=ccStart;
+ ccBy('ccLeave').onclick=ccLeave;
+ ccBy('ccCopy').onclick=()=>navigator.clipboard.writeText(ccInvite()).then(()=>ccStatus('Link copied.')).catch(()=>ccStatus('Select the link and copy it.'));
+ ccBy('ccWa').onclick=()=>ccMessage('wa',false);
+ ccBy('ccTg').onclick=()=>ccMessage('tg',false);
+ ccBy('ccShare').onclick=()=>ccMessage('native',false);
+ ccBy('ccRemind').onclick=()=>ccMessage('native',true);
+ ccBy('ccLogo').onchange=ccLoadLogo;
+ ccBy('ccName').value=localStorage.getItem('cc_player_name')||'';
+ ccBy('ccName').addEventListener('keydown',e=>{if(e.key==='Enter')ccEnter()});
+}
+function ccMessage(app,reminder){const link=ccInvite();if(!link)return;const msg=(reminder?'Reminder: join our practice squad! ':'Join my private snowball squad! ')+link;
+ if(app==='wa')window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener');
+ else if(app==='tg')window.open('https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(reminder?'Reminder: join our squad!':'Join my practice squad!'),'_blank','noopener');
+ else if(navigator.share)navigator.share({title:'Practice squad',text:msg,url:link}).catch(()=>{});
+ else navigator.clipboard.writeText(msg).then(()=>ccStatus('Message copied. Paste it into WhatsApp or Telegram.')).catch(()=>ccStatus(msg));
+}
+async function ccInit(){if(ccDb)return;
+ if(!window.supabase||!window.supabase.createClient)throw Error('Supabase library could not load. Check your connection.');
+ ccDb=window.supabase.createClient(CC_SUPABASE_URL,CC_SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}});
+ let {data:{session:s},error:e}=await ccDb.auth.getSession();if(e)throw e;
+ if(!s){const a=await ccDb.auth.signInAnonymously();if(a.error)throw Error(a.error.message+' — Enable Anonymous Sign-Ins in Supabase Authentication settings.');s=a.data.session}
+ ccAuth=s.user.id;
+}
+async function ccRpc(name,params){let {data,error}=await ccDb.rpc(name,params);if(error)throw Error(error.message);return data}
+async function ccEnter(){if(ccJoining)return;const name=ccBy('ccName').value.trim();if(!name){ccStatus('Enter your name first.');return}
+ ccJoining=true;ccBy('ccEnter').disabled=true;ccStatus('Connecting to Supabase…');
+ try{await ccInit();localStorage.setItem('cc_player_name',name);
+ const invite=new URLSearchParams(location.search).get('room');let id;
+ if(invite){id=await ccRpc('cc_join_room',{p_invite:invite,p_name:name})}
+ else {const created=await ccRpc('cc_create_room',{p_name:name});id=created.room_id}
+ await ccOpenRoom(id);
+ }catch(e){ccStatus('Could not enter room: '+e.message)}finally{ccJoining=false;ccBy('ccEnter').disabled=false}}
+async function ccOpenRoom(id){if(ccChannel)await ccDb.removeChannel(ccChannel);ccRoom={id};ccPlaying=false;
+ await ccRefresh();ccBy('ccWelcome').hidden=true;ccBy('ccRoomUI').hidden=false;
+ ccChannel=ccDb.channel('cc-'+id)
+ .on('postgres_changes',{event:'*',schema:'public',table:'cc_rooms',filter:'id=eq.'+id},()=>ccRefresh().catch(()=>{}))
+ .on('postgres_changes',{event:'*',schema:'public',table:'cc_players',filter:'room_id=eq.'+id},()=>ccRefresh().catch(()=>{})).subscribe();
+ if(ccTimer)clearInterval(ccTimer);
+ ccTimer=setInterval(async()=>{if(!ccRoom)return;try{await ccRpc('cc_heartbeat',{p_room:ccRoom.id});await ccRefresh()}catch(e){ccStatus('Room update interrupted: '+e.message)}},4000);
+ ccStatus('Room connected. Share the private link with friends.');
+}
+async function ccRefresh(){if(!ccRoom)return;
+ const [a,b]=await Promise.all([ccDb.from('cc_rooms').select('*').eq('id',ccRoom.id).single(),ccDb.from('cc_players').select('*').eq('room_id',ccRoom.id).order('joined_at')]);
+ if(a.error)throw Error(a.error.message);if(b.error)throw Error(b.error.message);
+ ccRoom=a.data;ccPeople=b.data;
+ const host=ccRoom.host_id===ccAuth;
+ ccBy('ccRole').textContent=host?'HOST':'TEAMMATE';
+ ccBy('ccHostEdit').hidden=!host;
+ ccBy('ccTeamName').textContent=ccRoom.company;
+ ccBy('ccRoomState').textContent=ccRoom.status==='waiting'?'Waiting for friends':'Match in progress';
+ ccBy('ccLink').value=ccInvite();ccBy('ccCompany').value=ccCompanies.includes(ccRoom.company)?ccRoom.company:'Custom Team';
+ ccBy('ccColour').value=ccRoom.colour;
+ ccBy('ccCount').textContent=ccPeople.length+'/4';
+ ccBy('ccRoster').replaceChildren(...ccPeople.map((p,i)=>{const row=document.createElement('div');row.className='ccPlayer';
+ const color=document.createElement('i');color.style.background=p.player_colour||ccColors[i%4];
+ const name=document.createElement('span');name.textContent=p.display_name+(p.user_id===ccRoom.host_id?' ★':'')+(p.user_id===ccAuth?' (you)':'');
+ const points=document.createElement('small');points.textContent=ccRoom.status==='playing'?p.score.toLocaleString()+' pts':'';
+ row.append(color,name,points);return row}));
+ ccBy('ccTeamScore').textContent=ccRoom.status==='playing'?'Squad score reported: '+ccPeople.reduce((n,p)=>n+Number(p.score||0),0).toLocaleString():'';
+ ccBy('ccStart').hidden=!host||ccRoom.status!=='waiting';
+ ccBy('ccSave').hidden=ccRoom.status!=='waiting';
+ if(ccRoom.status==='playing'&&ccRoom.starts_at&&!ccPlaying)ccScheduleStart(ccRoom.starts_at);
+}
+async function ccLoadLogo(){const file=ccBy('ccLogo').files[0];if(!file)return;
+ if(file.size>5e6){ccStatus('Choose a picture smaller than 5 MB.');return}
+ if(!['image/png','image/jpeg','image/webp'].includes(file.type)){ccStatus('Only PNG, JPEG and WebP images are supported.');return}
+ const url=URL.createObjectURL(file),im=new Image();
+ im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=96;const x=c.getContext('2d');x.clearRect(0,0,96,96);const scale=Math.min(96/im.width,96/im.height);x.drawImage(im,(96-im.width*scale)/2,(96-im.height*scale)/2,im.width*scale,im.height*scale);
+ ccBy('ccPreview').src=c.toDataURL('image/jpeg',0.68);ccBy('ccPreview').hidden=false;URL.revokeObjectURL(url);ccStatus('Logo selected. Click Save team choice.')};
+ im.onerror=()=>{URL.revokeObjectURL(url);ccStatus('Could not read this image.')};im.src=url;
+}
+async function ccSave(){if(!ccRoom)return;ccStatus('Saving shared team…');
+ try{const company=ccBy('ccCompany').value;const colour=ccBy('ccColour').value;
+ const logo=ccBy('ccPreview').hidden?ccRoom.logo:ccBy('ccPreview').src;
+ await ccRpc('cc_update_team',{p_room:ccRoom.id,p_company:company,p_colour:colour,p_logo:logo||null,p_rider:ccRoom.rider||'snow'});
+ await ccRefresh();ccStatus('Team updated for everyone.')
+ }catch(e){ccStatus('Could not save: '+e.message)}}
+async function ccStart(){try{ccBy('ccStart').disabled=true;const t=await ccRpc('cc_start_room',{p_room:ccRoom.id});ccScheduleStart(t);await ccRefresh()}catch(e){ccStatus('Could not start: '+e.message)}finally{ccBy('ccStart').disabled=false}}
+function ccScheduleStart(when){if(ccStartTimer)clearTimeout(ccStartTimer);
+ const left=Math.max(0,new Date(when).getTime()-Date.now());ccStatus('Starting together in '+Math.ceil(left/1000)+' seconds…');
+ ccStartTimer=setTimeout(()=>{if(ccPlaying||!ccRoom)return;ccPlaying=true;ccBy('ccOverlay').classList.remove('ccOpen');
+ const im=new Image(),go=()=>{const data={name:ccRoom.company,color:ccRoom.colour,im:im.complete&&im.naturalWidth?im:null};startPractice(data)};
+ if(ccRoom.logo){im.onload=go;im.onerror=go;im.src=ccRoom.logo;}else go();
+ ccStatus('Practice match started. Prototype physics run locally on each device.');
+ },left)}
+async function ccLeave(){if(ccRoom)try{await ccRpc('cc_leave_room',{p_room:ccRoom.id})}catch(e){ccStatus('Leave failed: '+e.message);return}
+ if(ccTimer)clearInterval(ccTimer);if(ccChannel)ccDb.removeChannel(ccChannel);ccRoom=null;ccPlaying=false;ccBy('ccWelcome').hidden=false;ccBy('ccRoomUI').hidden=true;
+ history.replaceState({},'',location.pathname);ccStatus('Left the squad.')}
+function ccShow(){ccBy('ccOverlay').classList.add('ccOpen');ccBy('ccName').focus()}
+ccUI();
+$('practBtn').onclick=ccShow;
+// When the practice match finishes, submit an untrusted prototype score.
+const ccOriginalEndRound=endRound;
+endRound=function(){if(ccPlaying&&ccRoom&&me>=0){ccRpc('cc_report_score',{p_room:ccRoom.id,p_score:Math.max(0,Math.floor(mePts()))}).catch(()=>{})}return ccOriginalEndRound.apply(this,arguments)};
+// Allow return to room without disturbing old paid flows.
+const ccOriginalBack=backToExample;
+backToExample=function(){ccOriginalBack();if(ccRoom){$('lobby').classList.remove('on');ccShow()}};
+$('exitBtn').onclick=()=>backToExample();$('winBack').onclick=()=>backToExample();
+if(new URLSearchParams(location.search).has('room')){setTimeout(ccShow,250)}
 
 (document.fonts?document.fonts.ready:Promise.resolve()).then(()=>{newRound();size();countdown();requestAnimationFrame(loop)});
 }

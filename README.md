@@ -1,25 +1,31 @@
-# Coolest Company in the Universe — GitHub Pages deployment
+# Coolest Company — Supabase multiplayer lobby prototype
 
-## Included
-- `index.html`: the existing game with an accessible **Watch game trailer** button.
-- `audio/theme.mp3`: game audio.
-- `video/trailer.mp4`: web-optimized version of supplied trailer (~5.5 MB, 720p).
-- `CNAME`: custom domain `www.coolestcompanyintheuniverse.com`.
-- `.nojekyll`: serve assets as-is.
+## Quick setup
 
-## Publish
-1. In GitHub, create a public repository (or use your existing Pages repository).
-2. Upload the *contents* of this ZIP to the repository root and commit to the `main` branch.
-3. Under **Settings > Pages**, set **Deploy from a branch**, `main`, `/(root)`.
-4. In **Settings > Pages > Custom domain**, confirm `www.coolestcompanyintheuniverse.com` and save.
-5. At your domain registrar/DNS provider, set the `www` **CNAME** to `<YOUR-GITHUB-USERNAME>.github.io` (do NOT include the repository name); remove any conflicting existing `www` records. **Avoid changing unrelated email MX/TXT records.**
-6. Wait for DNS and HTTPS certificate provisioning; enable **Enforce HTTPS** when GitHub offers it.
-7. Test the game and trailer on both mobile and desktop at https://www.coolestcompanyintheuniverse.com.
+1. Supabase Dashboard → **Authentication → Providers → Anonymous Sign-Ins** → enable (the exact menu may vary).
+2. Supabase Dashboard → **SQL Editor** → paste and run the entire `supabase-setup.sql` file. Use a fresh project. This file creates two `cc_*` tables, secure RPCs, row-level security, and Realtime publication entries.
+3. Upload **the extracted contents** of this folder to a **GitHub Pages staging repository** (do not replace your live domain before testing). For staging, remove `CNAME` so GitHub Pages doesn't claim your production domain. Change links only when ready for production.
+4. Open your site over HTTPS, press **Practise free**, enter a name, share the unique URL. A second private browser/device can join. Both see the roster. Host chooses a team/logo and clicks Start. Both browsers enter a *locally simulated* game on the same countdown.
+5. Test a second browser and mobile; check the browser console if a room fails. If you see “Anonymous sign-ins disabled,” enable that provider. If you see “function not found,” run SQL and refresh.
 
-**Existing website warning:** If this domain already serves a site, changing its DNS will move traffic away from that host. Back up and plan migration first.
+## Winner reveal and spectating
+- The round-end presentation expands to a full-arena view with **one single, giant winning team logo** (not repeating tile badges), whether your squad won or lost.
+- A locally eliminated practice player keeps watching the remaining match rather than being automatically shown a game-over dialog. This does **not** synchronize spectating across devices; multiplayer spectator camera switching needs the live game-state backend.
 
-## Trailer performance
-The video has **no source attribute until a visitor presses Watch game trailer**, and the video has `preload="none"`. It is not downloaded or decoded during initial page load. The video is paused and unloaded when the modal closes. The game soundtrack is paused while the trailer plays and resumed afterward if previously active. The optimized 720p video is ~5.5 MB instead of ~39 MB.
+## Implemented
+- Actual hosted rooms, unique invite tokens, Supabase anonymous identities, 4-person roster, live changes plus periodic refresh, host-only team editing and synchronized countdown.
+- Player names, 4 player marker colours in lobby, upload team badge (96×96 compressed), preselected companies (Qatar Airways, Amazon, Meta, X, NVIDIA, China, United Kingdom, etc.), share links and manual reminder.
+- Existing game, trailer, audio controls and legacy paid flow kept. The original standalone practice engine launches on each participant's device.
 
-## Important: commercial functionality is not included
-This static site does not include the `/api` backend, payment processing, synchronized live multiplayer, registration verification, or email services. Do not accept payments or promise working paid multiplayer until those backend components are implemented and tested. The site copy may describe capabilities or event dates that are not yet operational.
+## Not yet real multiplayer
+- Gameplay **physics, player positions, combat, spectating, teammate markers and scores are NOT synchronized** across devices. Local player score uploads are user-submitted and **not prize-safe**.
+- Voice chat not implemented: needs a LiveKit server/token endpoint or another WebRTC signalling service. Do not claim teammate voice is live.
+- Paid entry is unchanged, and checkout receipts do not grant Supabase room access. No verified payment webhook or entitlement gates.
+- Personal uploaded logos are displayed in the practice match; never upload sensitive images. Membership is link-based. Anonymous sessions can be reset by clearing browser storage.
+- Browser-based session timing is approximate across client clocks. Match-start signal is server-timestamped, but clocks may differ slightly.
+
+## Security
+Supabase client publishable key is public by design. **Never put an `sb_secret_` key in this repository.** RLS allows reads only for members; all mutations use narrowly checked RPCs. Room invite tokens are bearer capabilities: do not share them publicly. Anonymous sign-ins are for prototype only. Add rate limits, abuse controls and a verified auth mechanism before commercial release.
+
+## Live URL
+For `https://www.coolestcompanyintheuniverse.com`, retain `CNAME` when ready to use production. For preview/staging remove `CNAME` and use `https://YOURNAME.github.io/REPO/`.
